@@ -41,7 +41,7 @@ export default function PaywallOverlay() {
                         </ul>
 
                         <button className="w-full py-4 bg-stone-800 hover:bg-stone-700 text-white uppercase tracking-widest text-xs font-bold transition-colors border border-white/5">
-                            Seleziona Premium
+                            Attiva Premium
                         </button>
                     </div>
 
@@ -49,7 +49,7 @@ export default function PaywallOverlay() {
                     <div className="bg-gradient-to-b from-stone-900 to-black border border-luminel-gold/30 p-8 rounded-sm relative group overflow-hidden shadow-2xl shadow-luminel-gold/5">
                         <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-luminel-gold to-transparent" />
                         <div className="absolute top-4 right-4 text-[9px] uppercase tracking-widest text-luminel-gold border border-luminel-gold/30 px-2 py-1 rounded-sm">
-                            Most Popular
+                            Il Più Scelto
                         </div>
 
                         <h3 className="text-xl font-serif text-white mb-2 flex items-center gap-2 justify-center md:justify-start">
@@ -64,7 +64,7 @@ export default function PaywallOverlay() {
                         </ul>
 
                         <button className="w-full py-4 bg-luminel-gold hover:bg-[#b8860b] text-black uppercase tracking-widest text-xs font-bold transition-colors shadow-lg shadow-luminel-gold/20">
-                            Diventa Elite
+                            Ascendi all'Elite
                         </button>
                     </div>
 

@@ -22,7 +22,7 @@ export default function PainSection() {
 
                     <div className="space-y-8 font-serif text-xl md:text-2xl leading-relaxed text-stone-400">
                         <p>
-                            Prendi decisioni pesanti ogni singoloiorno. Guidi gli altri, risolvi i loro problemi, assorbi il loro stress. <br />
+                            Prendi decisioni pesanti ogni singolo giorno. Guidi gli altri, risolvi i loro problemi, assorbi il loro stress. <br />
                             Quando i tuoi dipendenti, i tuoi soci o la tua famiglia crollano, vengono da te. <br />
                             <span className="text-stone-200">Sanno che tu non crolli mai.</span>
                         </p>
@@ -35,7 +35,7 @@ export default function PainSection() {
                         </p>
                     </div>
 
-                    <div className="mt-16 bg-stone-900/50 p-8 rounded-sm import border border-white/5 max-w-3xl mx-auto">
+                    <div className="mt-16 bg-stone-900/50 p-8 rounded-sm border border-white/5 max-w-3xl mx-auto">
                         <p className="text-lg text-white font-serif">
                             Luminel ribalta questa dinamica.
                         </p>

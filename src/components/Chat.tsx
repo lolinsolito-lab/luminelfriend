@@ -242,7 +242,7 @@ export default function Chat() {
         {/* Continuous Disclaimer */}
         <div className="text-center mt-2 border-t border-white/5 pt-2">
           <p className="text-[9px] text-stone-700 uppercase tracking-widest">
-            Luminel is an AI for entertainment purposes only. Not a medical service.
+            Luminel è un'IA a scopo di intrattenimento. Non è un servizio medico.
           </p>
         </div>
       </footer>
