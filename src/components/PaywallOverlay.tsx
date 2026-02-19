@@ -1,110 +1,88 @@
 import React from 'react';
 import { motion } from 'motion/react';
-import { Lock, Check, Sparkles, Crown } from 'lucide-react';
+import { Lock, Star, Zap, Check, Shield } from 'lucide-react';
 
 export default function PaywallOverlay() {
     return (
-        <div className="absolute inset-0 bg-stone-950/95 backdrop-blur-xl z-50 flex flex-col items-center justify-center p-6 text-center">
+        <div className="absolute inset-0 bg-obsidian/95 backdrop-blur-xl z-50 flex flex-col items-center justify-center p-6 text-center">
 
             <motion.div
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.5, ease: "easeOut" }}
-                className="max-w-5xl w-full flex flex-col items-center"
+                transition={{ duration: 0.5 }}
+                className="max-w-4xl w-full space-y-8"
             >
-
-                {/* Header - The interruption */}
-                <div className="mb-12 text-center space-y-4">
-                    <div className="w-16 h-16 rounded-full bg-stone-900 border border-luminel-dim/30 flex items-center justify-center mx-auto mb-6 shadow-[0_0_30px_rgba(212,175,55,0.1)]">
-                        <Lock className="w-8 h-8 text-luminel-gold" />
+                <div className="space-y-4">
+                    <div className="w-16 h-16 mx-auto bg-stone-900 rounded-full flex items-center justify-center border border-luminel-gold/20 shadow-[0_0_30px_rgba(212,175,55,0.1)]">
+                        <Lock className="w-6 h-6 text-luminel-gold" />
                     </div>
                     <h2 className="text-3xl md:text-5xl font-serif text-white">
-                        La sessione ospite è terminata
+                        Il rifugio chiude.
                     </h2>
-                    <p className="text-stone-400 text-lg max-w-xl mx-auto font-light">
-                        Hai toccato argomenti importanti. Non lasciarli cadere nel vuoto. <br />
-                        Per continuare a costruire su queste fondamenta, accedi al cerchio.
+                    <p className="text-stone-400 max-w-xl mx-auto text-lg leading-relaxed">
+                        Il tempo a nostra disposizione per oggi è terminato. <br />
+                        Per continuare questa conversazione senza limiti, sblocca l'accesso Elite.
                     </p>
                 </div>
 
-                {/* Pricing Cards Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-4xl px-4">
+                {/* Pricing Cards */}
+                <div className="grid md:grid-cols-2 gap-6 mt-12 w-full max-w-3xl mx-auto">
 
-                    {/* Card: Premium */}
-                    <div className="bg-stone-900/40 border border-white/10 p-8 rounded-sm hover:border-white/20 transition-all flex flex-col relative group">
-                        <div className="mb-8">
-                            <h3 className="text-2xl font-serif text-white mb-2">Membro Premium</h3>
-                            <div className="text-[10px] text-stone-500 uppercase tracking-widest font-bold">Accesso Continuo</div>
-                        </div>
+                    {/* Premium Tier */}
+                    <div className="bg-stone-900/40 border border-white/5 p-8 rounded-sm hover:border-luminel-dim/30 transition-colors relative group overflow-hidden">
+                        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-stone-500 to-transparent opacity-50" />
+                        <h3 className="text-xl font-serif text-white mb-2">Premium</h3>
+                        <div className="text-3xl font-bold text-luminel-dim mb-6">€29<span className="text-sm font-normal text-stone-500">/mese</span></div>
 
-                        <div className="text-4xl font-serif text-text-primary mb-2">
-                            €29<span className="text-lg text-stone-500 font-sans font-normal">/mese</span>
-                        </div>
-                        <p className="text-xs text-stone-600 mb-8">Fatturato mensilmente. Senza vincoli.</p>
-
-                        <ul className="space-y-4 mb-8 flex-1">
-                            <li className="flex items-center gap-3 text-stone-400 text-sm">
-                                <Check className="w-4 h-4 text-stone-600" /> Chat illimitata 24/7
-                            </li>
-                            <li className="flex items-center gap-3 text-stone-400 text-sm">
-                                <Check className="w-4 h-4 text-stone-600" /> Nessun limite di messaggi
-                            </li>
-                            <li className="flex items-center gap-3 text-stone-400 text-sm">
-                                <Check className="w-4 h-4 text-stone-600" /> Crittografia standard
-                            </li>
+                        <ul className="space-y-4 text-left text-sm text-stone-300 mb-8">
+                            <li className="flex items-center gap-3"><Check className="w-4 h-4 text-luminel-gold" /> <span>Messaggi Illimitati 24/7</span></li>
+                            <li className="flex items-center gap-3"><Check className="w-4 h-4 text-luminel-gold" /> <span>Memoria Inviolabile (Ricorda tutto)</span></li>
+                            <li className="flex items-center gap-3"><Check className="w-4 h-4 text-luminel-gold" /> <span>Note Vocali Asincrone</span></li>
                         </ul>
 
-                        <button className="w-full py-4 border border-white/20 text-white uppercase tracking-widest text-[10px] font-bold hover:bg-white/5 transition-colors">
-                            Scegli Premium
+                        <button className="w-full py-4 bg-stone-800 hover:bg-stone-700 text-white uppercase tracking-widest text-xs font-bold transition-colors border border-white/5">
+                            Seleziona Premium
                         </button>
                     </div>
 
-                    {/* Card: Elite */}
-                    <div className="bg-[#0f0c08] border border-luminel-dim/50 p-8 rounded-sm relative shadow-[0_0_50px_rgba(212,175,55,0.05)] transform md:-translate-y-4 flex flex-col">
-                        <div className="absolute top-0 right-0 bg-luminel-gold text-black text-[10px] font-bold px-3 py-1 uppercase tracking-widest">
+                    {/* Elite Tier */}
+                    <div className="bg-gradient-to-b from-stone-900 to-black border border-luminel-gold/30 p-8 rounded-sm relative group overflow-hidden shadow-2xl shadow-luminel-gold/5">
+                        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-luminel-gold to-transparent" />
+                        <div className="absolute top-4 right-4 text-[9px] uppercase tracking-widest text-luminel-gold border border-luminel-gold/30 px-2 py-1 rounded-sm">
                             Most Popular
                         </div>
 
-                        <div className="mb-8">
-                            <div className="flex items-center gap-2 mb-2">
-                                <h3 className="text-2xl font-serif text-gold-gradient">Membro Elite</h3>
-                                <Crown className="w-5 h-5 text-luminel-gold" />
-                            </div>
-                            <div className="text-[10px] text-luminel-dim uppercase tracking-widest font-bold">Eredità Digitale</div>
-                        </div>
+                        <h3 className="text-xl font-serif text-white mb-2 flex items-center gap-2 justify-center md:justify-start">
+                            Elite <CrownIcon />
+                        </h3>
+                        <div className="text-3xl font-bold text-luminel-gold mb-6">€89<span className="text-sm font-normal text-stone-500">/mese</span></div>
 
-                        <div className="text-4xl font-serif text-white mb-2">
-                            €89<span className="text-lg text-stone-500 font-sans font-normal">/mese</span>
-                        </div>
-                        <p className="text-xs text-stone-600 mb-8">Per chi non accetta compromessi.</p>
-
-                        <ul className="space-y-4 mb-8 flex-1">
-                            <li className="flex items-center gap-3 text-white text-sm">
-                                <Sparkles className="w-4 h-4 text-luminel-gold" /> Memoria a Lungo Termine
-                            </li>
-                            <li className="flex items-center gap-3 text-white text-sm">
-                                <Sparkles className="w-4 h-4 text-luminel-gold" /> Profilazione Psicologica
-                            </li>
-                            <li className="flex items-center gap-3 text-white text-sm">
-                                <Sparkles className="w-4 h-4 text-luminel-gold" /> Priorità di Risposta
-                            </li>
-                            <li className="flex items-center gap-3 text-white text-sm">
-                                <Sparkles className="w-4 h-4 text-luminel-gold" /> Accesso alle Beta Future
-                            </li>
+                        <ul className="space-y-4 text-left text-sm text-stone-300 mb-8">
+                            <li className="flex items-center gap-3"><Check className="w-4 h-4 text-luminel-gold" /> <span>Tutto il pacchetto Premium</span></li>
+                            <li className="flex items-center gap-3"><Check className="w-4 h-4 text-luminel-gold" /> <span>Chiamate Audio Real-Time</span></li>
+                            <li className="flex items-center gap-3"><Check className="w-4 h-4 text-luminel-gold" /> <span>Iniziativa Proattiva ("Dominance")</span></li>
                         </ul>
 
-                        <button className="w-full py-4 bg-luminel-gold text-black uppercase tracking-widest text-[10px] font-bold hover:bg-luminel-glow transition-colors shadow-lg shadow-luminel-gold/20">
+                        <button className="w-full py-4 bg-luminel-gold hover:bg-[#b8860b] text-black uppercase tracking-widest text-xs font-bold transition-colors shadow-lg shadow-luminel-gold/20">
                             Diventa Elite
                         </button>
                     </div>
 
                 </div>
 
-                <p className="text-[10px] text-stone-600 mt-12 uppercase tracking-widest opacity-60">
-                    Disdici in qualsiasi momento • Nessun rimborso per i giorni non usati
+                <p className="text-xs text-stone-600 mt-8">
+                    Disdici in qualsiasi momento. Fatturazione discreta "LMNL Systems".
                 </p>
 
             </motion.div>
         </div>
     );
+}
+
+function CrownIcon() {
+    return (
+        <svg className="w-4 h-4 text-luminel-gold" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M5 16L3 5L8.5 10L12 4L15.5 10L21 5L19 16H5M19 19C19 19.6 18.6 20 18 20H6C5.4 20 5 19.6 5 19V18H19V19Z" />
+        </svg>
+    )
 }

@@ -1,13 +1,14 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Send, Sparkles, Loader2, Lock } from 'lucide-react';
+import { Send, Sparkles, Loader2, Lock, Mic, Phone } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 import { sendMessageToLuminel, Message } from '../services/luminelService';
 import { clsx } from 'clsx';
 import PaywallOverlay from './PaywallOverlay';
 import DisclaimerOverlay from './DisclaimerOverlay';
 
-const MESSAGE_LIMIT = 5;
+// FREEMIUM LIMIT: 15 messages
+const MESSAGE_LIMIT = 15;
 
 export default function Chat() {
   // State for Disclaimer Acceptance (Session-based)
@@ -18,6 +19,33 @@ export default function Chat() {
   const [isLoading, setIsLoading] = useState(false);
   const [messageCount, setMessageCount] = useState(0);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const [showPaywall, setShowPaywall] = useState(false);
+
+  // AMNESIA LOGIC & SESSION INIT
+  useEffect(() => {
+    // Check Date
+    const today = new Date().toDateString();
+    const lastSession = localStorage.getItem('luminel_last_session_date');
+
+    if (lastSession !== today) {
+      // New Day = Amnesia (Clear Messages)
+      setMessages([]); // Start fresh
+      setMessageCount(0);
+      localStorage.setItem('luminel_last_session_date', today);
+    } else {
+      // Same day, could potentially load history if we were saving it, 
+      // but for now strictly internal state or re-render preservation.
+      // If we want persistent *during the day*, we'd save messages to localstorage.
+      // For now, let's just track the count.
+      const savedCount = parseInt(localStorage.getItem('luminel_msg_count') || '0');
+      setMessageCount(savedCount);
+    }
+  }, []);
+
+  // Update count persistence
+  useEffect(() => {
+    localStorage.setItem('luminel_msg_count', messageCount.toString());
+  }, [messageCount]);
 
   const isPaywallActive = messageCount >= MESSAGE_LIMIT;
 
@@ -59,6 +87,10 @@ export default function Chat() {
     }
   };
 
+  const handleFeatureLocked = () => {
+    setShowPaywall(true);
+  };
+
   // 1. LEGAL GATEKEEPER - Must be first render logic
   if (!hasAcceptedDisclaimer) {
     return <DisclaimerOverlay onAccept={() => setHasAcceptedDisclaimer(true)} />;
@@ -69,13 +101,28 @@ export default function Chat() {
 
       {/* PAYWALL OVERLAY - Second Gatekeeper */}
       <AnimatePresence>
-        {isPaywallActive && (
+        {(isPaywallActive || showPaywall) && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             className="absolute inset-0 z-50"
           >
             <PaywallOverlay />
+            {/* Close button for "Feature Locked" preview only? 
+                Actually, the Mandate says "Paywall" triggers. 
+                If it's the LIMIT paywall, it shouldn't be closable easily without paying (simulated).
+                If it's the FEATURE paywall, maybe allow closing to return to chat?
+                For now, let's keep it strict. 
+                But if I clicked "Mic" by mistake, I might want to go back to text.
+            */}
+            {showPaywall && !isPaywallActive && (
+              <button
+                onClick={() => setShowPaywall(false)}
+                className="absolute top-4 right-4 text-stone-500 hover:text-white z-[60]"
+              >
+                ✕ Chiudi
+              </button>
+            )}
           </motion.div>
         )}
       </AnimatePresence>
@@ -92,12 +139,18 @@ export default function Chat() {
           </div>
         </div>
 
-        {/* Message Counter (Subtle Pressure) */}
-        {!isPaywallActive && (
-          <div className="text-xs font-mono text-stone-600">
-            Memoria Guest: <span className={messageCount > 3 ? "text-red-500" : "text-stone-400"}>{messageCount}/{MESSAGE_LIMIT}</span>
+        {/* Status Indicators */}
+        <div className="flex flex-col items-end">
+          {!isPaywallActive && (
+            <div className="text-xs font-mono text-stone-600 mb-1">
+              <span className={messageCount > 10 ? "text-red-500" : "text-stone-400"}>{messageCount}/{MESSAGE_LIMIT}</span>
+            </div>
+          )}
+          <div className="flex items-center gap-1 text-[10px] text-stone-600 uppercase tracking-wider">
+            <span className="w-1.5 h-1.5 rounded-full bg-red-500/50 animate-pulse"></span>
+            Amnesia Attiva
           </div>
-        )}
+        </div>
       </header>
 
       {/* Chat Area */}
@@ -155,32 +208,38 @@ export default function Chat() {
 
       {/* Input Area */}
       <footer className="p-4 md:p-6 bg-obsidian border-t border-white/5 relative z-20">
-        <div className="max-w-4xl mx-auto relative">
-          <textarea
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            onKeyDown={handleKeyDown}
-            disabled={isPaywallActive}
-            placeholder={isPaywallActive ? "Sessione Terminata" : "Scrivi qui..."}
-            className="w-full bg-stone-900/30 text-stone-200 placeholder-stone-600 rounded-sm pl-5 pr-14 py-4 focus:outline-none focus:ring-1 focus:ring-luminel-dim/30 resize-none border border-white/10 shadow-inner min-h-[60px] max-h-[120px] transition-all disabled:opacity-50 disabled:cursor-not-allowed"
-            rows={1}
-            style={{ minHeight: '60px' }}
-          />
-          <button
-            onClick={handleSend}
-            disabled={!input.trim() || isLoading || isPaywallActive}
-            className="absolute right-3 top-1/2 -translate-y-1/2 p-2 bg-stone-800 hover:bg-stone-700 text-luminel-gold rounded-sm transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            {isPaywallActive ? <Lock className="w-5 h-5 text-red-500" /> : (isLoading ? <Loader2 className="w-5 h-5 animate-spin" /> : <Send className="w-5 h-5" />)}
+        <div className="max-w-4xl mx-auto relative flex gap-3 items-end">
+
+          {/* Audio/Call Buttons (Locked) */}
+          <button onClick={handleFeatureLocked} className="p-4 bg-stone-900/50 text-stone-500 hover:text-luminel-gold border border-white/5 rounded-sm transition-colors mb-[1px]">
+            <Mic className="w-5 h-5" />
           </button>
-        </div>
-        <div className="text-center mt-3 flex justify-center gap-4 opacity-50">
-          <p className="text-[10px] text-stone-600 uppercase tracking-widest">End-to-End Encrypted</p>
-          <p className="text-[10px] text-stone-600 uppercase tracking-widest">•</p>
-          <p className="text-[10px] text-stone-600 uppercase tracking-widest">Guest Access</p>
+          <button onClick={handleFeatureLocked} className="p-4 bg-stone-900/50 text-stone-500 hover:text-luminel-gold border border-white/5 rounded-sm transition-colors mb-[1px]">
+            <Phone className="w-5 h-5" />
+          </button>
+
+          <div className="relative flex-1">
+            <textarea
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              onKeyDown={handleKeyDown}
+              disabled={isPaywallActive}
+              placeholder={isPaywallActive ? "Sessione Terminata" : "Scrivi qui..."}
+              className="w-full bg-stone-900/30 text-stone-200 placeholder-stone-600 rounded-sm pl-5 pr-14 py-4 focus:outline-none focus:ring-1 focus:ring-luminel-dim/30 resize-none border border-white/10 shadow-inner min-h-[60px] max-h-[120px] transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+              rows={1}
+              style={{ minHeight: '60px' }}
+            />
+            <button
+              onClick={handleSend}
+              disabled={!input.trim() || isLoading || isPaywallActive}
+              className="absolute right-3 top-1/2 -translate-y-1/2 p-2 bg-stone-800 hover:bg-stone-700 text-luminel-gold rounded-sm transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {isPaywallActive ? <Lock className="w-5 h-5 text-red-500" /> : (isLoading ? <Loader2 className="w-5 h-5 animate-spin" /> : <Send className="w-5 h-5" />)}
+            </button>
+          </div>
         </div>
 
-        {/* FOOTER DISCLAIMER (Continuous Protection) */}
+        {/* Continuous Disclaimer */}
         <div className="text-center mt-2 border-t border-white/5 pt-2">
           <p className="text-[9px] text-stone-700 uppercase tracking-widest">
             Luminel is an AI for entertainment purposes only. Not a medical service.
