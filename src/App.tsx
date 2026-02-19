@@ -27,29 +27,10 @@ function App() {
       {/* 2. Lo Specchio (The Pain) */}
       <PainSection />
 
-      {/* 3. I Pilastri (The Solution) - Replaced FeaturesDNA */}
+      {/* 3. I Pilastri (The Solution) */}
       <PillarsSection />
 
-      {/* 4. La Frattura (The Paradigm) - Moved after Pillars for better flow, or kept before? 
-          User asked for Pillars AFTER Pain. Let's stick to the user's flow:
-          Pain -> Pillars -> Closing. 
-          Where does Paradigm go? User didn't specify, but it fits well as a "Why Us" after Pillars or before.
-          Let's place it after Pain and before Pillars as a transition. 
-      */}
-
-      {/* actually, User said: "Sezione 3: I Pilastri... subito dopo la sezione del dolore".
-          So: Hero -> Pain -> Pillars.
-          And "Sezione 4: Chiusura".
-          Paradigm and ShadowInvite are extra assets we have.
-          Let's put Paradigm after Pillars to reinforce the "Non è terapia" point.
-          Then ShadowInvite (Viral).
-          Then ClosingCTA.
-      */}
-
-      {/* 3. I Pilastri del Rifugio */}
-      <PillarsSection />
-
-      {/* 4. La Frattura (Reinforcement) */}
+      {/* 4. La Frattura (The Paradigm) */}
       <ParadigmSection />
 
       {/* 5. Viralità Inversa */}
