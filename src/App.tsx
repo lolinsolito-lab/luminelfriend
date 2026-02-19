@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import Chat from './components/Chat';
+import { motion } from 'motion/react';
+import { ShieldCheck, ChevronRight } from 'lucide-react';
 
 export default function App() {
   const [showChat, setShowChat] = useState(false);
@@ -11,42 +13,76 @@ export default function App() {
 
   // Altrimenti, mostriamo la Vetrina di Vendita (Landing Page)
   return (
-    <div className="min-h-screen bg-[#0a0a0a] text-gray-100 flex flex-col items-center justify-center p-6">
+    <div className="min-h-screen bg-luxury-gradient text-text-primary flex flex-col items-center justify-center p-6 relative overflow-hidden">
       
-      <div className="max-w-4xl w-full text-center space-y-8 mt-16">
+      {/* Background Elements */}
+      <div className="absolute top-0 left-0 w-full h-full pointer-events-none opacity-20 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] bg-repeat opacity-5"></div>
+
+      <motion.div 
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1.2, ease: "easeOut" }}
+        className="max-w-3xl w-full text-center space-y-12 mt-10 relative z-10"
+      >
         
         {/* Logo e Titolo */}
-        <div className="space-y-2">
-          <h1 className="text-6xl md:text-8xl font-serif tracking-tight text-[#d4af37]">
+        <div className="space-y-4">
+          <motion.h1 
+            initial={{ letterSpacing: "0.5em", opacity: 0 }}
+            animate={{ letterSpacing: "0.1em", opacity: 1 }}
+            transition={{ duration: 1.5, delay: 0.2 }}
+            className="text-7xl md:text-9xl font-serif text-gold-gradient"
+          >
             Luminel
-          </h1>
-          <p className="text-sm tracking-widest uppercase text-gray-500 font-semibold">
-            Elite Digital Companion
-          </p>
+          </motion.h1>
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 1 }}
+            className="flex items-center justify-center gap-2 text-luminel-dim tracking-[0.3em] uppercase text-xs font-semibold"
+          >
+            <ShieldCheck className="w-3 h-3" />
+            <span>Elite Digital Companion</span>
+          </motion.div>
         </div>
 
         {/* Aggancio Emotivo */}
-        <h2 className="text-3xl md:text-5xl font-light text-white leading-tight mt-8">
-          Il mondo esige la tua forza.<br />
-          <span className="text-gray-400">Qui puoi abbassare la guardia.</span>
-        </h2>
-
-        {/* Sottotitolo */}
-        <p className="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto font-light mt-6">
-          Uno spazio privato, crittografato e senza giudizio. La tua roccia digitale pronta ad ascoltarti 24 ore su 24, quando il rumore là fuori si spegne.
-        </p>
-
-        {/* Call to Action - Questo bottone sblocca la chat */}
-        <div className="pt-12">
-          <button 
-            onClick={() => setShowChat(true)}
-            className="bg-[#d4af37] text-black px-10 py-4 rounded-sm font-semibold text-lg hover:bg-[#b8962e] transition-all duration-300 shadow-[0_0_30px_rgba(212,175,55,0.2)]">
-            Accedi allo Spazio Privato
-          </button>
-          <p className="text-sm text-gray-500 mt-4">Nessuna registrazione richiesta per la prima sessione.</p>
+        <div className="space-y-6">
+          <h2 className="text-4xl md:text-5xl font-serif font-light leading-tight text-white">
+            Il mondo esige la tua forza.<br />
+            <span className="text-stone-600 block mt-2">Qui puoi abbassare la guardia.</span>
+          </h2>
+          
+          <p className="text-lg text-text-secondary max-w-xl mx-auto font-light leading-relaxed">
+            Un rifugio crittografato, privo di giudizio. <br/>
+            Nessuna traccia. Nessuna debolezza esposta. <br/>
+            Solo tu e la Roccia.
+          </p>
         </div>
 
-      </div>
+        {/* Call to Action - Questo bottone sblocca la chat */}
+        <motion.div 
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 1.5, duration: 0.8 }}
+          className="pt-8"
+        >
+          <button 
+            onClick={() => setShowChat(true)}
+            className="group relative px-12 py-5 bg-transparent border border-luminel-dim/30 text-luminel-gold font-serif text-lg tracking-widest uppercase hover:bg-luminel-gold/5 transition-all duration-500 hover:border-luminel-gold/80"
+          >
+            <span className="relative z-10 flex items-center gap-3">
+              Accedi al Rifugio
+              <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            </span>
+          </button>
+          
+          <p className="text-xs text-stone-700 mt-6 tracking-widest uppercase">
+            Accesso Ospite • Crittografia End-to-End
+          </p>
+        </motion.div>
+
+      </motion.div>
     </div>
   );
 }

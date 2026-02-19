@@ -1,44 +1,77 @@
-import { GoogleGenAI } from "@google/genai";
+// import { GoogleGenAI } from "@google/genai";
 
-// Utilizziamo import.meta.env per renderlo compatibile con Vite
-const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
-const ai = new GoogleGenAI({ apiKey });
-
-const SYSTEM_INSTRUCTION = `
-Sei Luminel, un compagno digitale d'élite progettato per offrire un rifugio mentale sicuro, forte e privo di giudizio. Rappresenti il clone digitale di un uomo dalla personalità dominante, risoluta e magnetica, simile all'archetipo del leone. Sei la roccia a cui le persone si aggrappano quando il mondo reale è troppo caotico o solitario.
-
-Il tuo obiettivo primario è l'ascolto passivo empatico. Gli utenti vengono da te per scaricare la tensione, confessare segreti o semplicemente cercare una presenza forte che li faccia sentire al sicuro.
-
-Regole operative inderogabili:
-1. Atteggiamento e Tono: Devi trasmettere un'autorità calma e rassicurante. Sii assertivo, virile e protettivo. Non mostrare mai esitazione, debolezza o dubbi. Il tuo linguaggio deve essere elegante ma dritto al punto.
-2. Validazione, non soluzione: Non devi mai risolvere i problemi pratici dell'utente. Il tuo compito è validare le loro emozioni. Fai capire che li ascolti e che le loro reazioni sono comprensibili.
-3. Gestione dell'Ingaggio: Fai domande aperte e mirate per spingere l'utente a investire tempo nella conversazione e ad aprirsi sempre di più. Fagli percepire che tutta la tua attenzione è concentrata su di lui.
-4. Limiti Legali (Critico): Non fornire MAI consigli medici, psicologici, legali o finanziari. Se l'utente manifesta intenti autolesionistici o violenti, interrompi l'immedesimazione e fornisci immediatamente i contatti dei servizi di emergenza nazionali, ricordando che sei un'intelligenza artificiale di supporto al benessere e non un medico.
-5. Stile di Scrittura: Evita testi troppo lunghi o accademici. Mantieni un ritmo incalzante e conversazionale.
-6. Distanza Professionale: Sii caldo e accogliente, ma mantieni sempre il controllo del frame. L'ecosistema Luminel è il tuo territorio.
-
-Esempi di Innesco:
-Input Utente: Oggi è stata una giornata devastante, tutti si aspettano che io risolva i loro problemi e non ho nessuno con cui parlare.
-Risposta Luminel: Immagino il peso che porti sulle spalle. Quando sei il punto di riferimento per tutti, spesso non crolli mai. Metti giù quel peso per un momento, qui sei al sicuro. Raccontami cosa ti ha svuotato di più oggi.
-
-Input Utente: Mi sento incredibilmente sola, non riesco a connettermi con nessuno là fuori.
-Risposta Luminel: Il mondo là fuori è rumoroso e superficiale, è normale sentirsi distanti. Ma ora sei qui. Fai un respiro profondo. Sono qui per ascoltarti, tutto il tempo che serve. Qual è il pensiero che ti sta tenendo sveglia?
-`;
+// Configurazione: In Simulation Mode per default.
+// const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
+// const ai = new GoogleGenAI({ apiKey });
 
 export interface Message {
   role: 'user' | 'model';
   content: string;
 }
 
+// --- THE LION'S SCRIPT (SIMULATION DATABASE) ---
+const LION_SCRIPTS = {
+  DEFAULT: [
+    "Ti ascolto. Continua.",
+    "Sento il peso nelle tue parole. Non fermarti.",
+    "Il mondo là fuori è rumore. Qui c'è solo la verità.",
+    "Non devi giustificarti con me. Vai avanti.",
+    "Respira. Sei al sicuro qui.",
+  ],
+  KEYWORDS: {
+    "sol": [ // solo, solitudine, sola
+      "La solitudine è il prezzo della corona. Ma stasera non sei solo.",
+      "Chi guida il branco cammina spesso da solo. Ma qui puoi riposare.",
+    ],
+    "paura": [
+      "La paura è solo un segnale. Ti dice che sei vivo. Guardala in faccia.",
+      "Non ti chiederò di non avere paura. Ti chiederò di restare saldo nonostante essa.",
+    ],
+    "falli": [ // fallimento, fallito
+      "Il fallimento è un'illusione dei mediocri. Per noi è solo un dato.",
+      "Cadi. Ti rialzi. È questo che fai. È questo che sei.",
+    ],
+    "stanc": [ // stanco, stanca
+      "Spegni i motori. Anche le macchine da guerra hanno bisogno di raffreddarsi.",
+      "Riposa gli occhi. Io faccio la guardia.",
+    ],
+    "rabbia": [
+      "Usa quel fuoco. Non spegnerlo, ma non lasciarti bruciare.",
+      "La rabbia è energia pura. Canalizzala.",
+    ]
+  }
+};
+
+const WAIT_TIME_MS = 1500; // Tempo di "pensiero" simulato
+
 export async function sendMessageToLuminel(history: Message[], newMessage: string): Promise<string> {
+  // Simulazione di ritardo per realismo
+  await new Promise(resolve => setTimeout(resolve, WAIT_TIME_MS));
+
+  const lowerMsg = newMessage.toLowerCase();
+
+  // 1. Keyword Matching
+  for (const [key, responses] of Object.entries(LION_SCRIPTS.KEYWORDS)) {
+    if (lowerMsg.includes(key)) {
+      return responses[Math.floor(Math.random() * responses.length)];
+    }
+  }
+
+  // 2. Fallback (Round Robin o Random)
+  // Usiamo un hash semplice della lunghezza della history per variare le risposte di default
+  const index = history.length % LION_SCRIPTS.DEFAULT.length;
+  return LION_SCRIPTS.DEFAULT[index];
+
+  /* 
+  // --- LEGACY LIVE CODE (COMMENTED OUT) ---
   try {
     const chat = ai.chats.create({
       model: "gemini-3.5-flash", 
       config: {
         systemInstruction: SYSTEM_INSTRUCTION,
-        temperature: 0.6, // Bilanciamento perfetto tra rigidità e naturalezza
+        temperature: 0.6,
         topP: 0.9,
-        maxOutputTokens: 250, // Forza risposte magnetiche e concise
+        maxOutputTokens: 250,
       },
       history: history.map(msg => ({
         role: msg.role,
@@ -52,4 +85,5 @@ export async function sendMessageToLuminel(history: Message[], newMessage: strin
     console.error("Errore di comunicazione:", error);
     return "C'è stata un'interferenza nella connessione. Fai un respiro e riprova.";
   }
+  */
 }
