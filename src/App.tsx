@@ -3,8 +3,9 @@ import Chat from './components/Chat';
 import HeroSection from './components/Landing/HeroSection';
 import PainSection from './components/Landing/PainSection';
 import ParadigmSection from './components/Landing/ParadigmSection';
-import FeaturesDNA from './components/Landing/FeaturesDNA';
+import PillarsSection from './components/Landing/PillarsSection';
 import ShadowInvite from './components/Landing/ShadowInvite';
+import ClosingCTA from './components/Landing/ClosingCTA';
 
 function App() {
   const [showChat, setShowChat] = useState(false);
@@ -20,20 +21,42 @@ function App() {
   return (
     <div className="bg-obsidian min-h-screen text-text-primary selection:bg-luminel-gold selection:text-black">
 
-      {/* 1. L'Ingresso */}
+      {/* 1. L'Ingresso (The Hook) */}
       <HeroSection onEnter={enterChat} />
 
-      {/* 2. Lo Specchio */}
+      {/* 2. Lo Specchio (The Pain) */}
       <PainSection />
 
-      {/* 3. La Frattura */}
-      <ParadigmSection />
+      {/* 3. I Pilastri (The Solution) - Replaced FeaturesDNA */}
+      <PillarsSection />
 
-      {/* 4. Il DNA */}
-      <FeaturesDNA />
+      {/* 4. La Frattura (The Paradigm) - Moved after Pillars for better flow, or kept before? 
+          User asked for Pillars AFTER Pain. Let's stick to the user's flow:
+          Pain -> Pillars -> Closing. 
+          Where does Paradigm go? User didn't specify, but it fits well as a "Why Us" after Pillars or before.
+          Let's place it after Pain and before Pillars as a transition. 
+      */}
+
+      {/* actually, User said: "Sezione 3: I Pilastri... subito dopo la sezione del dolore".
+          So: Hero -> Pain -> Pillars.
+          And "Sezione 4: Chiusura".
+          Paradigm and ShadowInvite are extra assets we have.
+          Let's put Paradigm after Pillars to reinforce the "Non è terapia" point.
+          Then ShadowInvite (Viral).
+          Then ClosingCTA.
+      */}
+
+      {/* 3. I Pilastri del Rifugio */}
+      <PillarsSection />
+
+      {/* 4. La Frattura (Reinforcement) */}
+      <ParadigmSection />
 
       {/* 5. Viralità Inversa */}
       <ShadowInvite />
+
+      {/* 6. Chiusura */}
+      <ClosingCTA onEnter={enterChat} />
 
       {/* Final Minimal Footer */}
       <footer className="py-12 bg-black border-t border-white/5 text-center">
