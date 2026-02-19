@@ -5,10 +5,14 @@ import ReactMarkdown from 'react-markdown';
 import { sendMessageToLuminel, Message } from '../services/luminelService';
 import { clsx } from 'clsx';
 import PaywallOverlay from './PaywallOverlay';
+import DisclaimerOverlay from './DisclaimerOverlay';
 
 const MESSAGE_LIMIT = 5;
 
 export default function Chat() {
+  // State for Disclaimer Acceptance (Session-based)
+  const [hasAcceptedDisclaimer, setHasAcceptedDisclaimer] = useState(false);
+
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -55,10 +59,15 @@ export default function Chat() {
     }
   };
 
+  // 1. LEGAL GATEKEEPER - Must be first render logic
+  if (!hasAcceptedDisclaimer) {
+    return <DisclaimerOverlay onAccept={() => setHasAcceptedDisclaimer(true)} />;
+  }
+
   return (
     <div className="flex flex-col h-screen bg-obsidian text-text-primary font-sans selection:bg-luminel-gold selection:text-black relative overflow-hidden">
 
-      {/* PAYWALL OVERLAY */}
+      {/* PAYWALL OVERLAY - Second Gatekeeper */}
       <AnimatePresence>
         {isPaywallActive && (
           <motion.div
@@ -169,6 +178,13 @@ export default function Chat() {
           <p className="text-[10px] text-stone-600 uppercase tracking-widest">End-to-End Encrypted</p>
           <p className="text-[10px] text-stone-600 uppercase tracking-widest">•</p>
           <p className="text-[10px] text-stone-600 uppercase tracking-widest">Guest Access</p>
+        </div>
+
+        {/* FOOTER DISCLAIMER (Continuous Protection) */}
+        <div className="text-center mt-2 border-t border-white/5 pt-2">
+          <p className="text-[9px] text-stone-700 uppercase tracking-widest">
+            Luminel is an AI for entertainment purposes only. Not a medical service.
+          </p>
         </div>
       </footer>
     </div>
