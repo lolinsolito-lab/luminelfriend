@@ -84,7 +84,7 @@ export default function PricingSection() {
     const [isAnnual, setIsAnnual] = useState(false);
 
     return (
-        <section className="py-24 md:py-32 px-6 bg-space-deep border-t border-white/5">
+        <section className="py-24 md:py-32 px-6 bg-space-deep glow-border-top">
             <div className="max-w-6xl mx-auto">
 
                 {/* Header */}
@@ -216,7 +216,7 @@ export default function PricingSection() {
                                     {tier.cta}
                                 </div>
                             ) : tier.ctaStyle === 'solid' ? (
-                                <button className="w-full py-3.5 bg-gradient-to-r from-amber to-amber-dim hover:from-amber-glow hover:to-amber text-space-deep uppercase tracking-widest text-[11px] font-display font-bold transition-all rounded-lg shadow-lg shadow-amber/15">
+                                <button className="w-full py-3.5 bg-gradient-to-r from-amber to-amber-dim hover:from-amber-glow hover:to-amber text-white uppercase tracking-widest text-[11px] font-display font-bold transition-all rounded-lg shadow-lg shadow-amber/15">
                                     {tier.cta}
                                 </button>
                             ) : (

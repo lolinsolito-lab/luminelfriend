@@ -57,7 +57,7 @@ export default function PillarsSection() {
                             className="group glass glass-hover card-glow p-8 rounded-xl transition-all duration-500 hover:-translate-y-1"
                         >
                             <div className="flex items-center gap-3 mb-6">
-                                <div className="p-3 rounded-lg bg-space-deep border border-white/5 group-hover:border-amber/15 transition-colors">
+                                <div className="p-3 rounded-lg bg-space border border-space-border group-hover:border-amber/20 transition-colors">
                                     <div className="icon-glow">
                                         {pillar.icon}
                                     </div>

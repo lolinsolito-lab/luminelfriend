@@ -50,7 +50,7 @@ export default function Navbar({ onEnter }: { onEnter: () => void }) {
                 animate={{ y: 0 }}
                 transition={{ duration: 0.5, ease: 'easeOut' }}
                 className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled
-                    ? 'bg-space-deep/90 backdrop-blur-xl border-b border-white/5 shadow-lg shadow-black/20'
+                    ? 'bg-space-deep/90 backdrop-blur-xl border-b border-space-border shadow-lg shadow-black/5'
                     : 'bg-transparent'
                     }`}
             >
@@ -94,7 +94,7 @@ export default function Navbar({ onEnter }: { onEnter: () => void }) {
                     <div className="hidden md:block">
                         <button
                             onClick={onEnter}
-                            className="text-[11px] font-display font-bold uppercase tracking-widest px-5 py-2.5 bg-gradient-to-r from-amber to-amber-dim hover:from-amber-glow hover:to-amber text-space-deep rounded-lg transition-all shadow-lg shadow-amber/15 hover:shadow-amber/30"
+                            className="text-[11px] font-display font-bold uppercase tracking-widest px-5 py-2.5 bg-gradient-to-r from-amber to-amber-dim hover:from-amber-glow hover:to-amber text-white rounded-lg transition-all shadow-lg shadow-amber/15 hover:shadow-amber/30"
                         >
                             Parla con Luminel
                         </button>
@@ -128,7 +128,7 @@ export default function Navbar({ onEnter }: { onEnter: () => void }) {
                         initial={{ opacity: 0, y: -20 }}
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -20 }}
-                        className="fixed top-[60px] left-0 right-0 z-40 bg-space-deep/95 backdrop-blur-xl border-b border-white/5 p-6"
+                        className="fixed top-[60px] left-0 right-0 z-40 bg-space-deep/95 backdrop-blur-xl border-b border-space-border p-6"
                     >
                         <div className="flex flex-col gap-4">
                             {navLinks.map(link => (
@@ -143,7 +143,7 @@ export default function Navbar({ onEnter }: { onEnter: () => void }) {
                             ))}
                             <button
                                 onClick={() => { onEnter(); setMobileOpen(false); }}
-                                className="mt-2 w-full text-[11px] font-display font-bold uppercase tracking-widest px-5 py-3 bg-gradient-to-r from-amber to-amber-dim text-space-deep rounded-lg"
+                                className="mt-2 w-full text-[11px] font-display font-bold uppercase tracking-widest px-5 py-3 bg-gradient-to-r from-amber to-amber-dim text-white rounded-lg"
                             >
                                 Parla con Luminel
                             </button>

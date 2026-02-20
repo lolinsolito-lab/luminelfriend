@@ -52,7 +52,7 @@ export default function ClosingCTA({ onEnter }: { onEnter: () => void }) {
                     onClick={onEnter}
                     whileHover={{ scale: 1.03, boxShadow: "0 0 60px rgba(232,168,56,0.3)" }}
                     whileTap={{ scale: 0.97 }}
-                    className="group inline-flex items-center gap-4 px-10 py-5 bg-gradient-to-r from-amber to-amber-dim text-space-deep font-display font-bold uppercase tracking-widest text-xs rounded-xl shadow-2xl shadow-amber/20 transition-all"
+                    className="group inline-flex items-center gap-4 px-10 py-5 bg-gradient-to-r from-amber to-amber-dim text-white font-display font-bold uppercase tracking-widest text-xs rounded-xl shadow-2xl shadow-amber/20 transition-all"
                 >
                     Parla con Luminel
                     <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />

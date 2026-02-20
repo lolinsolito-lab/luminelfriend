@@ -45,7 +45,7 @@ export default function DisclaimerOverlay({ onAccept }: { onAccept: () => void }
                     disabled={!canAccept}
                     className={`w-full py-4 uppercase tracking-widest text-xs font-display font-bold transition-all duration-500 flex items-center justify-center gap-3 rounded-xl
             ${canAccept
-                            ? 'bg-gradient-to-r from-amber to-amber-dim text-space-deep hover:from-amber-glow hover:to-amber cursor-pointer shadow-lg shadow-amber/15'
+                            ? 'bg-gradient-to-r from-amber to-amber-dim text-white hover:from-amber-glow hover:to-amber cursor-pointer shadow-lg shadow-amber/15'
                             : 'glass text-text-muted cursor-not-allowed opacity-50'
                         }`}
                 >

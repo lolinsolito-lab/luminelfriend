@@ -112,7 +112,7 @@ export default function Chat() {
       </AnimatePresence>
 
       {/* Header */}
-      <header className="flex items-center justify-between px-6 py-4 border-b border-white/5 bg-space/80 backdrop-blur-xl sticky top-0 z-10">
+      <header className="flex items-center justify-between px-6 py-4 border-b border-space-border bg-space/80 backdrop-blur-xl sticky top-0 z-10">
         <div className="flex items-center gap-3">
           <div className="luminel-orb-sm" style={{ width: 36, height: 36 }} />
           <div>
@@ -187,7 +187,7 @@ export default function Chat() {
       </main>
 
       {/* Input Area */}
-      <footer className="p-4 md:p-6 bg-space-deep border-t border-white/5 relative z-20">
+      <footer className="p-4 md:p-6 bg-space-deep border-t border-space-border relative z-20">
         <div className="max-w-4xl mx-auto relative flex gap-3 items-end">
 
           {/* Locked Features */}
@@ -219,7 +219,7 @@ export default function Chat() {
           </div>
         </div>
 
-        <div className="text-center mt-2 border-t border-white/5 pt-2">
+        <div className="text-center mt-2 border-t border-space-border pt-2">
           <p className="text-[9px] text-text-muted uppercase tracking-widest">
             Luminel è un'IA a scopo di intrattenimento. Non è un servizio medico.
           </p>

@@ -115,8 +115,8 @@ export default function PaywallOverlay() {
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: key === 'pro' ? 0.1 : key === 'proPlus' ? 0.2 : 0.3 }}
                             className={`glass p-6 rounded-xl transition-colors relative group overflow-hidden ${tier.accent
-                                    ? 'border-amber/25 hover:border-amber/40 shadow-2xl shadow-amber/5 md:scale-105'
-                                    : 'hover:border-amber/20'
+                                ? 'border-amber/25 hover:border-amber/40 shadow-2xl shadow-amber/5 md:scale-105'
+                                : 'hover:border-amber/20'
                                 }`}
                         >
                             {/* Top accent line */}
@@ -169,8 +169,8 @@ export default function PaywallOverlay() {
 
                             {/* CTA */}
                             <button className={`w-full py-3.5 uppercase tracking-widest text-xs font-display font-bold transition-all rounded-lg ${tier.accent
-                                    ? 'bg-gradient-to-r from-amber to-amber-dim hover:from-amber-glow hover:to-amber text-space-deep shadow-lg shadow-amber/15'
-                                    : 'glass hover:bg-space-border text-text-warm'
+                                ? 'bg-gradient-to-r from-amber to-amber-dim hover:from-amber-glow hover:to-amber text-white shadow-lg shadow-amber/15'
+                                : 'glass hover:bg-space-border text-text-warm'
                                 }`}>
                                 {tier.cta}
                             </button>
