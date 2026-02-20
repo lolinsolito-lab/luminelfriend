@@ -7,7 +7,7 @@ export default function HeroSection({ onEnter }: { onEnter: () => void }) {
             {/* Ambient Background — expanded warm glows */}
             <div className="absolute inset-0 pointer-events-none">
                 <div className="absolute top-[25%] left-[50%] -translate-x-1/2 w-[800px] h-[800px] rounded-full bg-amber/[0.07] blur-[180px]" />
-                <div className="absolute top-[35%] left-[45%] -translate-x-1/2 w-[500px] h-[500px] rounded-full bg-cyan/[0.04] blur-[140px]" />
+                <div className="absolute top-[35%] left-[45%] -translate-x-1/2 w-[500px] h-[500px] rounded-full bg-champagne/[0.03] blur-[140px]" />
                 <div className="absolute top-[50%] left-[50%] -translate-x-1/2 w-[1200px] h-[600px] rounded-full bg-amber/[0.03] blur-[200px]" />
             </div>
 

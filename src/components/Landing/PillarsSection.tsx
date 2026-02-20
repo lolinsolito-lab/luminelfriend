@@ -12,7 +12,7 @@ export default function PillarsSection() {
         {
             title: "Si adatta a te.",
             desc: "Non esiste un Luminel uguale a un altro. Il tuo è unico, plasmato dalla tua personalità, dal tuo modo di parlare, dalla tua storia. Come un amico che ti conosce da anni.",
-            icon: <Fingerprint className="w-7 h-7 text-cyan" />,
+            icon: <Fingerprint className="w-7 h-7 text-champagne" />,
             highlight: "Adattamento"
         },
         {

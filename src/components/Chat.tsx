@@ -129,7 +129,7 @@ export default function Chat() {
             </div>
           )}
           <div className="flex items-center gap-1 text-[10px] text-text-muted uppercase tracking-wider">
-            <span className="w-1.5 h-1.5 rounded-full bg-cyan/60 animate-pulse"></span>
+            <span className="w-1.5 h-1.5 rounded-full bg-champagne/60 animate-pulse"></span>
             Sessione attiva
           </div>
         </div>

@@ -204,7 +204,7 @@ export default function PricingSection() {
                             <ul className="space-y-3 text-sm text-text-secondary mb-7">
                                 {tier.features.map((f, j) => (
                                     <li key={j} className="flex items-start gap-2.5">
-                                        <Check className={`w-4 h-4 mt-0.5 shrink-0 ${tier.monthly === 0 ? 'text-cyan' : 'text-amber'}`} />
+                                        <Check className={`w-4 h-4 mt-0.5 shrink-0 ${tier.monthly === 0 ? 'text-champagne' : 'text-amber'}`} />
                                         <span>{f}</span>
                                     </li>
                                 ))}
@@ -251,7 +251,7 @@ export default function PricingSection() {
                                 <motion.div
                                     animate={{ scale: [1, 1.15, 1], opacity: [0.6, 1, 0.6] }}
                                     transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
-                                    className="w-20 h-20 rounded-full bg-gradient-to-br from-amber/30 to-cyan/20 blur-sm"
+                                    className="w-20 h-20 rounded-full bg-gradient-to-br from-amber/30 to-champagne/20 blur-sm"
                                 />
                                 <div className="absolute inset-0 flex items-center justify-center">
                                     <Video className="w-8 h-8 text-amber" />
