@@ -5,7 +5,7 @@ export default function ClosingCTA({ onEnter }: { onEnter: () => void }) {
     return (
         <section className="py-28 md:py-36 px-6 relative text-center overflow-hidden"
             style={{
-                background: 'radial-gradient(ellipse at 50% 80%, rgba(232,168,56,0.08) 0%, rgba(17,27,46,0.5) 35%, var(--color-space) 65%)'
+                background: 'radial-gradient(ellipse at 50% 80%, rgba(196,154,42,0.08) 0%, rgba(226,217,204,0.3) 35%, var(--color-space-deep) 65%)'
             }}
         >
             {/* Warm ambient glow — the climax of light */}
