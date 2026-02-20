@@ -6,6 +6,7 @@ import PainSection from './components/Landing/PainSection';
 import ParadigmSection from './components/Landing/ParadigmSection';
 import PillarsSection from './components/Landing/PillarsSection';
 import ShadowInvite from './components/Landing/ShadowInvite';
+import PricingSection from './components/Landing/PricingSection';
 import ClosingCTA from './components/Landing/ClosingCTA';
 
 function App() {
@@ -52,7 +53,10 @@ function App() {
           {/* 5. Condividi */}
           <ShadowInvite />
 
-          {/* 6. Chiusura */}
+          {/* 6. Pricing */}
+          <PricingSection />
+
+          {/* 7. Chiusura */}
           <ClosingCTA onEnter={enterChat} />
 
           {/* Footer */}
