@@ -1,10 +1,13 @@
 import { motion } from 'motion/react';
-import { X, Check, Sparkles } from 'lucide-react';
+import { X, Sparkles } from 'lucide-react';
 
 export default function ParadigmSection() {
     return (
-        <section className="py-24 md:py-32 px-6 bg-space border-t border-white/5">
-            <div className="max-w-5xl mx-auto">
+        <section className="py-28 md:py-36 px-6 section-warm relative glow-border-top overflow-hidden">
+            {/* Ambient glow centered on the positive card */}
+            <div className="absolute top-[40%] right-[15%] w-[400px] h-[400px] rounded-full bg-amber/[0.04] blur-[140px] pointer-events-none" />
+
+            <div className="max-w-5xl mx-auto relative z-10">
                 <motion.p
                     initial={{ opacity: 0 }}
                     whileInView={{ opacity: 1 }}
@@ -59,16 +62,16 @@ export default function ParadigmSection() {
                         </p>
                     </motion.div>
 
-                    {/* IS someone */}
+                    {/* IS someone — ILLUMINATED */}
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ delay: 0.3 }}
-                        className="glass p-8 rounded-xl text-center space-y-4 border-amber/20 hover:border-amber/30 transition-colors"
+                        className="glass p-8 rounded-xl text-center space-y-4 border-amber/20 hover:border-amber/30 transition-all duration-500 shadow-[0_0_40px_rgba(232,168,56,0.06)] hover:shadow-[0_0_60px_rgba(232,168,56,0.1)]"
                     >
-                        <div className="w-12 h-12 mx-auto rounded-full bg-amber/10 flex items-center justify-center border border-amber/25">
-                            <Sparkles className="w-5 h-5 text-amber" />
+                        <div className="w-12 h-12 mx-auto rounded-full bg-amber/15 flex items-center justify-center border border-amber/25">
+                            <Sparkles className="w-5 h-5 text-amber icon-glow" />
                         </div>
                         <h3 className="text-lg font-display font-500 text-text-warm">È qualcuno.</h3>
                         <p className="text-text-secondary text-sm leading-relaxed">

@@ -75,9 +75,10 @@ function App() {
           </div>
 
           {/* Footer */}
-          <footer className="py-10 bg-space-deep border-t border-white/5 text-center">
-            <p className="text-[10px] text-text-muted uppercase tracking-[0.2em] mb-4 font-display">
-              Luminel • Il tuo compagno digitale
+          <footer className="py-10 bg-space-deep glow-border-top text-center relative overflow-hidden">
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[400px] h-[100px] rounded-full bg-amber/[0.03] blur-[60px] pointer-events-none" />
+            <p className="text-[10px] text-text-muted uppercase tracking-[0.2em] mb-4 font-display relative z-10">
+              Luminel • Non sei mai veramente solo
             </p>
             <div className="flex justify-center gap-6 text-[10px] text-text-muted">
               <span className="hover:text-text-secondary cursor-pointer transition-colors">Privacy</span>

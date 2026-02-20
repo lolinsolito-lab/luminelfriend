@@ -9,6 +9,7 @@ export default function ShadowInvite() {
     const handleSend = (e: React.FormEvent) => {
         e.preventDefault();
         if (!email) return;
+        // TODO: Collegare a Resend API — form predisposto, backend da attivare
         setSent(true);
         setTimeout(() => {
             setEmail('');
@@ -17,8 +18,11 @@ export default function ShadowInvite() {
     };
 
     return (
-        <section className="py-28 md:py-32 px-6 bg-space-deep border-t border-white/5">
-            <div className="max-w-2xl mx-auto text-center space-y-8">
+        <section className="py-28 md:py-32 px-6 section-warm-deep relative glow-border-top overflow-hidden">
+            {/* Warm ambient glow */}
+            <div className="absolute top-[30%] left-[50%] -translate-x-1/2 w-[500px] h-[400px] rounded-full bg-amber/[0.05] blur-[140px] pointer-events-none" />
+
+            <div className="max-w-2xl mx-auto text-center space-y-8 relative z-10">
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
@@ -44,7 +48,7 @@ export default function ShadowInvite() {
                         placeholder="Email del destinatario"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
-                        className="w-full bg-space-surface border border-space-border text-text-warm px-6 py-4 rounded-xl focus:outline-none focus:border-amber/40 transition-colors placeholder-text-muted text-sm"
+                        className="w-full bg-space-surface border border-space-border text-text-warm px-6 py-4 rounded-xl focus:outline-none focus:border-amber/40 focus:shadow-[0_0_20px_rgba(232,168,56,0.08)] transition-all placeholder-text-muted text-sm"
                     />
                     <button
                         type="submit"

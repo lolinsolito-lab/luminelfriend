@@ -24,8 +24,11 @@ export default function PillarsSection() {
     ];
 
     return (
-        <section className="py-24 md:py-32 px-6 bg-space-deep relative">
-            <div className="max-w-6xl mx-auto">
+        <section className="py-28 md:py-36 px-6 section-warm-deep relative overflow-hidden">
+            {/* Ambient depth */}
+            <div className="absolute top-[30%] left-[50%] -translate-x-1/2 w-[700px] h-[500px] rounded-full bg-amber/[0.04] blur-[160px] pointer-events-none" />
+
+            <div className="max-w-6xl mx-auto relative z-10">
                 <motion.p
                     initial={{ opacity: 0 }}
                     whileInView={{ opacity: 1 }}
@@ -51,11 +54,13 @@ export default function PillarsSection() {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ delay: idx * 0.15 }}
-                            className="group glass glass-hover p-8 rounded-xl transition-all duration-500 hover:-translate-y-1"
+                            className="group glass glass-hover card-glow p-8 rounded-xl transition-all duration-500 hover:-translate-y-1"
                         >
                             <div className="flex items-center gap-3 mb-6">
-                                <div className="p-3 rounded-lg bg-space-deep border border-white/5">
-                                    {pillar.icon}
+                                <div className="p-3 rounded-lg bg-space-deep border border-white/5 group-hover:border-amber/15 transition-colors">
+                                    <div className="icon-glow">
+                                        {pillar.icon}
+                                    </div>
                                 </div>
                                 <span className="text-[10px] font-display uppercase tracking-widest text-text-muted">{pillar.highlight}</span>
                             </div>

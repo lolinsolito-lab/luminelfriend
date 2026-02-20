@@ -4,10 +4,27 @@ import { ArrowRight } from 'lucide-react';
 export default function HeroSection({ onEnter }: { onEnter: () => void }) {
     return (
         <section className="min-h-screen flex flex-col items-center justify-center p-6 relative overflow-hidden bg-space-deep">
-            {/* Ambient Background */}
+            {/* Ambient Background — expanded warm glows */}
             <div className="absolute inset-0 pointer-events-none">
-                <div className="absolute top-[30%] left-[50%] -translate-x-1/2 w-[600px] h-[600px] rounded-full bg-amber/5 blur-[150px]" />
-                <div className="absolute top-[40%] left-[45%] -translate-x-1/2 w-[400px] h-[400px] rounded-full bg-cyan/5 blur-[120px]" />
+                <div className="absolute top-[25%] left-[50%] -translate-x-1/2 w-[800px] h-[800px] rounded-full bg-amber/[0.07] blur-[180px]" />
+                <div className="absolute top-[35%] left-[45%] -translate-x-1/2 w-[500px] h-[500px] rounded-full bg-cyan/[0.04] blur-[140px]" />
+                <div className="absolute top-[50%] left-[50%] -translate-x-1/2 w-[1200px] h-[600px] rounded-full bg-amber/[0.03] blur-[200px]" />
+            </div>
+
+            {/* Floating light particles */}
+            <div className="absolute inset-0 pointer-events-none overflow-hidden">
+                {[...Array(8)].map((_, i) => (
+                    <div
+                        key={i}
+                        className={i % 3 === 0 ? "particle-light" : i % 3 === 1 ? "particle-soft" : "particle"}
+                        style={{
+                            left: `${15 + (i * 10)}%`,
+                            bottom: `-${5 + (i * 3)}%`,
+                            animationDuration: `${8 + i * 2}s`,
+                            animationDelay: `${i * 1.2}s`,
+                        }}
+                    />
+                ))}
             </div>
 
             <motion.div
@@ -16,14 +33,25 @@ export default function HeroSection({ onEnter }: { onEnter: () => void }) {
                 transition={{ duration: 1.2, ease: "easeOut" }}
                 className="max-w-4xl text-center space-y-10 relative z-10"
             >
-                {/* The Orb — Luminel's presence */}
+                {/* The Orb — Luminel's presence with light spill */}
                 <motion.div
                     initial={{ opacity: 0, scale: 0.8 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ duration: 1.5, delay: 0.3 }}
-                    className="flex justify-center mb-8"
+                    className="flex justify-center mb-8 relative"
                 >
-                    <div className="luminel-orb" />
+                    {/* Orb light spill ring */}
+                    <div className="absolute inset-0 flex items-center justify-center">
+                        <motion.div
+                            animate={{
+                                scale: [1, 1.8, 1],
+                                opacity: [0.15, 0, 0.15]
+                            }}
+                            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                            className="w-[120px] h-[120px] rounded-full bg-amber/20 blur-xl"
+                        />
+                    </div>
+                    <div className="luminel-orb relative z-10" />
                 </motion.div>
 
                 {/* Headline */}
