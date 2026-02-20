@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import Chat from './components/Chat';
+import Navbar from './components/Landing/Navbar';
 import HeroSection from './components/Landing/HeroSection';
 import PainSection from './components/Landing/PainSection';
 import ParadigmSection from './components/Landing/ParadigmSection';
@@ -37,27 +38,41 @@ function App() {
           transition={{ duration: 0.6 }}
           className="bg-space-deep min-h-screen text-text-warm"
         >
+          {/* Smart Navbar */}
+          <Navbar onEnter={enterChat} />
 
           {/* 1. L'Ingresso — The Hook */}
-          <HeroSection onEnter={enterChat} />
+          <div id="hero" className="scroll-mt-20">
+            <HeroSection onEnter={enterChat} />
+          </div>
 
           {/* 2. Lo Specchio — The Pain */}
-          <PainSection />
+          <div id="perche" className="scroll-mt-20">
+            <PainSection />
+          </div>
 
           {/* 3. Come Funziona — The Solution */}
-          <PillarsSection />
+          <div id="pilastri" className="scroll-mt-20">
+            <PillarsSection />
+          </div>
 
           {/* 4. La Differenza — The Paradigm */}
-          <ParadigmSection />
+          <div id="paradigma" className="scroll-mt-20">
+            <ParadigmSection />
+          </div>
 
           {/* 5. Condividi */}
           <ShadowInvite />
 
           {/* 6. Pricing */}
-          <PricingSection />
+          <div id="piani" className="scroll-mt-20">
+            <PricingSection />
+          </div>
 
           {/* 7. Chiusura */}
-          <ClosingCTA onEnter={enterChat} />
+          <div id="contatto" className="scroll-mt-20">
+            <ClosingCTA onEnter={enterChat} />
+          </div>
 
           {/* Footer */}
           <footer className="py-10 bg-space-deep border-t border-white/5 text-center">
