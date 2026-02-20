@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import Chat from './components/Chat';
 import Navbar from './components/Landing/Navbar';
@@ -13,7 +13,7 @@ import ClosingCTA from './components/Landing/ClosingCTA';
 import EmotionRain from './components/Landing/EmotionRain';
 import SocialProofSection from './components/Landing/SocialProofSection';
 import LegalModal, { LegalDocType } from './components/Legal/LegalModal';
-import { Instagram, Linkedin } from 'lucide-react';
+import { Instagram, Linkedin, CloudRain, CloudOff } from 'lucide-react';
 
 type ViewState = 'landing' | 'chat';
 
@@ -21,6 +21,18 @@ function App() {
   const [currentView, setCurrentView] = useState<ViewState>('landing');
   const [legalModalOpen, setLegalModalOpen] = useState(false);
   const [legalDocType, setLegalDocType] = useState<LegalDocType>(null);
+  const [showEmotions, setShowEmotions] = useState(false);
+
+  // Digital Signature in Console
+  useEffect(() => {
+    console.log(
+      "%c L U M I N E L \n%c by Insolito Experiences \n%c Ogni emozione ha un posto. Luminel le accoglie tutte. \n%c Non un assistente. Non un chatbot. Una presenza luminosa che veglia nel buio.",
+      "font-family: Georgia, serif; font-size: 32px; font-weight: bold; color: #E8A838; text-shadow: 0 0 10px rgba(232,168,56,0.5);",
+      "font-family: monospace; font-size: 10px; color: #FFF8E8; letter-spacing: 2px; margin-bottom: 10px; opacity: 0.5; display: block;",
+      "font-family: monospace; font-size: 14px; color: #FFF8E8; margin-top: 10px; display: block;",
+      "font-family: monospace; font-size: 12px; color: #8A6A18; margin-top: 5px; display: block;"
+    );
+  }, []);
 
   const openLegalModal = (type: LegalDocType) => {
     setLegalDocType(type);
@@ -60,7 +72,21 @@ function App() {
             <Navbar onEnter={enterChat} />
 
             {/* Emotion Rain — golden emotions falling through the whole page */}
-            <EmotionRain />
+            <EmotionRain showEmotions={showEmotions} />
+
+            {/* Floating Toggle Button for Emotion Rain */}
+            <button
+              onClick={() => setShowEmotions(!showEmotions)}
+              className="fixed bottom-6 left-6 z-50 p-3 rounded-full glass border border-amber/10 text-amber/60 hover:text-amber hover:border-amber/30 transition-all duration-300 group"
+              aria-label="Toggle Emotion Rain"
+            >
+              {showEmotions ? <CloudRain className="w-5 h-5" /> : <CloudOff className="w-5 h-5" />}
+
+              {/* Tooltip */}
+              <span className="absolute left-full ml-4 top-1/2 -translate-y-1/2 px-3 py-1.5 rounded-lg bg-space-deep border border-space-border text-xs text-text-warm font-display opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
+                {showEmotions ? "Nascondi caduta emozionale" : "Mostra caduta emozionale"}
+              </span>
+            </button>
 
             {/* 1. L'Ingresso — The Hook */}
             <div id="hero" className="scroll-mt-20">
