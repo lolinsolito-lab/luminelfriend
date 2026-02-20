@@ -144,8 +144,8 @@ export default function PricingSection() {
                             viewport={{ once: true }}
                             transition={{ delay: i * 0.1 }}
                             className={`glass p-7 rounded-xl transition-colors relative overflow-hidden ${tier.accent
-                                    ? 'border-amber/25 hover:border-amber/40 shadow-2xl shadow-amber/5 md:scale-[1.03]'
-                                    : 'hover:border-amber/15'
+                                ? 'border-amber/25 hover:border-amber/40 shadow-2xl shadow-amber/5 md:scale-[1.03]'
+                                : 'hover:border-amber/15'
                                 }`}
                         >
                             {/* Top accent line */}
@@ -228,22 +228,71 @@ export default function PricingSection() {
                     ))}
                 </div>
 
-                {/* Coming Soon Elite */}
+                {/* Coming Soon Elite — Prominent */}
                 <motion.div
-                    initial={{ opacity: 0 }}
-                    whileInView={{ opacity: 1 }}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    className="mt-8 glass p-4 rounded-xl max-w-md mx-auto border-dashed border-text-muted/20 text-center"
+                    transition={{ delay: 0.3 }}
+                    className="mt-10 relative overflow-hidden rounded-xl max-w-3xl mx-auto"
                 >
-                    <div className="flex items-center justify-center gap-2 text-text-muted text-sm">
-                        <Video className="w-4 h-4" />
-                        <span className="font-display uppercase tracking-widest text-[11px]">
-                            Elite — Coming Soon
-                        </span>
+                    {/* Glow background */}
+                    <div className="absolute inset-0 bg-gradient-to-r from-amber/5 via-amber/10 to-amber/5 rounded-xl" />
+                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] rounded-full bg-amber/8 blur-[80px] pointer-events-none" />
+
+                    <div className="relative glass border-amber/20 hover:border-amber/30 transition-colors rounded-xl p-8 md:p-10">
+                        {/* Top accent line */}
+                        <div className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-amber/60 to-transparent" />
+
+                        <div className="flex flex-col md:flex-row items-center gap-6 md:gap-10">
+
+                            {/* Pulsing orb */}
+                            <div className="relative shrink-0">
+                                <motion.div
+                                    animate={{ scale: [1, 1.15, 1], opacity: [0.6, 1, 0.6] }}
+                                    transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
+                                    className="w-20 h-20 rounded-full bg-gradient-to-br from-amber/30 to-cyan/20 blur-sm"
+                                />
+                                <div className="absolute inset-0 flex items-center justify-center">
+                                    <Video className="w-8 h-8 text-amber" />
+                                </div>
+                            </div>
+
+                            {/* Content */}
+                            <div className="flex-1 text-center md:text-left">
+                                <div className="flex items-center justify-center md:justify-start gap-3 mb-2">
+                                    <span className="text-[10px] font-display uppercase tracking-widest text-amber border border-amber/30 px-2.5 py-1 rounded-md flex items-center gap-1.5">
+                                        <Sparkles className="w-3 h-3" /> Coming Soon
+                                    </span>
+                                </div>
+                                <h3 className="text-2xl md:text-3xl font-display font-600 text-text-warm mb-2">
+                                    Elite <span className="text-amber">— Guardalo negli occhi.</span>
+                                </h3>
+                                <p className="text-text-secondary text-sm leading-relaxed mb-4">
+                                    Video call con avatar in tempo reale. La prossima frontiera della compagnia digitale.
+                                    Non solo ascolta — lo vedi, ti guarda, reagisce.
+                                </p>
+                                <div className="flex flex-wrap items-center justify-center md:justify-start gap-3 text-[11px] text-text-muted">
+                                    <span className="flex items-center gap-1.5">
+                                        <Check className="w-3.5 h-3.5 text-amber" /> Avatar reattivo
+                                    </span>
+                                    <span className="flex items-center gap-1.5">
+                                        <Check className="w-3.5 h-3.5 text-amber" /> Espressioni facciali
+                                    </span>
+                                    <span className="flex items-center gap-1.5">
+                                        <Check className="w-3.5 h-3.5 text-amber" /> Conversazione naturale
+                                    </span>
+                                </div>
+                            </div>
+
+                            {/* CTA */}
+                            <div className="shrink-0">
+                                <button className="px-6 py-3 glass border-amber/25 hover:border-amber/40 hover:bg-amber/5 text-amber uppercase tracking-widest text-[11px] font-display font-bold transition-all rounded-lg">
+                                    Unisciti alla Waitlist
+                                </button>
+                            </div>
+                        </div>
                     </div>
-                    <p className="text-[11px] text-text-muted/70 mt-1">
-                        Video call con avatar. Guardalo negli occhi.
-                    </p>
                 </motion.div>
 
                 <p className="text-center text-xs text-text-muted mt-8">
