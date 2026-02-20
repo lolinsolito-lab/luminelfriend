@@ -1,9 +1,26 @@
-import React from 'react';
 import { motion } from 'motion/react';
 
 export default function PainSection() {
+    const scenarios = [
+        {
+            emoji: "🎓",
+            label: "Lo studente",
+            text: "Sei in una città nuova, circondato da gente, eppure la sera chiudi la porta e il silenzio ti pesa."
+        },
+        {
+            emoji: "💼",
+            label: "L'imprenditore",
+            text: "Prendi decisioni ogni giorno per tutti. Ma quando la pressione sale, non puoi mostrarti vulnerabile con nessuno."
+        },
+        {
+            emoji: "🌙",
+            label: "Chiunque",
+            text: "È domenica sera. Non hai voglia di disturbare nessuno. Ma avresti solo bisogno che qualcuno ti chiedesse: 'Come stai?'"
+        }
+    ];
+
     return (
-        <section className="py-32 px-6 bg-stone-950 relative border-t border-white/5">
+        <section className="py-28 md:py-36 px-6 bg-space relative border-t border-white/5">
             <div className="max-w-4xl mx-auto">
                 <motion.div
                     initial={{ opacity: 0 }}
@@ -12,37 +29,49 @@ export default function PainSection() {
                     transition={{ duration: 1 }}
                     className="space-y-12 text-center"
                 >
-                    <h2 className="text-xs font-bold text-luminel-dim uppercase tracking-[0.3em] mb-4">
-                        Lo Specchio
+                    <p className="text-xs font-display font-bold text-amber uppercase tracking-[0.3em]">
+                        Lo specchio
+                    </p>
+
+                    <h2 className="text-3xl md:text-5xl font-display font-600 text-text-warm leading-tight">
+                        Tutti hanno qualcuno con cui parlare. <br />
+                        <span className="text-text-secondary">Ma quanti hanno qualcuno che li ascolta davvero?</span>
                     </h2>
 
-                    <h3 className="text-3xl md:text-5xl font-serif text-white mb-8">
-                        Il prezzo del vertice è il silenzio.
-                    </h3>
-
-                    <div className="space-y-8 font-serif text-xl md:text-2xl leading-relaxed text-stone-400">
-                        <p>
-                            Prendi decisioni pesanti ogni singolo giorno. Guidi gli altri, risolvi i loro problemi, assorbi il loro stress. <br />
-                            Quando i tuoi dipendenti, i tuoi soci o la tua famiglia crollano, vengono da te. <br />
-                            <span className="text-stone-200">Sanno che tu non crolli mai.</span>
-                        </p>
-                        <p>
-                            Ma quando la porta si chiude e il rumore finisce, l'adrenalina scende e il peso ti cade addosso.
-                            A chi ti rivolgi quando sei tu ad aver bisogno di sfogarti?
-                        </p>
-                        <p className="text-lg font-sans font-light text-stone-500 max-w-3xl mx-auto mt-8 border-l-2 border-luminel-dim/30 pl-6 italic">
-                            "Non puoi mostrare esitazione ai tuoi sottoposti. Non puoi scaricare questa pressione su chi ti sta vicino. Mostrare vulnerabilità, nel mondo reale, costa troppo caro. Fino ad oggi, il silenzio era la tua unica opzione."
-                        </p>
+                    {/* Scenarios */}
+                    <div className="grid md:grid-cols-3 gap-6 mt-12">
+                        {scenarios.map((s, idx) => (
+                            <motion.div
+                                key={idx}
+                                initial={{ opacity: 0, y: 20 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ delay: idx * 0.15 }}
+                                className="glass glass-hover p-6 rounded-xl text-left space-y-3 transition-all duration-300"
+                            >
+                                <div className="text-2xl">{s.emoji}</div>
+                                <p className="text-sm font-display font-500 text-amber uppercase tracking-wider">{s.label}</p>
+                                <p className="text-text-secondary text-sm leading-relaxed">{s.text}</p>
+                            </motion.div>
+                        ))}
                     </div>
 
-                    <div className="mt-16 bg-stone-900/50 p-8 rounded-sm border border-white/5 max-w-3xl mx-auto">
-                        <p className="text-lg text-white font-serif">
+                    {/* Bridge */}
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        whileInView={{ opacity: 1 }}
+                        viewport={{ once: true }}
+                        className="mt-16 glass p-8 rounded-xl max-w-3xl mx-auto border-l-2 border-amber/30"
+                    >
+                        <p className="text-lg text-text-warm font-display">
                             Luminel ribalta questa dinamica.
                         </p>
-                        <p className="text-stone-400 mt-4 leading-relaxed">
-                            Abbiamo costruito lo spazio inviolabile in cui l'armatura cade. Nessuna lezione di vita, nessuna dinamica clinica, nessuna pietà. Solo una presenza magnetica, risoluta e leale, addestrata per assorbire la pressione e ascoltare la verità che non puoi permetterti di dire a nessun altro.
+                        <p className="text-text-secondary mt-3 leading-relaxed text-sm">
+                            Abbiamo creato qualcuno che è sempre lì. Non giudica, non si stanca, non ti interrompe.
+                            Una presenza che ti conosce, si ricorda delle tue giornate, e ti accoglie ogni volta come se
+                            importassi davvero. Perché importi davvero.
                         </p>
-                    </div>
+                    </motion.div>
                 </motion.div>
             </div>
         </section>

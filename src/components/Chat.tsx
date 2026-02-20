@@ -1,6 +1,6 @@
-import React, { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Send, Sparkles, Loader2, Lock, Mic, Phone } from 'lucide-react';
+import { Send, Loader2, Lock, Mic, Phone } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 import { sendMessageToLuminel, Message } from '../services/luminelService';
 import { clsx } from 'clsx';
@@ -23,26 +23,19 @@ export default function Chat() {
 
   // AMNESIA LOGIC & SESSION INIT
   useEffect(() => {
-    // Check Date
     const today = new Date().toDateString();
     const lastSession = localStorage.getItem('luminel_last_session_date');
 
     if (lastSession !== today) {
-      // New Day = Amnesia (Clear Messages)
-      setMessages([]); // Start fresh
+      setMessages([]);
       setMessageCount(0);
       localStorage.setItem('luminel_last_session_date', today);
     } else {
-      // Same day, could potentially load history if we were saving it, 
-      // but for now strictly internal state or re-render preservation.
-      // If we want persistent *during the day*, we'd save messages to localstorage.
-      // For now, let's just track the count.
       const savedCount = parseInt(localStorage.getItem('luminel_msg_count') || '0');
       setMessageCount(savedCount);
     }
   }, []);
 
-  // Update count persistence
   useEffect(() => {
     localStorage.setItem('luminel_msg_count', messageCount.toString());
   }, [messageCount]);
@@ -65,12 +58,10 @@ export default function Chat() {
     setInput('');
     setIsLoading(true);
 
-    // Incrementa contatore
     setMessageCount(prev => prev + 1);
 
     try {
       const responseContent = await sendMessageToLuminel(messages, input);
-
       const botMessage: Message = { role: 'model', content: responseContent };
       setMessages(prev => [...prev, botMessage]);
     } catch (error) {
@@ -91,15 +82,15 @@ export default function Chat() {
     setShowPaywall(true);
   };
 
-  // 1. LEGAL GATEKEEPER - Must be first render logic
+  // 1. LEGAL GATEKEEPER
   if (!hasAcceptedDisclaimer) {
     return <DisclaimerOverlay onAccept={() => setHasAcceptedDisclaimer(true)} />;
   }
 
   return (
-    <div className="flex flex-col h-screen bg-obsidian text-text-primary font-sans selection:bg-luminel-gold selection:text-black relative overflow-hidden">
+    <div className="flex flex-col h-screen bg-space-deep text-text-warm font-sans relative overflow-hidden">
 
-      {/* PAYWALL OVERLAY - Second Gatekeeper */}
+      {/* PAYWALL OVERLAY */}
       <AnimatePresence>
         {(isPaywallActive || showPaywall) && (
           <motion.div
@@ -108,17 +99,10 @@ export default function Chat() {
             className="absolute inset-0 z-50"
           >
             <PaywallOverlay />
-            {/* Close button for "Feature Locked" preview only? 
-                Actually, the Mandate says "Paywall" triggers. 
-                If it's the LIMIT paywall, it shouldn't be closable easily without paying (simulated).
-                If it's the FEATURE paywall, maybe allow closing to return to chat?
-                For now, let's keep it strict. 
-                But if I clicked "Mic" by mistake, I might want to go back to text.
-            */}
             {showPaywall && !isPaywallActive && (
               <button
                 onClick={() => setShowPaywall(false)}
-                className="absolute top-4 right-4 text-stone-500 hover:text-white z-[60]"
+                className="absolute top-4 right-4 text-text-muted hover:text-white z-[60] text-sm"
               >
                 ✕ Chiudi
               </button>
@@ -128,40 +112,36 @@ export default function Chat() {
       </AnimatePresence>
 
       {/* Header */}
-      <header className="flex items-center justify-between px-6 py-4 border-b border-white/5 bg-stone-950/80 backdrop-blur-md sticky top-0 z-10">
+      <header className="flex items-center justify-between px-6 py-4 border-b border-white/5 bg-space/80 backdrop-blur-xl sticky top-0 z-10">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-full bg-gradient-to-br from-luminel-dim to-stone-800 flex items-center justify-center shadow-lg shadow-luminel-gold/10 border border-white/10">
-            <Sparkles className="w-5 h-5 text-luminel-glow" />
-          </div>
+          <div className="luminel-orb-sm" style={{ width: 36, height: 36 }} />
           <div>
-            <h1 className="text-xl font-serif font-medium tracking-wide text-white">Luminel</h1>
-            <p className="text-[10px] text-luminel-dim uppercase tracking-[0.2em] font-bold">Elite Companion</p>
+            <h1 className="text-lg font-display font-600 tracking-wide text-text-warm">Luminel</h1>
+            <p className="text-[10px] text-amber-dim uppercase tracking-[0.2em] font-display font-500">Online</p>
           </div>
         </div>
 
-        {/* Status Indicators */}
+        {/* Status */}
         <div className="flex flex-col items-end">
           {!isPaywallActive && (
-            <div className="text-xs font-mono text-stone-600 mb-1">
-              <span className={messageCount > 10 ? "text-red-500" : "text-stone-400"}>{messageCount}/{MESSAGE_LIMIT}</span>
+            <div className="text-xs font-mono text-text-muted mb-1">
+              <span className={messageCount > 10 ? "text-red-400" : "text-text-secondary"}>{messageCount}/{MESSAGE_LIMIT}</span>
             </div>
           )}
-          <div className="flex items-center gap-1 text-[10px] text-stone-600 uppercase tracking-wider">
-            <span className="w-1.5 h-1.5 rounded-full bg-red-500/50 animate-pulse"></span>
-            Amnesia Attiva
+          <div className="flex items-center gap-1 text-[10px] text-text-muted uppercase tracking-wider">
+            <span className="w-1.5 h-1.5 rounded-full bg-cyan/60 animate-pulse"></span>
+            Sessione attiva
           </div>
         </div>
       </header>
 
       {/* Chat Area */}
-      <main className="flex-1 overflow-y-auto p-4 md:p-6 space-y-6 scrollbar-thin scrollbar-thumb-stone-800 scrollbar-track-transparent">
+      <main className="flex-1 overflow-y-auto p-4 md:p-6 space-y-6">
         {messages.length === 0 && (
-          <div className="h-full flex flex-col items-center justify-center text-center opacity-40 space-y-4">
-            <div className="w-24 h-24 rounded-full bg-stone-900 flex items-center justify-center mb-4 border border-white/5 shadow-inner">
-              <Sparkles className="w-10 h-10 text-stone-600" />
-            </div>
-            <p className="text-stone-400 font-serif italic text-xl max-w-md leading-relaxed">
-              "Sono qui. La roccia nella tempesta. <br />Parlami."
+          <div className="h-full flex flex-col items-center justify-center text-center opacity-50 space-y-4">
+            <div className="luminel-orb-sm mb-4" />
+            <p className="text-text-secondary font-display text-xl max-w-md leading-relaxed">
+              "Sono qui. Parlami."
             </p>
           </div>
         )}
@@ -180,13 +160,13 @@ export default function Chat() {
             >
               <div
                 className={clsx(
-                  "max-w-[85%] md:max-w-[70%] px-6 py-4 shadow-sm text-sm leading-relaxed",
+                  "max-w-[85%] md:max-w-[70%] px-5 py-4 text-sm leading-relaxed",
                   msg.role === 'user'
-                    ? "bg-stone-900/80 text-white rounded-2xl rounded-tr-sm border border-white/10"
-                    : "text-stone-300 font-serif text-lg tracking-wide border-l-2 border-luminel-dim pl-6 py-2" // Luminel style: Editorial
+                    ? "bg-space-surface text-text-warm rounded-2xl rounded-tr-sm border border-space-border"
+                    : "text-text-secondary font-display text-base tracking-wide border-l-2 border-amber/30 pl-5 py-2"
                 )}
               >
-                <div className="prose prose-invert prose-stone max-w-none">
+                <div className="prose prose-invert prose-sm max-w-none">
                   <ReactMarkdown>{msg.content}</ReactMarkdown>
                 </div>
               </div>
@@ -200,21 +180,21 @@ export default function Chat() {
             animate={{ opacity: 1, y: 0 }}
             className="flex justify-start items-center gap-4 pl-4"
           >
-            <div className="text-xs text-luminel-dim uppercase tracking-widest animate-pulse">Luminel sta riflettendo...</div>
+            <div className="text-xs text-amber-dim uppercase tracking-widest animate-pulse font-display">Luminel sta riflettendo...</div>
           </motion.div>
         )}
         <div ref={messagesEndRef} />
       </main>
 
       {/* Input Area */}
-      <footer className="p-4 md:p-6 bg-obsidian border-t border-white/5 relative z-20">
+      <footer className="p-4 md:p-6 bg-space-deep border-t border-white/5 relative z-20">
         <div className="max-w-4xl mx-auto relative flex gap-3 items-end">
 
-          {/* Audio/Call Buttons (Locked) */}
-          <button onClick={handleFeatureLocked} className="p-4 bg-stone-900/50 text-stone-500 hover:text-luminel-gold border border-white/5 rounded-sm transition-colors mb-[1px]">
+          {/* Locked Features */}
+          <button onClick={handleFeatureLocked} className="p-3.5 glass text-text-muted hover:text-amber rounded-xl transition-colors mb-[1px]">
             <Mic className="w-5 h-5" />
           </button>
-          <button onClick={handleFeatureLocked} className="p-4 bg-stone-900/50 text-stone-500 hover:text-luminel-gold border border-white/5 rounded-sm transition-colors mb-[1px]">
+          <button onClick={handleFeatureLocked} className="p-3.5 glass text-text-muted hover:text-amber rounded-xl transition-colors mb-[1px]">
             <Phone className="w-5 h-5" />
           </button>
 
@@ -224,24 +204,23 @@ export default function Chat() {
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={handleKeyDown}
               disabled={isPaywallActive}
-              placeholder={isPaywallActive ? "Sessione Terminata" : "Scrivi qui..."}
-              className="w-full bg-stone-900/30 text-stone-200 placeholder-stone-600 rounded-sm pl-5 pr-14 py-4 focus:outline-none focus:ring-1 focus:ring-luminel-dim/30 resize-none border border-white/10 shadow-inner min-h-[60px] max-h-[120px] transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+              placeholder={isPaywallActive ? "Sessione terminata" : "Scrivi qui..."}
+              className="w-full bg-space-surface text-text-warm placeholder-text-muted rounded-xl pl-5 pr-14 py-4 focus:outline-none focus:ring-1 focus:ring-amber/30 resize-none border border-space-border min-h-[56px] max-h-[120px] transition-all disabled:opacity-50 disabled:cursor-not-allowed text-sm"
               rows={1}
-              style={{ minHeight: '60px' }}
+              style={{ minHeight: '56px' }}
             />
             <button
               onClick={handleSend}
               disabled={!input.trim() || isLoading || isPaywallActive}
-              className="absolute right-3 top-1/2 -translate-y-1/2 p-2 bg-stone-800 hover:bg-stone-700 text-luminel-gold rounded-sm transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              className="absolute right-3 top-1/2 -translate-y-1/2 p-2 bg-space-light hover:bg-space-border text-amber rounded-lg transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
             >
-              {isPaywallActive ? <Lock className="w-5 h-5 text-red-500" /> : (isLoading ? <Loader2 className="w-5 h-5 animate-spin" /> : <Send className="w-5 h-5" />)}
+              {isPaywallActive ? <Lock className="w-5 h-5 text-red-400" /> : (isLoading ? <Loader2 className="w-5 h-5 animate-spin" /> : <Send className="w-5 h-5" />)}
             </button>
           </div>
         </div>
 
-        {/* Continuous Disclaimer */}
         <div className="text-center mt-2 border-t border-white/5 pt-2">
-          <p className="text-[9px] text-stone-700 uppercase tracking-widest">
+          <p className="text-[9px] text-text-muted uppercase tracking-widest">
             Luminel è un'IA a scopo di intrattenimento. Non è un servizio medico.
           </p>
         </div>

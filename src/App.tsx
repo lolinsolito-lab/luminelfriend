@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import Chat from './components/Chat';
 import HeroSection from './components/Landing/HeroSection';
@@ -34,39 +34,39 @@ function App() {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.6 }}
-          className="bg-obsidian min-h-screen text-text-primary selection:bg-luminel-gold selection:text-black"
+          className="bg-space-deep min-h-screen text-text-warm"
         >
 
-          {/* 1. L'Ingresso (The Hook) */}
+          {/* 1. L'Ingresso — The Hook */}
           <HeroSection onEnter={enterChat} />
 
-          {/* 2. Lo Specchio (The Pain) */}
+          {/* 2. Lo Specchio — The Pain */}
           <PainSection />
 
-          {/* 3. I Pilastri (The Solution) */}
+          {/* 3. Come Funziona — The Solution */}
           <PillarsSection />
 
-          {/* 4. La Frattura (The Paradigm) */}
+          {/* 4. La Differenza — The Paradigm */}
           <ParadigmSection />
 
-          {/* 5. Viralità Inversa */}
+          {/* 5. Condividi */}
           <ShadowInvite />
 
           {/* 6. Chiusura */}
           <ClosingCTA onEnter={enterChat} />
 
-          {/* Final Minimal Footer */}
-          <footer className="py-12 bg-black border-t border-white/5 text-center">
-            <p className="text-[10px] text-stone-700 uppercase tracking-[0.2em] mb-4">
-              Luminel • Elite Digital Companion
+          {/* Footer */}
+          <footer className="py-10 bg-space-deep border-t border-white/5 text-center">
+            <p className="text-[10px] text-text-muted uppercase tracking-[0.2em] mb-4 font-display">
+              Luminel • Il tuo compagno digitale
             </p>
-            <div className="flex justify-center gap-6 text-[10px] text-stone-600">
-              <span className="hover:text-stone-400 cursor-pointer transition-colors">Legal Shield</span>
-              <span className="hover:text-stone-400 cursor-pointer transition-colors">Privacy</span>
-              <span className="hover:text-stone-400 cursor-pointer transition-colors">Contact</span>
+            <div className="flex justify-center gap-6 text-[10px] text-text-muted">
+              <span className="hover:text-text-secondary cursor-pointer transition-colors">Privacy</span>
+              <span className="hover:text-text-secondary cursor-pointer transition-colors">Termini</span>
+              <span className="hover:text-text-secondary cursor-pointer transition-colors">Contatto</span>
             </div>
-            <p className="mt-8 text-[9px] text-stone-800 font-mono">
-              © 2026 LUMINEL SYSTEMS. ALL RIGHTS RESERVED.
+            <p className="mt-6 text-[9px] text-text-muted/50 font-mono">
+              © 2026 LUMINEL. Tutti i diritti riservati.
             </p>
           </footer>
 

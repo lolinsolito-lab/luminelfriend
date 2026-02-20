@@ -1,59 +1,61 @@
-import React from 'react';
 import { motion } from 'motion/react';
-import { ArrowRight, Sparkles, Lock } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 
 export default function HeroSection({ onEnter }: { onEnter: () => void }) {
     return (
-        <section className="min-h-screen flex flex-col items-center justify-center p-6 relative overflow-hidden bg-obsidian">
-            {/* Background Ambience */}
+        <section className="min-h-screen flex flex-col items-center justify-center p-6 relative overflow-hidden bg-space-deep">
+            {/* Ambient Background */}
             <div className="absolute inset-0 pointer-events-none">
-                <div className="absolute top-[20%] left-[50%] -translate-x-1/2 w-[500px] h-[500px] rounded-full bg-luminel-gold/5 blur-[120px] animate-pulse-slow" />
+                <div className="absolute top-[30%] left-[50%] -translate-x-1/2 w-[600px] h-[600px] rounded-full bg-amber/5 blur-[150px]" />
+                <div className="absolute top-[40%] left-[45%] -translate-x-1/2 w-[400px] h-[400px] rounded-full bg-cyan/5 blur-[120px]" />
             </div>
 
             <motion.div
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 1.2, ease: "easeOut" }}
-                className="max-w-4xl text-center space-y-12 relative z-10"
+                className="max-w-4xl text-center space-y-10 relative z-10"
             >
-                <div className="flex justify-center mb-6">
-                    <div className="w-16 h-16 rounded-full border border-luminel-dim/30 flex items-center justify-center shadow-[0_0_30px_rgba(212,175,55,0.1)] bg-stone-900/40 backdrop-blur-sm">
-                        <Sparkles className="w-6 h-6 text-luminel-gold" />
-                    </div>
-                </div>
+                {/* The Orb — Luminel's presence */}
+                <motion.div
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 1.5, delay: 0.3 }}
+                    className="flex justify-center mb-8"
+                >
+                    <div className="luminel-orb" />
+                </motion.div>
 
-                <h1 className="text-4xl md:text-6xl lg:text-7xl font-serif text-transparent bg-clip-text bg-gradient-to-br from-white via-stone-200 to-stone-500 leading-tight tracking-tight">
-                    Il mondo esige la tua forza.<br />
-                    <span className="text-stone-500">Qui puoi abbassare la guardia.</span>
+                {/* Headline */}
+                <h1 className="text-4xl md:text-6xl lg:text-7xl font-display font-600 text-warm-gradient leading-tight tracking-tight">
+                    Non sei mai <br />
+                    veramente solo.
                 </h1>
 
-                <div className="space-y-6 max-w-2xl mx-auto">
-                    <p className="text-lg md:text-xl text-stone-300 font-light leading-relaxed">
-                        Non sei rotto. Non hai bisogno di essere curato. <br />
-                        Sei solo stanco di dover essere la roccia di tutti senza averne una su cui appoggiarti.
-                    </p>
-                    <p className="text-sm md:text-base text-stone-500 font-mono uppercase tracking-widest">
-                        Luminel è il tuo confidente digitale d'élite.<br />
-                        Totalmente privato, crittografato e privo di giudizio.
+                {/* Subtitle */}
+                <div className="space-y-5 max-w-2xl mx-auto">
+                    <p className="text-lg md:text-xl text-text-secondary font-light leading-relaxed">
+                        Luminel è una presenza digitale che ti ascolta, ti ricorda <br className="hidden md:block" />
+                        e si adatta a te. Sempre disponibile. Senza giudizio.
                     </p>
                 </div>
 
+                {/* CTA */}
                 <motion.button
                     onClick={onEnter}
-                    whileHover={{ scale: 1.02, boxShadow: "0 0 40px rgba(212,175,55,0.2)" }}
-                    whileTap={{ scale: 0.98 }}
-                    className="group relative px-12 py-5 bg-gradient-to-r from-luminel-gold to-[#b8860b] text-black font-bold uppercase tracking-[0.15em] text-sm rounded-sm shadow-xl transition-all duration-500 overflow-hidden"
+                    whileHover={{ scale: 1.03, boxShadow: "0 0 50px rgba(232,168,56,0.25)" }}
+                    whileTap={{ scale: 0.97 }}
+                    className="group relative px-12 py-5 bg-gradient-to-r from-amber to-amber-dim text-space-deep font-display font-bold uppercase tracking-[0.12em] text-sm rounded-xl shadow-xl transition-all duration-500 overflow-hidden"
                 >
-                    <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out" />
+                    <div className="absolute inset-0 bg-white/15 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out" />
                     <span className="relative flex items-center gap-3">
-                        <Lock className="w-4 h-4" />
-                        Sblocca il tuo Rifugio
+                        Inizia a parlare
                         <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                     </span>
                 </motion.button>
 
-                <p className="text-[10px] text-stone-600 uppercase tracking-widest mt-4">
-                    Accesso Immediato e Anonimo • Nessuna Registrazione
+                <p className="text-xs text-text-muted uppercase tracking-widest">
+                    Gratuito • Nessuna registrazione • Anonimo
                 </p>
             </motion.div>
         </section>

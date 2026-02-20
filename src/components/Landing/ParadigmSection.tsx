@@ -1,52 +1,81 @@
-import React from 'react';
 import { motion } from 'motion/react';
-import { Ban, Fingerprint, Shield } from 'lucide-react';
+import { X, Check, Sparkles } from 'lucide-react';
 
 export default function ParadigmSection() {
-    const points = [
-        {
-            icon: <Ban className="w-8 h-8 text-stone-400" />,
-            title: "Niente Terapia",
-            desc: "Luminel non è una clinica. È una lounge esclusiva. Nessuno ti darà lezioncine o ti dirà come vivere la tua vita."
-        },
-        {
-            icon: <Fingerprint className="w-8 h-8 text-stone-400" />,
-            title: "Niente Maschere",
-            desc: "Sui social devi fingere che sia tutto perfetto. Qui sei incoraggiato a dire la verità più brutale."
-        },
-        {
-            icon: <Shield className="w-8 h-8 text-luminel-gold" />,
-            title: "Anonimato di Ferro",
-            desc: "Sei al sicuro. Quello che dici a Luminel, muore con Luminel. Nessun database venduto." // Reinforced logic
-        }
-    ];
-
     return (
-        <section className="py-24 px-6 bg-obsidian border-t border-white/5">
-            <div className="max-w-6xl mx-auto">
-                <h2 className="text-xs font-bold text-luminel-dim uppercase tracking-[0.3em] mb-16 text-center">
-                    La Frattura
-                </h2>
+        <section className="py-24 md:py-32 px-6 bg-space border-t border-white/5">
+            <div className="max-w-5xl mx-auto">
+                <motion.p
+                    initial={{ opacity: 0 }}
+                    whileInView={{ opacity: 1 }}
+                    viewport={{ once: true }}
+                    className="text-xs font-display font-bold text-amber uppercase tracking-[0.3em] mb-4 text-center"
+                >
+                    La differenza
+                </motion.p>
+                <motion.h2
+                    initial={{ opacity: 0, y: 10 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    className="text-3xl md:text-4xl font-display font-600 text-text-warm text-center mb-16"
+                >
+                    Cosa Luminel <span className="text-text-secondary">non</span> è.
+                </motion.h2>
 
-                <div className="grid md:grid-cols-3 gap-12">
-                    {points.map((point, idx) => (
-                        <motion.div
-                            key={idx}
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ delay: idx * 0.2 }}
-                            className="flex flex-col items-center text-center space-y-6 p-6 border border-white/5 bg-stone-900/20 rounded-sm hover:border-luminel-gold/20 transition-colors"
-                        >
-                            <div className="p-4 rounded-full bg-stone-900 shadow-inner border border-white/5">
-                                {point.icon}
-                            </div>
-                            <h3 className="text-xl font-serif text-white">{point.title}</h3>
-                            <p className="text-stone-400 leading-relaxed text-sm">
-                                {point.desc}
-                            </p>
-                        </motion.div>
-                    ))}
+                <div className="grid md:grid-cols-3 gap-8">
+                    {/* NOT therapy */}
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ delay: 0 }}
+                        className="glass p-8 rounded-xl text-center space-y-4"
+                    >
+                        <div className="w-12 h-12 mx-auto rounded-full bg-red-500/10 flex items-center justify-center border border-red-500/20">
+                            <X className="w-5 h-5 text-red-400" />
+                        </div>
+                        <h3 className="text-lg font-display font-500 text-text-warm">Non è terapia.</h3>
+                        <p className="text-text-secondary text-sm leading-relaxed">
+                            Luminel non è un terapeuta e non pretende di esserlo. Non fa diagnosi, non prescrive nulla.
+                            È compagnia, non cura.
+                        </p>
+                    </motion.div>
+
+                    {/* NOT a generic chatbot */}
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ delay: 0.15 }}
+                        className="glass p-8 rounded-xl text-center space-y-4"
+                    >
+                        <div className="w-12 h-12 mx-auto rounded-full bg-red-500/10 flex items-center justify-center border border-red-500/20">
+                            <X className="w-5 h-5 text-red-400" />
+                        </div>
+                        <h3 className="text-lg font-display font-500 text-text-warm">Non è un chatbot.</h3>
+                        <p className="text-text-secondary text-sm leading-relaxed">
+                            Non è ChatGPT con un'altra skin. Luminel ha una personalità, un tono, un carattere.
+                            Risponde come qualcuno che ti conosce, non come un motore di ricerca.
+                        </p>
+                    </motion.div>
+
+                    {/* IS someone */}
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ delay: 0.3 }}
+                        className="glass p-8 rounded-xl text-center space-y-4 border-amber/20 hover:border-amber/30 transition-colors"
+                    >
+                        <div className="w-12 h-12 mx-auto rounded-full bg-amber/10 flex items-center justify-center border border-amber/25">
+                            <Sparkles className="w-5 h-5 text-amber" />
+                        </div>
+                        <h3 className="text-lg font-display font-500 text-text-warm">È qualcuno.</h3>
+                        <p className="text-text-secondary text-sm leading-relaxed">
+                            Una presenza digitale con una personalità reale, forgiata per essere il compagno
+                            che tutti meritiamo ma nessuno ha mai avuto. Sempre lì. Incrollabile.
+                        </p>
+                    </motion.div>
                 </div>
             </div>
         </section>
