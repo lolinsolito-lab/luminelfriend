@@ -210,7 +210,7 @@ body {
   }
 }
 
-/* ═══ Ambient Particles — Gold Dust on Light ═══ */
+/* ═══ Ambient Particles — Gold Dust (visible on light) ═══ */
 @keyframes float-up {
   0% {
     transform: translateY(0) translateX(0);
@@ -218,11 +218,11 @@ body {
   }
 
   10% {
-    opacity: 0.5;
+    opacity: 0.7;
   }
 
   90% {
-    opacity: 0.5;
+    opacity: 0.7;
   }
 
   100% {
@@ -238,11 +238,11 @@ body {
   }
 
   15% {
-    opacity: 0.35;
+    opacity: 0.55;
   }
 
   85% {
-    opacity: 0.35;
+    opacity: 0.55;
   }
 
   100% {
@@ -253,31 +253,69 @@ body {
 
 .particle {
   position: absolute;
-  width: 2px;
-  height: 2px;
+  width: 3px;
+  height: 3px;
   border-radius: 50%;
-  background: rgba(196, 154, 42, 0.5);
+  background: rgba(196, 154, 42, 0.7);
+  box-shadow: 0 0 4px rgba(196, 154, 42, 0.4);
   animation: float-up linear infinite;
 }
 
 .particle-light {
   position: absolute;
-  width: 3px;
-  height: 3px;
+  width: 4px;
+  height: 4px;
   border-radius: 50%;
-  background: rgba(212, 171, 58, 0.45);
-  box-shadow: 0 0 8px rgba(196, 154, 42, 0.3);
+  background: rgba(196, 154, 42, 0.65);
+  box-shadow: 0 0 10px rgba(196, 154, 42, 0.5), 0 0 20px rgba(196, 154, 42, 0.2);
   animation: float-up-slow linear infinite;
 }
 
 .particle-soft {
   position: absolute;
-  width: 4px;
-  height: 4px;
+  width: 5px;
+  height: 5px;
   border-radius: 50%;
-  background: rgba(232, 200, 118, 0.3);
-  box-shadow: 0 0 14px rgba(196, 154, 42, 0.2);
+  background: rgba(212, 171, 58, 0.5);
+  box-shadow: 0 0 16px rgba(196, 154, 42, 0.4), 0 0 30px rgba(196, 154, 42, 0.15);
   animation: float-up-slow linear infinite;
+}
+
+/* ═══ Shooting Stars — Golden Streaks ═══ */
+@keyframes shooting-star {
+  0% {
+    transform: translateX(0) translateY(0) rotate(-35deg);
+    opacity: 0;
+    width: 0;
+  }
+
+  5% {
+    opacity: 1;
+    width: 80px;
+  }
+
+  30% {
+    opacity: 0.8;
+    width: 120px;
+  }
+
+  100% {
+    transform: translateX(calc(100vw + 200px)) translateY(60vh) rotate(-35deg);
+    opacity: 0;
+    width: 40px;
+  }
+}
+
+.shooting-star {
+  position: absolute;
+  height: 2px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, transparent 0%, rgba(196, 154, 42, 0.1) 20%, rgba(212, 171, 58, 0.7) 60%, rgba(255, 248, 232, 0.9) 100%);
+  box-shadow:
+    0 0 6px rgba(196, 154, 42, 0.5),
+    0 0 15px rgba(212, 171, 58, 0.3);
+  animation: shooting-star linear infinite;
+  pointer-events: none;
 }
 
 /* ═══ Selection ═══ */

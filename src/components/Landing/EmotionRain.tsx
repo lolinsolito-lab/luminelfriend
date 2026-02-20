@@ -70,6 +70,35 @@ export default function EmotionRain() {
 
     return (
         <div className="fixed inset-0 pointer-events-none z-[5] overflow-hidden">
+            {/* Shooting Stars — golden streaks */}
+            {[...Array(4)].map((_, i) => (
+                <div
+                    key={`star-${i}`}
+                    className="shooting-star"
+                    style={{
+                        top: `${10 + i * 22}%`,
+                        left: '-120px',
+                        animationDuration: `${6 + i * 3}s`,
+                        animationDelay: `${i * 5 + 2}s`,
+                    }}
+                />
+            ))}
+
+            {/* Gold dust particles floating up */}
+            {[...Array(12)].map((_, i) => (
+                <div
+                    key={`dust-${i}`}
+                    className={i % 3 === 0 ? "particle-soft" : i % 3 === 1 ? "particle-light" : "particle"}
+                    style={{
+                        left: `${5 + (i * 8)}%`,
+                        bottom: `-3%`,
+                        animationDuration: `${7 + i * 1.5}s`,
+                        animationDelay: `${i * 0.8}s`,
+                    }}
+                />
+            ))}
+
+            {/* Emotion droplets */}
             <AnimatePresence>
                 {drops.map(drop => (
                     <motion.div
