@@ -44,7 +44,11 @@ function generateDroplet(id: number): Droplet {
     };
 }
 
-export default function EmotionRain() {
+interface EmotionRainProps {
+    showEmotions: boolean;
+}
+
+export default function EmotionRain({ showEmotions }: EmotionRainProps) {
     const [drops, setDrops] = useState<Droplet[]>([]);
 
     // Generate initial droplets
@@ -67,6 +71,15 @@ export default function EmotionRain() {
 
         return () => clearInterval(interval);
     }, [initialDrops]);
+
+    // Clear drops immediately when toggled off
+    useEffect(() => {
+        if (!showEmotions) {
+            setDrops([]);
+        } else {
+            setDrops(initialDrops);
+        }
+    }, [showEmotions, initialDrops]);
 
     return (
         <div className="fixed inset-0 pointer-events-none z-[5] overflow-hidden">
@@ -100,7 +113,7 @@ export default function EmotionRain() {
 
             {/* Emotion droplets */}
             <AnimatePresence>
-                {drops.map(drop => (
+                {showEmotions && drops.map(drop => (
                     <motion.div
                         key={drop.id}
                         initial={{
