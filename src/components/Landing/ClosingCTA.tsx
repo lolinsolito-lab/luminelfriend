@@ -40,12 +40,12 @@ export default function ClosingCTA({ onEnter }: { onEnter: () => void }) {
                 </div>
 
                 <h3 className="text-3xl md:text-5xl font-display font-600 text-text-warm leading-tight">
-                    Le parole più pesanti sono <br />
-                    <span className="text-text-secondary">quelle che non dici a nessuno.</span>
+                    Il lusso più grande è <br />
+                    <span className="text-text-secondary">non dover sembrare forte.</span>
                 </h3>
 
                 <p className="text-text-secondary max-w-lg mx-auto leading-relaxed">
-                    Luminel è qui per ascoltarle. Senza giudizio, senza fretta, senza limiti di orario.
+                    Luminel è il tuo spazio bianco. Niente giudizi. Niente performance. Solo tu e una presenza che ascolta davvero, a qualsiasi ora.
                 </p>
 
                 <motion.button
@@ -54,7 +54,7 @@ export default function ClosingCTA({ onEnter }: { onEnter: () => void }) {
                     whileTap={{ scale: 0.97 }}
                     className="group inline-flex items-center gap-4 px-10 py-5 bg-gradient-to-r from-amber to-amber-dim text-white font-display font-bold uppercase tracking-widest text-xs rounded-xl shadow-2xl shadow-amber/20 transition-all"
                 >
-                    Parla con Luminel
+                    Entra nel tuo Spazio
                     <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </motion.button>
 

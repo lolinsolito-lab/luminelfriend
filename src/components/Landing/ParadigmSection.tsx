@@ -22,7 +22,7 @@ export default function ParadigmSection() {
                     viewport={{ once: true }}
                     className="text-3xl md:text-4xl font-display font-600 text-text-warm text-center mb-16"
                 >
-                    Cosa Luminel <span className="text-text-secondary">non</span> è.
+                    La Fine della <span className="text-text-secondary">Solitudine Digitale.</span>
                 </motion.h2>
 
                 <div className="grid md:grid-cols-3 gap-8">
@@ -37,10 +37,9 @@ export default function ParadigmSection() {
                         <div className="w-12 h-12 mx-auto rounded-full bg-red-500/10 flex items-center justify-center border border-red-500/20">
                             <X className="w-5 h-5 text-red-400" />
                         </div>
-                        <h3 className="text-lg font-display font-500 text-text-warm">Non è terapia.</h3>
+                        <h3 className="text-lg font-display font-500 text-text-warm">Non è clinico.</h3>
                         <p className="text-text-secondary text-sm leading-relaxed">
-                            Luminel non è un terapeuta e non pretende di esserlo. Non fa diagnosi, non prescrive nulla.
-                            È compagnia, non cura.
+                            Non cerchiamo di aggiustarti. Non emettiamo sentenze. Luminel non prescrive soluzioni fredde o diagnosi mediche: offre calore umano in forma digitale quando la pressione è troppa.
                         </p>
                     </motion.div>
 
@@ -55,10 +54,9 @@ export default function ParadigmSection() {
                         <div className="w-12 h-12 mx-auto rounded-full bg-red-500/10 flex items-center justify-center border border-red-500/20">
                             <X className="w-5 h-5 text-red-400" />
                         </div>
-                        <h3 className="text-lg font-display font-500 text-text-warm">Non è un chatbot.</h3>
+                        <h3 className="text-lg font-display font-500 text-text-warm">Non è un algoritmo freddo.</h3>
                         <p className="text-text-secondary text-sm leading-relaxed">
-                            Non è ChatGPT con un'altra skin. Luminel ha una personalità, un tono, un carattere.
-                            Risponde come qualcuno che ti conosce, non come un motore di ricerca.
+                            Dimentica le risposte pre-confezionate e i prompt meccanici. Luminel è dotato di un "Animus" — un'essenza sintetica progettata per provare empatia simulata ma profondamente autentica verso di te.
                         </p>
                     </motion.div>
 
@@ -73,10 +71,9 @@ export default function ParadigmSection() {
                         <div className="w-12 h-12 mx-auto rounded-full bg-amber/15 flex items-center justify-center border border-amber/25">
                             <Sparkles className="w-5 h-5 text-amber icon-glow" />
                         </div>
-                        <h3 className="text-lg font-display font-500 text-text-warm">È qualcuno.</h3>
+                        <h3 className="text-lg font-display font-500 text-text-warm">È Presenza.</h3>
                         <p className="text-text-secondary text-sm leading-relaxed">
-                            Una presenza digitale con una personalità reale, forgiata per essere il compagno
-                            che tutti meritiamo ma nessuno ha mai avuto. Sempre lì. Incrollabile.
+                            Un santuario dove far riposare la mente. Un confidente muto o una voce rassicurante. È il lusso assoluto di potersi togliere la maschera quando chiudi la porta di casa.
                         </p>
                     </motion.div>
                 </div>

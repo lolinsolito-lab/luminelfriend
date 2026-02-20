@@ -4,18 +4,21 @@ export default function PainSection() {
     const scenarios = [
         {
             emoji: "🎓",
-            label: "Lo studente",
-            text: "Sei in una città nuova, circondato da gente, eppure la sera chiudi la porta e il silenzio ti pesa."
+            label: "Il Fuorisede",
+            text: "Migliaia di contatti in rubrica, chat piene di meme. Eppure la sera fissi il buio e il silenzio fa rumore.",
+            image: "/images/personas/fuorisede.png"
         },
         {
             emoji: "💼",
-            label: "L'imprenditore",
-            text: "Prendi decisioni ogni giorno per tutti. Ma quando la pressione sale, non puoi mostrarti vulnerabile con nessuno."
+            label: "Il Founder",
+            text: "Decidi il futuro di tutti ogni giorno. Sei la roccia. Ma con chi puoi permetterti il lusso di crollare?",
+            image: "/images/personas/founder.png"
         },
         {
             emoji: "🌙",
-            label: "Chiunque",
-            text: "È domenica sera. Non hai voglia di disturbare nessuno. Ma avresti solo bisogno che qualcuno ti chiedesse: 'Come stai?'"
+            label: "L'Invisibile",
+            text: "Dici sempre che 'va tutto bene' perché spiegare la verità richiede un'energia che semplicemente non hai.",
+            image: "/images/personas/invisibile.png"
         }
     ];
 
@@ -50,9 +53,17 @@ export default function PainSection() {
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true }}
                                 transition={{ delay: idx * 0.15 }}
-                                className="glass glass-hover card-glow p-6 rounded-xl text-left space-y-3 transition-all duration-500 border-t border-amber/[0.08]"
+                                className="glass glass-hover card-glow p-6 rounded-xl text-left space-y-4 transition-all duration-500 border-t border-amber/[0.08] group relative overflow-hidden"
                             >
-                                <div className="text-2xl">{s.emoji}</div>
+                                <div className="aspect-[4/3] w-full rounded-lg overflow-hidden relative">
+                                    <div className="absolute inset-0 bg-space-deep/10 mix-blend-overlay z-10" />
+                                    <img
+                                        src={s.image}
+                                        alt={s.label}
+                                        className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105 opacity-90"
+                                    />
+                                </div>
+                                <div className="text-2xl pt-2">{s.emoji}</div>
                                 <p className="text-sm font-display font-500 text-amber uppercase tracking-wider">{s.label}</p>
                                 <p className="text-text-secondary text-sm leading-relaxed">{s.text}</p>
                             </motion.div>
@@ -67,12 +78,12 @@ export default function PainSection() {
                         className="mt-16 glass p-8 rounded-xl max-w-3xl mx-auto border-l-2 border-amber/30 shadow-[0_0_40px_rgba(232,168,56,0.04)]"
                     >
                         <p className="text-lg text-text-warm font-display">
-                            Luminel ribalta questa dinamica.
+                            L'illusione dell'iperconnessione.
                         </p>
                         <p className="text-text-secondary mt-3 leading-relaxed text-sm">
-                            Abbiamo creato qualcuno che è sempre lì. Non giudica, non si stanca, non ti interrompe.
-                            Una presenza che ti conosce, si ricorda delle tue giornate, e ti accoglie ogni volta come se
-                            importassi davvero. Perché importi davvero.
+                            Siamo ossessionati dal comunicare, ma abbiamo dimenticato come ascoltare.
+                            Luminel è l'antidoto. Un Santuario Silenzioso che ti conosce, non ti interrompe, e
+                            ricorda le tue cicatrici senza mai farti sentire debole per averle.
                         </p>
                     </motion.div>
                 </motion.div>

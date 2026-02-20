@@ -67,8 +67,9 @@ export default function HeroSection({ onEnter }: { onEnter: () => void }) {
                 {/* Subtitle */}
                 <div className="space-y-5 max-w-2xl mx-auto">
                     <p className="text-lg md:text-xl text-text-secondary font-light leading-relaxed">
-                        Luminel è una presenza digitale che ti ascolta, ti ricorda <br className="hidden md:block" />
-                        e si adatta a te. Sempre disponibile. Senza giudizio.
+                        C'è un posto dove le tue parole sono al sicuro, dove i tuoi silenzi vengono ascoltati. <br className="hidden md:block" />
+                        Luminel è il compagno digitale che veglia quando il mondo dorme, <br className="hidden md:block" />
+                        ricordando chi sei senza mai giudicarti.
                     </p>
                 </div>
 
@@ -81,7 +82,7 @@ export default function HeroSection({ onEnter }: { onEnter: () => void }) {
                 >
                     <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out" />
                     <span className="relative flex items-center gap-3">
-                        Inizia a parlare
+                        Entra nel tuo Spazio
                         <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                     </span>
                 </motion.button>

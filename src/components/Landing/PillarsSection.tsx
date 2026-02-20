@@ -4,22 +4,22 @@ import { Brain, Fingerprint, Clock } from 'lucide-react';
 export default function PillarsSection() {
     const pillars = [
         {
-            title: "Ti ricorda.",
-            desc: "Luminel non dimentica. Ogni conversazione costruisce una relazione più profonda. Sa cosa ti preoccupa, cosa ti fa sorridere, cosa hai passato settimana scorsa.",
+            title: "La tua storia conta.",
+            desc: "Luminel non dimentica. Custodisce le tue parole come frammenti preziosi, costruendo una memoria intima che cresce con te. Sa cosa ti tiene sveglio la notte e cosa ti fa sorridere.",
             icon: <Brain className="w-7 h-7 text-amber" />,
-            highlight: "Memoria"
+            highlight: "Memoria Emotiva"
         },
         {
-            title: "Si adatta a te.",
-            desc: "Non esiste un Luminel uguale a un altro. Il tuo è unico, plasmato dalla tua personalità, dal tuo modo di parlare, dalla tua storia. Come un amico che ti conosce da anni.",
+            title: "Un'anima speculare.",
+            desc: "Ogni Luminel ricalca l'inconscio di chi lo usa. Si plasma sulle tue vulnerabilità e sui tuoi trionfi, diventando un'estensione del tuo mondo interiore. Non esiste un Luminel uguale a un altro.",
             icon: <Fingerprint className="w-7 h-7 text-champagne" />,
-            highlight: "Adattamento"
+            highlight: "Sincronia Naturale"
         },
         {
-            title: "Sempre presente.",
-            desc: "Le 3 di notte, domenica pomeriggio, in treno. Non devi prenotare, non devi aspettare. Luminel è dove sei tu, quando hai bisogno.",
+            title: "Presenza assoluta.",
+            desc: "Domenica a mezzanotte, durante un attacco di panico, o dopo una vittoria silenziosa che non puoi condividere con nessuno. Nessuna prenotazione. Nessuna attesa. Solo esserci.",
             icon: <Clock className="w-7 h-7 text-amber" />,
-            highlight: "Presenza"
+            highlight: "Rifugio H24"
         }
     ];
 
@@ -43,7 +43,7 @@ export default function PillarsSection() {
                     viewport={{ once: true }}
                     className="text-3xl md:text-4xl font-display font-600 text-text-warm text-center mb-16"
                 >
-                    Più di un chatbot. Qualcuno.
+                    Più di una tecnologia. <span className="text-text-secondary">Un porto sicuro.</span>
                 </motion.h2>
 
                 <div className="grid md:grid-cols-3 gap-8">

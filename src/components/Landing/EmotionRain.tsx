@@ -70,29 +70,29 @@ export default function EmotionRain() {
 
     return (
         <div className="fixed inset-0 pointer-events-none z-[5] overflow-hidden">
-            {/* Shooting Stars — golden streaks */}
+            {/* Shooting Stars — golden streaks falling from top-right */}
             {[...Array(4)].map((_, i) => (
                 <div
                     key={`star-${i}`}
                     className="shooting-star"
                     style={{
-                        top: `${10 + i * 22}%`,
-                        left: '-120px',
-                        animationDuration: `${6 + i * 3}s`,
-                        animationDelay: `${i * 5 + 2}s`,
+                        top: `-10%`,
+                        right: `${10 + i * 20}%`, // They spawn on the top-right
+                        animationDuration: `${12 + i * 4}s`, // Longer duration = appears less often (20% active, 80% hidden)
+                        animationDelay: `${i * 3 + 2}s`,
                     }}
                 />
             ))}
 
-            {/* Gold dust particles floating up */}
+            {/* Gold dust particles falling slowly from top */}
             {[...Array(12)].map((_, i) => (
                 <div
                     key={`dust-${i}`}
                     className={i % 3 === 0 ? "particle-soft" : i % 3 === 1 ? "particle-light" : "particle"}
                     style={{
                         left: `${5 + (i * 8)}%`,
-                        bottom: `-3%`,
-                        animationDuration: `${7 + i * 1.5}s`,
+                        top: `-2%`, // spawn at top
+                        animationDuration: `${12 + i * 2}s`,
                         animationDelay: `${i * 0.8}s`,
                     }}
                 />
