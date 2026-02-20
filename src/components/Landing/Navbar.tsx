@@ -50,8 +50,8 @@ export default function Navbar({ onEnter }: { onEnter: () => void }) {
                 animate={{ y: 0 }}
                 transition={{ duration: 0.5, ease: 'easeOut' }}
                 className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled
-                        ? 'bg-space-deep/90 backdrop-blur-xl border-b border-white/5 shadow-lg shadow-black/20'
-                        : 'bg-transparent'
+                    ? 'bg-space-deep/90 backdrop-blur-xl border-b border-white/5 shadow-lg shadow-black/20'
+                    : 'bg-transparent'
                     }`}
             >
                 <div className="max-w-6xl mx-auto flex items-center justify-between px-6 py-4">
@@ -61,7 +61,7 @@ export default function Navbar({ onEnter }: { onEnter: () => void }) {
                         onClick={() => scrollTo('hero')}
                         className="flex items-center gap-2.5 group"
                     >
-                        <div className="w-7 h-7 rounded-full bg-gradient-to-br from-amber to-amber-dim shadow-lg shadow-amber/20 group-hover:shadow-amber/40 transition-shadow" />
+                        <img src="/favicon.svg" alt="Luminel" className="w-8 h-8 rounded-full group-hover:shadow-amber/40 transition-shadow" />
                         <span className="font-display font-600 text-text-warm text-lg tracking-wide">
                             Luminel
                         </span>
@@ -74,8 +74,8 @@ export default function Navbar({ onEnter }: { onEnter: () => void }) {
                                 key={link.target}
                                 onClick={() => scrollTo(link.target)}
                                 className={`text-xs font-display uppercase tracking-[0.15em] transition-colors relative py-1 ${activeSection === link.target
-                                        ? 'text-amber'
-                                        : 'text-text-muted hover:text-text-warm'
+                                    ? 'text-amber'
+                                    : 'text-text-muted hover:text-text-warm'
                                     }`}
                             >
                                 {link.label}

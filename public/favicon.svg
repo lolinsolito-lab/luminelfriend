@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <radialGradient id="glow" cx="50%" cy="45%" r="50%">
+      <stop offset="0%" stop-color="#FFD700" stop-opacity="0.9"/>
+      <stop offset="60%" stop-color="#C8A020" stop-opacity="0.6"/>
+      <stop offset="100%" stop-color="#080F1E" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="orb" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFD700"/>
+      <stop offset="50%" stop-color="#DAA520"/>
+      <stop offset="100%" stop-color="#B8860B"/>
+    </linearGradient>
+    <linearGradient id="ring" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFD700" stop-opacity="0.8"/>
+      <stop offset="100%" stop-color="#C8A020" stop-opacity="0.3"/>
+    </linearGradient>
+  </defs>
+  <!-- Dark background circle -->
+  <circle cx="256" cy="256" r="256" fill="#080F1E"/>
+  <!-- Ambient glow -->
+  <circle cx="256" cy="240" r="180" fill="url(#glow)"/>
+  <!-- Outer ring -->
+  <circle cx="256" cy="256" r="120" fill="none" stroke="url(#ring)" stroke-width="2"/>
+  <!-- Inner orb -->
+  <circle cx="256" cy="256" r="72" fill="url(#orb)" opacity="0.9"/>
+  <!-- Highlight -->
+  <ellipse cx="240" cy="236" rx="28" ry="20" fill="white" opacity="0.25"/>
+  <!-- L lettermark -->
+  <text x="256" y="275" text-anchor="middle" font-family="Georgia, serif" font-size="80" font-weight="600" fill="#080F1E" letter-spacing="-2">L</text>
+</svg>
