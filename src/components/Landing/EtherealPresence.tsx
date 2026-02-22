@@ -79,6 +79,7 @@ export default function EtherealPresence() {
                                 muted
                                 playsInline
                                 className="w-full h-full object-cover"
+                                style={{ objectPosition: '55% 50%' }}
                             />
                             {/* Soft overlay to blend edges into background */}
                             <div className="absolute inset-0 rounded-full"
