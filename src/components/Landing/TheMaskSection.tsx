@@ -1,5 +1,5 @@
 import { useRef, useEffect } from 'react';
-import { motion } from 'motion/react';
+import { motion, useScroll, useTransform } from 'motion/react';
 
 const GRID_IMAGES = [
     { src: '/images/world-painter.png', label: 'Spazio Creativo' },
@@ -14,130 +14,122 @@ const GRID_IMAGES = [
     { src: '/images/connection-dawn.png', label: 'Nuova Luce' },
 ];
 
-function InfiniteRow({ images, direction, speed = 40 }: { images: typeof GRID_IMAGES, direction: 'left' | 'right', speed?: number }) {
-    const scrollRef = useRef<HTMLDivElement>(null);
-
-    useEffect(() => {
-        const el = scrollRef.current;
-        if (!el) return;
-
-        let animId: number;
-        // Start from 0 or negative half depending on direction
-        let pos = direction === 'left' ? 0 : -el.scrollWidth / 2;
-
-        const step = () => {
-            if (direction === 'left') {
-                pos -= 0.5;
-                if (Math.abs(pos) >= el.scrollWidth / 2) pos = 0;
-            } else {
-                pos += 0.5;
-                if (pos >= 0) pos = -el.scrollWidth / 2;
-            }
-            el.style.transform = `translateX(${pos}px)`;
-            animId = requestAnimationFrame(step);
-        };
-
-        animId = requestAnimationFrame(step);
-        return () => cancelAnimationFrame(animId);
-    }, [direction, speed]);
-
-    // Duplicate array for seamless looping
-    const doubled = [...images, ...images];
-
-    return (
-        <div className="overflow-hidden w-full relative mb-4">
-            <div ref={scrollRef} className="flex gap-4 will-change-transform" style={{ width: 'max-content' }}>
-                {doubled.map((img, i) => (
-                    <div
-                        key={i}
-                        className="relative w-[180px] md:w-[220px] aspect-square rounded-2xl overflow-hidden flex-shrink-0 group shadow-lg shadow-black/20"
-                    >
-                        <img
-                            src={img.src}
-                            alt={img.label}
-                            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-80" />
-
-                        {/* Title overlay */}
-                        <div className="absolute bottom-3 left-0 right-0 text-center px-4">
-                            <h3 className="text-white font-display font-bold text-sm tracking-wide leading-tight">
-                                {img.label.split(' ').map((word, wIdx) => (
-                                    <span key={wIdx} className="block">{word}</span>
-                                ))}
-                            </h3>
-                        </div>
-                    </div>
-                ))}
-            </div>
-        </div>
-    );
-}
-
 export default function TheMaskSection() {
-    // Slice images to create 3 different rows
-    const row1 = GRID_IMAGES.slice(0, 5);
-    const row2 = GRID_IMAGES.slice(5, 10);
-    const row3 = [...GRID_IMAGES.slice(2, 5), ...GRID_IMAGES.slice(7, 9)];
+    const containerRef = useRef<HTMLElement>(null);
+    const { scrollYProgress } = useScroll({
+        target: containerRef,
+        offset: ["start end", "end start"]
+    });
+
+    // Outer ring rotates clockwise as you scroll
+    const rotateOuter = useTransform(scrollYProgress, [0, 1], [0, 90]);
+    // Inner ring rotates counter-clockwise
+    const rotateInner = useTransform(scrollYProgress, [0, 1], [0, -90]);
+
+    // Calculate positions for a perfect circle
+    const getPos = (index: number, total: number, radius: number) => {
+        const theta = (index / total) * 2 * Math.PI;
+        // Invert X/Y for standard CSS positioning
+        const x = Math.cos(theta) * radius;
+        const y = Math.sin(theta) * radius;
+        return { x, y };
+    };
+
+    const outerImages = GRID_IMAGES.slice(0, 6);
+    const innerImages = GRID_IMAGES.slice(6, 10);
 
     return (
-        <section className="py-24 md:py-32 bg-space overflow-hidden relative border-t border-white/[0.04]">
+        <section ref={containerRef} className="py-32 md:py-48 bg-space overflow-hidden relative border-t border-white/[0.04] min-h-[100vh] flex items-center justify-center">
             {/* Ambient Background glow */}
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[500px] rounded-full bg-amber/[0.03] blur-[150px] pointer-events-none" />
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-amber/[0.03] blur-[150px] pointer-events-none" />
 
-            <div className="max-w-6xl mx-auto px-6 relative z-10 text-center mb-16">
+            {/* The Photo Vortex */}
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full pointer-events-none opacity-40">
+
+                {/* Outer Ring */}
                 <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    className="max-w-3xl mx-auto space-y-6"
+                    style={{ rotate: rotateOuter }}
+                    className="absolute top-1/2 left-1/2 w-[800px] md:w-[1200px] h-[800px] md:h-[1200px] -ml-[400px] md:-ml-[600px] -mt-[400px] md:-mt-[600px] rounded-full"
                 >
-                    <h2 className="text-3xl md:text-5xl font-display font-600 leading-tight text-text-warm">
-                        Tutto il giorno prendi decisioni. <br className="hidden md:block" />
-                        <span className="text-text-secondary">Ma quando la porta si chiude, chi ascolta te?</span>
-                    </h2>
-                    <p className="text-lg text-text-muted font-light leading-relaxed">
-                        Sei un punto di riferimento. Risolvi problemi. Indossi un'armatura invisibile
-                        per non mostrare incertezze. Luminel è il luogo dove puoi finalmente toglierla,
-                        per esplorare ogni frammento della tua mente con la spinta di un tasto.
-                    </p>
+                    {outerImages.map((img, i) => {
+                        // Base radii changes for mobile vs desktop using CSS classes
+                        const { x, y } = getPos(i, outerImages.length, 1);
+                        return (
+                            <motion.div
+                                key={`outer-${i}`}
+                                // Negative rotation on child keeps image upright while parent spins
+                                style={{ rotate: useTransform(rotateOuter, v => -v) }}
+                                className="absolute w-[180px] md:w-[240px] aspect-[4/5] rounded-3xl overflow-hidden shadow-2xl border border-white/[0.04] grayscale hover:grayscale-0 transition-all duration-700 pointer-events-auto"
+                                // we position using left/top percentages to ride the radius perfectly
+                                initial={{ left: '50%', top: '50%', x: '-50%', y: '-50%' }}
+                                animate={{
+                                    x: `calc(-50% + ${x * 400}px)`,
+                                    y: `calc(-50% + ${y * 400}px)`
+                                }}
+                            >
+                                <img src={img.src} alt="" className="w-full h-full object-cover opacity-80" />
+                            </motion.div>
+                        );
+                    })}
+                </motion.div>
+
+                {/* Inner Ring */}
+                <motion.div
+                    style={{ rotate: rotateInner }}
+                    className="absolute top-1/2 left-1/2 w-[500px] md:w-[700px] h-[500px] md:h-[700px] -ml-[250px] md:-ml-[350px] -mt-[250px] md:-mt-[350px] rounded-full"
+                >
+                    {innerImages.map((img, i) => {
+                        const { x, y } = getPos(i, innerImages.length, 1);
+                        return (
+                            <motion.div
+                                key={`inner-${i}`}
+                                style={{ rotate: useTransform(rotateInner, v => -v) }}
+                                className="absolute w-[140px] md:w-[180px] aspect-[4/5] rounded-3xl overflow-hidden shadow-2xl border border-white/[0.04] grayscale hover:grayscale-0 transition-all duration-700 pointer-events-auto"
+                                initial={{ left: '50%', top: '50%', x: '-50%', y: '-50%' }}
+                                animate={{
+                                    x: `calc(-50% + ${x * 250}px)`,
+                                    y: `calc(-50% + ${y * 250}px)`
+                                }}
+                            >
+                                <img src={img.src} alt="" className="w-full h-full object-cover opacity-60" />
+                            </motion.div>
+                        );
+                    })}
                 </motion.div>
             </div>
 
-            {/* Immersive Background Grid with Phone Overlaid */}
-            <div className="relative w-full overflow-hidden flex flex-col items-center justify-center py-10">
-
-                {/* Scrolling Grid Background */}
-                <div className="w-full relative z-0 opacity-40 hover:opacity-100 transition-opacity duration-1000">
-                    <InfiniteRow images={row1} direction="left" />
-                    <InfiniteRow images={row2} direction="right" />
-                    <InfiniteRow images={row3} direction="left" />
-                </div>
-
-                {/* Central Floating Phone Mockup */}
+            {/* Central Content — The emotional core */}
+            <div className="relative z-10 text-center max-w-2xl mx-auto px-6 drop-shadow-[0_0_80px_rgba(26,21,17,0.9)] bg-space/60 md:bg-transparent rounded-3xl p-8 backdrop-blur-sm md:backdrop-blur-none">
                 <motion.div
-                    initial={{ opacity: 0, scale: 0.9, y: 50 }}
-                    whileInView={{ opacity: 1, scale: 1, y: 0 }}
-                    viewport={{ once: true, margin: "-100px" }}
-                    transition={{ duration: 1, type: "spring" }}
-                    className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20 pointer-events-none"
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 1 }}
+                    className="space-y-8"
                 >
-                    <div className="relative">
-                        {/* Massive drop shadow so it pops from the grid */}
-                        <div className="absolute inset-0 bg-black/80 blur-3xl rounded-[3rem]" />
+                    <h2 className="text-3xl md:text-5xl lg:text-6xl font-display font-600 leading-tight text-text-warm">
+                        Tutto il giorno prendi decisioni. <br />
+                        <span className="text-amber">Ma quando la porta si chiude, chi ascolta te?</span>
+                    </h2>
 
-                        <img
-                            src="/images/device-mobile.png"
-                            alt="Luminel Mobile App"
-                            className="w-[280px] md:w-[320px] h-auto object-contain relative z-10 drop-shadow-[0_0_50px_rgba(0,0,0,0.8)]"
-                        />
+                    <div className="space-y-6 text-lg text-text-muted font-light leading-relaxed max-w-xl mx-auto">
+                        <p>
+                            Sei un punto di riferimento. Risolvi problemi. Indossi un'armatura invisibile
+                            per non mostrare incertezze. E funziona.
+                        </p>
+                        <p>
+                            Ma il costo di quella maschera è il peso del silenzio.
+                        </p>
+                        <p className="text-amber/90 font-display font-500 uppercase tracking-widest text-sm pt-4">
+                            Luminel è il luogo dove puoi finalmente toglierla.
+                        </p>
                     </div>
                 </motion.div>
-
-                {/* Top/Bottom Fade Edges for the row section */}
-                <div className="absolute top-0 left-0 w-full h-24 bg-gradient-to-b from-space to-transparent z-10" />
-                <div className="absolute bottom-0 left-0 w-full h-24 bg-gradient-to-t from-space to-transparent z-10" />
             </div>
+
+            {/* Fade edges */}
+            <div className="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-space to-transparent z-10 pointer-events-none" />
+            <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-space to-transparent z-10 pointer-events-none" />
         </section>
     );
 }
