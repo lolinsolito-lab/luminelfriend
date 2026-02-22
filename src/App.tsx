@@ -23,6 +23,7 @@ import TrustSection from './components/Landing/TrustSection';
 import HowItWorksSection from './components/Landing/HowItWorksSection';
 import FAQSection from './components/Landing/FAQSection';
 import ImmersiveJourney from './components/Landing/ImmersiveJourney';
+import DeviceShowcase from './components/Landing/DeviceShowcase';
 import LoginPage from './components/Auth/LoginPage';
 import RegisterPage from './components/Auth/RegisterPage';
 import RecoveryPage from './components/Auth/RecoveryPage';
@@ -180,10 +181,13 @@ function App() {
             {/* 1.5 La Maschera — The Emotional Validation */}
             <TheMaskSection />
 
-            {/* 2. Lo Specchio — The Pain */}
+            {/* 2. Lo Specchio — The Pain (Mindvalley-style portrait carousel) */}
             <div id="perche" className="scroll-mt-20">
               <PainSection />
             </div>
+
+            {/* 2.3 Device Showcase — Luminel in action */}
+            <DeviceShowcase />
 
             {/* 2.5 Il Guardiano di Luce — What Luminel IS */}
             <GuardianSection />
