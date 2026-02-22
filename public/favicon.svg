@@ -1,28 +1,25 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
   <defs>
-    <radialGradient id="glow" cx="50%" cy="45%" r="50%">
-      <stop offset="0%" stop-color="#FFD700" stop-opacity="0.9"/>
-      <stop offset="60%" stop-color="#C8A020" stop-opacity="0.6"/>
-      <stop offset="100%" stop-color="#080706" stop-opacity="0"/>
+    <radialGradient id="glow" cx="50%" cy="40%" r="55%">
+      <stop offset="0%" stop-color="#FFD700" stop-opacity="0.6"/>
+      <stop offset="70%" stop-color="#C49A2A" stop-opacity="0.15"/>
+      <stop offset="100%" stop-color="#C49A2A" stop-opacity="0"/>
     </radialGradient>
-    <linearGradient id="orb" x1="0%" y1="0%" x2="100%" y2="100%">
+    <radialGradient id="orb" cx="45%" cy="40%" r="50%">
       <stop offset="0%" stop-color="#FFD700"/>
-      <stop offset="50%" stop-color="#DAA520"/>
-      <stop offset="100%" stop-color="#B8860B"/>
-    </linearGradient>
-    <linearGradient id="ring" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#FFD700" stop-opacity="0.8"/>
-      <stop offset="100%" stop-color="#C8A020" stop-opacity="0.3"/>
-    </linearGradient>
+      <stop offset="40%" stop-color="#DAA520"/>
+      <stop offset="80%" stop-color="#C49A2A"/>
+      <stop offset="100%" stop-color="#A47E1E"/>
+    </radialGradient>
   </defs>
-  <!-- Ambient glow -->
-  <circle cx="256" cy="240" r="180" fill="url(#glow)"/>
-  <!-- Outer ring -->
-  <circle cx="256" cy="256" r="120" fill="none" stroke="url(#ring)" stroke-width="2"/>
-  <!-- Inner orb -->
-  <circle cx="256" cy="256" r="72" fill="url(#orb)" opacity="0.9"/>
-  <!-- Highlight -->
-  <ellipse cx="240" cy="236" rx="28" ry="20" fill="white" opacity="0.25"/>
-  <!-- L lettermark -->
-  <text x="256" y="275" text-anchor="middle" font-family="Georgia, serif" font-size="80" font-weight="600" fill="#080706" letter-spacing="-2">L</text>
+  <!-- Soft ambient glow -->
+  <circle cx="256" cy="256" r="220" fill="url(#glow)"/>
+  <!-- Main orb body — warm gold sphere -->
+  <circle cx="256" cy="256" r="140" fill="url(#orb)"/>
+  <!-- Glass highlight — top left reflection -->
+  <ellipse cx="220" cy="210" rx="60" ry="40" fill="white" opacity="0.2"/>
+  <!-- Tiny bright spark — the "eye" of Luminel -->
+  <circle cx="210" cy="200" r="12" fill="white" opacity="0.5"/>
+  <!-- Subtle L lettermark — elegant, not dominant -->
+  <text x="256" y="285" text-anchor="middle" font-family="'Outfit', sans-serif" font-size="100" font-weight="300" fill="white" opacity="0.35" letter-spacing="-4">L</text>
 </svg>

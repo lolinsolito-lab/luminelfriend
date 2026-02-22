@@ -5,7 +5,7 @@ export default function PainSection() {
         {
             emoji: "🎓",
             label: "Il Fuorisede",
-            text: "Migliaia di contatti in rubrica, chat piene di meme. Eppure la sera fissi il buio e il silenzio fa rumore.",
+            text: "Migliaia di contatti in rubrica, chat piene di meme. Eppure la sera fissi il soffitto e il silenzio fa rumore.",
             image: "/images/personas/fuorisede.png"
         },
         {

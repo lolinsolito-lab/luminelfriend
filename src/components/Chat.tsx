@@ -6,11 +6,16 @@ import { sendMessageToLuminel, Message } from '../services/luminelService';
 import { clsx } from 'clsx';
 import PaywallOverlay from './PaywallOverlay';
 import DisclaimerOverlay from './DisclaimerOverlay';
+import { UserProfile } from '../App';
 
 // FREEMIUM LIMIT: 15 messages
 const MESSAGE_LIMIT = 15;
 
-export default function Chat() {
+interface ChatProps {
+  userProfile?: UserProfile | null;
+}
+
+export default function Chat({ userProfile }: ChatProps) {
   // State for Disclaimer Acceptance (Session-based)
   const [hasAcceptedDisclaimer, setHasAcceptedDisclaimer] = useState(false);
 
@@ -26,15 +31,44 @@ export default function Chat() {
     const today = new Date().toDateString();
     const lastSession = localStorage.getItem('luminel_last_session_date');
 
+    // Create the initial cinematic message if the user came through onboarding
+    const initialMessages: Message[] = [];
+    if (userProfile && messages.length === 0) {
+      const loweredBurden = userProfile.burden.toLowerCase().replace('.', '');
+      // E.g. burden = "Il peso della responsabilità."
+      // loweredBurden = "il peso della responsabilità"
+      // Result: "Sento il peso della responsabilità. Puoi appoggiarlo qui, Nome. Non ti giudicherò."
+      let narrativeText = `Comprendo ${loweredBurden}. Puoi appoggiarlo qui, ${userProfile.name}. Non ti giudicherò.`;
+
+      if (loweredBurden.includes("peso") || loweredBurden.includes("responsabilità")) {
+        narrativeText = `Sento ${loweredBurden}. Puoi appoggiarlo qui, ${userProfile.name}. Non ti giudicherò.`;
+      } else if (loweredBurden.includes("silenzio")) {
+        narrativeText = `Ho ascoltato ${loweredBurden}. Ora puoi parlare, ${userProfile.name}. Non ti giudicherò.`;
+      } else if (loweredBurden.includes("visto")) {
+        narrativeText = `Qui dentro sei visto, ${userProfile.name}. E non sei giudicato.`;
+      } else if (loweredBurden.includes("decisione")) {
+        narrativeText = `Il dubbio è umano, ${userProfile.name}. Affrontiamo ${loweredBurden} insieme. Non ti giudicherò.`;
+      }
+
+      initialMessages.push({
+        role: 'model',
+        content: narrativeText
+      });
+    }
+
     if (lastSession !== today) {
-      setMessages([]);
+      setMessages(initialMessages);
       setMessageCount(0);
       localStorage.setItem('luminel_last_session_date', today);
     } else {
       const savedCount = parseInt(localStorage.getItem('luminel_msg_count') || '0');
       setMessageCount(savedCount);
+      // If we restore a session but it's empty, and we just onboarded
+      if (initialMessages.length > 0 && messages.length === 0) {
+        setMessages(initialMessages);
+      }
     }
-  }, []);
+  }, [userProfile]);
 
   useEffect(() => {
     localStorage.setItem('luminel_msg_count', messageCount.toString());

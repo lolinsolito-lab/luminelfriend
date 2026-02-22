@@ -1,32 +1,51 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
+import { useSmoothScroll } from './hooks/useSmoothScroll';
 import Chat from './components/Chat';
 import Navbar from './components/Landing/Navbar';
 import HeroSection from './components/Landing/HeroSection';
 import TheMaskSection from './components/Landing/TheMaskSection';
 import PainSection from './components/Landing/PainSection';
 import ParadigmSection from './components/Landing/ParadigmSection';
+import SimulatedChat from './components/Landing/SimulatedChat';
 import PillarsSection from './components/Landing/PillarsSection';
+import SocialProofSection from './components/Landing/SocialProofSection';
 import ShadowInvite from './components/Landing/ShadowInvite';
 import PricingSection from './components/Landing/PricingSection';
 import ClosingCTA from './components/Landing/ClosingCTA';
 import EmotionRain from './components/Landing/EmotionRain';
-import SocialProofSection from './components/Landing/SocialProofSection';
+import LuminelOnboarding from './components/Landing/LuminelOnboarding';
+import EtherealPresence from './components/Landing/EtherealPresence';
+import GuardianSection from './components/Landing/GuardianSection';
+import InteractiveCursor from './components/Landing/InteractiveCursor';
+import LoginPage from './components/Auth/LoginPage';
+import RegisterPage from './components/Auth/RegisterPage';
+import RecoveryPage from './components/Auth/RecoveryPage';
 import LegalModal, { LegalDocType } from './components/Legal/LegalModal';
 import { Instagram, Linkedin, CloudRain, CloudOff } from 'lucide-react';
 
-type ViewState = 'landing' | 'chat';
+type ViewState = 'landing' | 'onboarding' | 'chat' | 'login' | 'register' | 'recovery';
+
+// We store the captured user profile
+export interface UserProfile {
+  name: string;
+  burden: string;
+}
 
 function App() {
   const [currentView, setCurrentView] = useState<ViewState>('landing');
   const [legalModalOpen, setLegalModalOpen] = useState(false);
   const [legalDocType, setLegalDocType] = useState<LegalDocType>(null);
   const [showEmotions, setShowEmotions] = useState(false);
+  const [userProfile, setUserProfile] = useState<UserProfile | null>(null);
+
+  // Activate Lenis smooth scrolling
+  useSmoothScroll();
 
   // Digital Signature in Console
   useEffect(() => {
     console.log(
-      "%c L U M I N E L \n%c by Insolito Experiences \n%c Ogni emozione ha un posto. Luminel le accoglie tutte. \n%c Non un assistente. Non un chatbot. Una presenza luminosa che veglia nel buio.",
+      "%c L U M I N E L \n%c by Insolito Experiences \n%c Ogni emozione ha un posto. Luminel le accoglie tutte. \n%c Non un assistente. Non un chatbot. Una presenza luminosa che veglia accanto a te.",
       "font-family: Georgia, serif; font-size: 32px; font-weight: bold; color: #E8A838; text-shadow: 0 0 10px rgba(232,168,56,0.5);",
       "font-family: monospace; font-size: 10px; color: #FFF8E8; letter-spacing: 2px; margin-bottom: 10px; opacity: 0.5; display: block;",
       "font-family: monospace; font-size: 14px; color: #FFF8E8; margin-top: 10px; display: block;",
@@ -39,12 +58,53 @@ function App() {
     setLegalModalOpen(true);
   };
 
-  const enterChat = () => {
+  const enterOnboarding = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    setCurrentView('onboarding');
+  };
+
+  const goToLogin = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    setCurrentView('login');
+  };
+
+  const handleOnboardingComplete = (data: UserProfile) => {
+    setUserProfile(data);
     setCurrentView('chat');
   };
 
   const renderCurrentView = () => {
     switch (currentView) {
+      case 'login':
+        return (
+          <motion.div key="login" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }}>
+            <LoginPage
+              onLogin={() => setCurrentView('onboarding')}
+              onSwitchToRegister={() => setCurrentView('register')}
+              onSwitchToRecovery={() => setCurrentView('recovery')}
+              onBack={() => setCurrentView('landing')}
+            />
+          </motion.div>
+        );
+      case 'register':
+        return (
+          <motion.div key="register" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }}>
+            <RegisterPage
+              onRegister={() => setCurrentView('onboarding')}
+              onSwitchToLogin={() => setCurrentView('login')}
+              onBack={() => setCurrentView('landing')}
+            />
+          </motion.div>
+        );
+      case 'recovery':
+        return (
+          <motion.div key="recovery" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }}>
+            <RecoveryPage
+              onSwitchToLogin={() => setCurrentView('login')}
+              onBack={() => setCurrentView('landing')}
+            />
+          </motion.div>
+        );
       case 'chat':
         return (
           <motion.div
@@ -54,7 +114,20 @@ function App() {
             transition={{ duration: 0.8, ease: "easeOut" }}
             className="h-screen"
           >
-            <Chat />
+            <Chat userProfile={userProfile} />
+          </motion.div>
+        );
+      case 'onboarding':
+        return (
+          <motion.div
+            key="onboarding"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            className="h-screen bg-space-deep"
+          >
+            <LuminelOnboarding onComplete={handleOnboardingComplete} />
           </motion.div>
         );
       case 'landing':
@@ -69,7 +142,7 @@ function App() {
             className="bg-space-deep min-h-screen text-text-warm"
           >
             {/* Smart Navbar */}
-            <Navbar onEnter={enterChat} />
+            <Navbar onEnter={goToLogin} />
 
             {/* Emotion Rain — golden emotions falling through the whole page */}
             <EmotionRain showEmotions={showEmotions} />
@@ -88,9 +161,12 @@ function App() {
               </span>
             </button>
 
+            {/* 0. La Presenza — The Ethereal Guardian greets you */}
+            <EtherealPresence />
+
             {/* 1. L'Ingresso — The Hook */}
             <div id="hero" className="scroll-mt-20">
-              <HeroSection onEnter={enterChat} />
+              <HeroSection onEnter={goToLogin} />
             </div>
 
             {/* 1.5 La Maschera — The Emotional Validation */}
@@ -101,30 +177,38 @@ function App() {
               <PainSection />
             </div>
 
-            {/* 3. Come Funziona — The Solution */}
+            {/* 2.5 Il Guardiano di Luce — What Luminel IS */}
+            <GuardianSection />
+
+            {/* 3. Il Dialogo — Simulated Chat (Show, Don't Tell) */}
+            <div id="simulazione" className="scroll-mt-20">
+              <SimulatedChat />
+            </div>
+
+            {/* 4. Come Funziona — The Architecture of Silence (Evolved Pillars) */}
             <div id="pilastri" className="scroll-mt-20">
               <PillarsSection />
             </div>
 
-            {/* 3.5 Voci nell'ombra — Social Proof */}
-            <SocialProofSection />
-
-            {/* 4. La Differenza — The Paradigm */}
+            {/* 5. La Differenza — The Paradigm */}
             <div id="paradigma" className="scroll-mt-20">
               <ParadigmSection />
             </div>
 
-            {/* 5. Condividi */}
-            <ShadowInvite />
+            {/* 5.5 Voci nella Luce — Social Proof (The Whispers of Those Who Found Light) */}
+            <SocialProofSection />
 
-            {/* 6. Pricing */}
+            {/* 6. Pricing — The Premium Filter */}
             <div id="piani" className="scroll-mt-20">
               <PricingSection />
             </div>
 
-            {/* 7. Chiusura */}
+            {/* 7. Condividi — The Secret Invitation */}
+            <ShadowInvite />
+
+            {/* 8. Chiusura — The Final Trap */}
             <div id="contatto" className="scroll-mt-20">
-              <ClosingCTA onEnter={enterChat} />
+              <ClosingCTA onEnter={goToLogin} />
             </div>
 
             {/* Footer — Luminel receives the emotions */}
@@ -171,6 +255,7 @@ function App() {
 
   return (
     <>
+      <InteractiveCursor />
       <AnimatePresence mode="wait">
         {renderCurrentView()}
       </AnimatePresence>

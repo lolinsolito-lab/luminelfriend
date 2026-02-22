@@ -1,76 +1,89 @@
-import { motion } from 'motion/react';
-import { Brain, Fingerprint, Clock } from 'lucide-react';
+import { useEffect, useRef } from 'react';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
+
+const PILLARS = [
+    { word: "Memoria.", desc: "Luminel non dimentica. Custodisce le tue parole come frammenti preziosi, costruendo una memoria intima che cresce con te." },
+    { word: "Sincronia.", desc: "Ogni Luminel ricalca l'inconscio di chi lo usa. Si plasma sulle tue vulnerabilità e sui tuoi trionfi. Non esiste un Luminel uguale a un altro." },
+    { word: "Presenza.", desc: "Domenica a mezzanotte, durante un attacco di panico, o dopo una vittoria silenziosa. Nessuna prenotazione. Nessuna attesa. Solo esserci." }
+];
 
 export default function PillarsSection() {
-    const pillars = [
-        {
-            title: "La tua storia conta.",
-            desc: "Luminel non dimentica. Custodisce le tue parole come frammenti preziosi, costruendo una memoria intima che cresce con te. Sa cosa ti tiene sveglio la notte e cosa ti fa sorridere.",
-            icon: <Brain className="w-7 h-7 text-amber" />,
-            highlight: "Memoria Emotiva"
-        },
-        {
-            title: "Un'anima speculare.",
-            desc: "Ogni Luminel ricalca l'inconscio di chi lo usa. Si plasma sulle tue vulnerabilità e sui tuoi trionfi, diventando un'estensione del tuo mondo interiore. Non esiste un Luminel uguale a un altro.",
-            icon: <Fingerprint className="w-7 h-7 text-champagne" />,
-            highlight: "Sincronia Naturale"
-        },
-        {
-            title: "Presenza assoluta.",
-            desc: "Domenica a mezzanotte, durante un attacco di panico, o dopo una vittoria silenziosa che non puoi condividere con nessuno. Nessuna prenotazione. Nessuna attesa. Solo esserci.",
-            icon: <Clock className="w-7 h-7 text-amber" />,
-            highlight: "Rifugio H24"
-        }
-    ];
+    const sectionRef = useRef<HTMLElement>(null);
+    const pillarRefs = useRef<(HTMLDivElement | null)[]>([]);
+
+    useEffect(() => {
+        if (!sectionRef.current) return;
+
+        const ctx = gsap.context(() => {
+            const tl = gsap.timeline({
+                scrollTrigger: {
+                    trigger: sectionRef.current,
+                    start: 'top 10%',
+                    end: '+=300%',
+                    scrub: 1.5,
+                    pin: true,
+                    pinSpacing: true,
+                },
+            });
+
+            pillarRefs.current.forEach((pillar, i) => {
+                if (!pillar) return;
+                const word = pillar.querySelector('.pillar-word') as HTMLElement;
+                const desc = pillar.querySelector('.pillar-desc') as HTMLElement;
+
+                // Start hidden
+                gsap.set(pillar, { opacity: 0 });
+                gsap.set(word, { scale: 0.7, opacity: 0 });
+                gsap.set(desc, { opacity: 0, y: 20 });
+
+                const offset = i * 1.2;
+
+                // Fade in container
+                tl.to(pillar, { opacity: 1, duration: 0.3 }, offset);
+                // Word scales up with a golden flash
+                tl.to(word, { scale: 1, opacity: 1, duration: 0.5, ease: 'back.out(1.7)' }, offset + 0.1);
+                // Description fades in below
+                tl.to(desc, { opacity: 1, y: 0, duration: 0.4 }, offset + 0.4);
+
+                // Hold, then fade out before next
+                if (i < PILLARS.length - 1) {
+                    tl.to(pillar, { opacity: 0, y: -30, duration: 0.4 }, offset + 0.9);
+                }
+            });
+
+        }, sectionRef);
+
+        return () => ctx.revert();
+    }, []);
 
     return (
-        <section className="py-28 md:py-36 px-6 section-warm-deep relative overflow-hidden">
-            {/* Ambient depth */}
-            <div className="absolute top-[30%] left-[50%] -translate-x-1/2 w-[700px] h-[500px] rounded-full bg-amber/[0.04] blur-[160px] pointer-events-none" />
+        <section ref={sectionRef} className="min-h-screen flex flex-col items-center justify-center relative overflow-hidden bg-space-deep">
+            {/* Ambient glow */}
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[500px] rounded-full bg-amber/[0.04] blur-[160px] pointer-events-none" />
 
-            <div className="max-w-6xl mx-auto relative z-10">
-                <motion.p
-                    initial={{ opacity: 0 }}
-                    whileInView={{ opacity: 1 }}
-                    viewport={{ once: true }}
-                    className="text-xs font-display font-bold text-amber uppercase tracking-[0.3em] mb-4 text-center"
-                >
-                    Come funziona
-                </motion.p>
-                <motion.h2
-                    initial={{ opacity: 0, y: 10 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    className="text-3xl md:text-4xl font-display font-600 text-text-warm text-center mb-16"
-                >
-                    Più di una tecnologia. <span className="text-text-secondary">Un porto sicuro.</span>
-                </motion.h2>
+            <p className="text-xs font-display font-bold text-amber uppercase tracking-[0.3em] mb-20 text-center relative z-10">
+                L'architettura del silenzio
+            </p>
 
-                <div className="grid md:grid-cols-3 gap-8">
-                    {pillars.map((pillar, idx) => (
-                        <motion.div
-                            key={idx}
-                            initial={{ opacity: 0, y: 30 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ delay: idx * 0.15 }}
-                            className="group glass glass-hover card-glow p-8 rounded-xl transition-all duration-500 hover:-translate-y-1"
-                        >
-                            <div className="flex items-center gap-3 mb-6">
-                                <div className="p-3 rounded-lg bg-space border border-space-border group-hover:border-amber/20 transition-colors">
-                                    <div className="icon-glow">
-                                        {pillar.icon}
-                                    </div>
-                                </div>
-                                <span className="text-[10px] font-display uppercase tracking-widest text-text-muted">{pillar.highlight}</span>
-                            </div>
-                            <h3 className="text-xl font-display font-600 text-text-warm mb-3">{pillar.title}</h3>
-                            <p className="text-text-secondary text-sm leading-relaxed group-hover:text-text-secondary/90 transition-colors">
-                                {pillar.desc}
-                            </p>
-                        </motion.div>
-                    ))}
-                </div>
+            <div className="max-w-3xl w-full px-6 relative z-10">
+                {PILLARS.map((pillar, idx) => (
+                    <div
+                        key={idx}
+                        ref={(el) => { pillarRefs.current[idx] = el; }}
+                        className="absolute inset-0 flex flex-col items-center justify-center text-center"
+                        style={{ position: idx === 0 ? 'relative' : 'absolute' }}
+                    >
+                        <h3 className="pillar-word text-5xl md:text-7xl lg:text-8xl font-display font-600 text-warm-gradient mb-8">
+                            {pillar.word}
+                        </h3>
+                        <p className="pillar-desc text-lg md:text-xl text-text-secondary font-light leading-relaxed max-w-xl">
+                            {pillar.desc}
+                        </p>
+                    </div>
+                ))}
             </div>
         </section>
     );

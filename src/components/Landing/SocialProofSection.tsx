@@ -42,7 +42,7 @@ export default function SocialProofSection() {
                     viewport={{ once: true }}
                     className="text-xs font-display font-bold text-amber uppercase tracking-[0.3em] mb-4 text-center"
                 >
-                    Voci nell'ombra
+                    Voci nella Luce
                 </motion.p>
                 <motion.h2
                     initial={{ opacity: 0, y: 10 }}

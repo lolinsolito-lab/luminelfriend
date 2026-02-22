@@ -2,11 +2,10 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 
 const navLinks = [
-    { label: 'Home', target: 'hero' },
-    { label: 'Perché', target: 'perche' },
-    { label: 'Come funziona', target: 'pilastri' },
+    { label: 'Lo Specchio', target: 'perche' },
+    { label: 'Il Guardiano', target: 'simulazione' },
+    { label: 'La Differenza', target: 'paradigma' },
     { label: 'Piani', target: 'piani' },
-    { label: 'Contatto', target: 'contatto' },
 ];
 
 export default function Navbar({ onEnter }: { onEnter: () => void }) {
@@ -18,8 +17,7 @@ export default function Navbar({ onEnter }: { onEnter: () => void }) {
         const handleScroll = () => {
             setScrolled(window.scrollY > 60);
 
-            // Detect active section
-            const sections = navLinks.map(l => l.target);
+            const sections = ['hero', ...navLinks.map(l => l.target)];
             for (let i = sections.length - 1; i >= 0; i--) {
                 const el = document.getElementById(sections[i]);
                 if (el) {
@@ -46,34 +44,38 @@ export default function Navbar({ onEnter }: { onEnter: () => void }) {
     return (
         <>
             <motion.nav
-                initial={{ y: -80 }}
-                animate={{ y: 0 }}
-                transition={{ duration: 0.5, ease: 'easeOut' }}
-                className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled
-                    ? 'bg-space-deep/90 backdrop-blur-xl border-b border-space-border shadow-lg shadow-black/5'
+                initial={{ y: -80, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ duration: 0.8, ease: 'easeOut', delay: 0.3 }}
+                className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled
+                    ? 'bg-space-deep/80 backdrop-blur-2xl border-b border-space-border/50'
                     : 'bg-transparent'
                     }`}
             >
                 <div className="max-w-6xl mx-auto flex items-center justify-between px-6 py-4">
 
-                    {/* Logo */}
+                    {/* Logo — The Orb + Name */}
                     <button
                         onClick={() => scrollTo('hero')}
-                        className="flex items-center gap-2.5 group"
+                        className="flex items-center gap-3 group"
                     >
-                        <img src="/favicon.svg" alt="Luminel" className="w-8 h-8 rounded-full group-hover:shadow-amber/40 transition-shadow" />
-                        <span className="font-display font-600 text-text-warm text-lg tracking-wide">
+                        {/* Mini Orb instead of favicon */}
+                        <div className="w-8 h-8 rounded-full bg-gradient-to-br from-amber-glow via-amber to-amber-dim shadow-lg shadow-amber/20 group-hover:shadow-amber/40 transition-shadow relative">
+                            <div className="absolute inset-0 rounded-full bg-white/20 blur-[2px]" />
+                            <div className="absolute top-1.5 left-2 w-2 h-1.5 rounded-full bg-white/40" />
+                        </div>
+                        <span className="font-display font-600 text-text-warm text-base tracking-[0.08em] uppercase">
                             Luminel
                         </span>
                     </button>
 
-                    {/* Desktop Nav */}
-                    <div className="hidden md:flex items-center gap-8">
+                    {/* Desktop Nav — Minimal, poetic labels */}
+                    <div className="hidden md:flex items-center gap-10">
                         {navLinks.map(link => (
                             <button
                                 key={link.target}
                                 onClick={() => scrollTo(link.target)}
-                                className={`text-xs font-display uppercase tracking-[0.15em] transition-colors relative py-1 ${activeSection === link.target
+                                className={`text-[11px] font-display tracking-[0.15em] uppercase transition-all duration-300 relative py-1 ${activeSection === link.target
                                     ? 'text-amber'
                                     : 'text-text-muted hover:text-text-warm'
                                     }`}
@@ -82,7 +84,7 @@ export default function Navbar({ onEnter }: { onEnter: () => void }) {
                                 {activeSection === link.target && (
                                     <motion.div
                                         layoutId="nav-indicator"
-                                        className="absolute -bottom-0.5 left-0 right-0 h-[2px] bg-amber rounded-full"
+                                        className="absolute -bottom-1 left-0 right-0 h-[1.5px] bg-amber/60 rounded-full"
                                         transition={{ type: 'spring', stiffness: 400, damping: 30 }}
                                     />
                                 )}
@@ -90,13 +92,14 @@ export default function Navbar({ onEnter }: { onEnter: () => void }) {
                         ))}
                     </div>
 
-                    {/* CTA */}
+                    {/* CTA — Evocative, not transactional */}
                     <div className="hidden md:block">
                         <button
                             onClick={onEnter}
-                            className="text-[11px] font-display font-bold uppercase tracking-widest px-5 py-2.5 bg-gradient-to-r from-amber to-amber-dim hover:from-amber-glow hover:to-amber text-white rounded-lg transition-all shadow-lg shadow-amber/15 hover:shadow-amber/30"
+                            className="group text-[10px] font-display font-600 uppercase tracking-[0.2em] px-6 py-2.5 border border-amber/30 hover:border-amber/60 text-amber hover:text-amber-glow rounded-full transition-all duration-500 hover:shadow-lg hover:shadow-amber/10 relative overflow-hidden"
                         >
-                            Parla con Luminel
+                            <div className="absolute inset-0 bg-amber/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                            <span className="relative">Entra</span>
                         </button>
                     </div>
 
@@ -107,46 +110,53 @@ export default function Navbar({ onEnter }: { onEnter: () => void }) {
                     >
                         <motion.div
                             animate={mobileOpen ? { rotate: 45, y: 6 } : { rotate: 0, y: 0 }}
-                            className="w-5 h-[2px] bg-text-warm"
+                            className="w-5 h-[1.5px] bg-text-warm origin-center"
                         />
                         <motion.div
-                            animate={mobileOpen ? { opacity: 0 } : { opacity: 1 }}
-                            className="w-5 h-[2px] bg-text-warm"
+                            animate={mobileOpen ? { opacity: 0, scaleX: 0 } : { opacity: 1, scaleX: 1 }}
+                            className="w-5 h-[1.5px] bg-text-warm"
                         />
                         <motion.div
                             animate={mobileOpen ? { rotate: -45, y: -6 } : { rotate: 0, y: 0 }}
-                            className="w-5 h-[2px] bg-text-warm"
+                            className="w-5 h-[1.5px] bg-text-warm origin-center"
                         />
                     </button>
                 </div>
             </motion.nav>
 
-            {/* Mobile Menu */}
+            {/* Mobile Menu — Full overlay, cinematic */}
             <AnimatePresence>
                 {mobileOpen && (
                     <motion.div
-                        initial={{ opacity: 0, y: -20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -20 }}
-                        className="fixed top-[60px] left-0 right-0 z-40 bg-space-deep/95 backdrop-blur-xl border-b border-space-border p-6"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.3 }}
+                        className="fixed inset-0 z-40 bg-space-deep/98 backdrop-blur-2xl flex flex-col items-center justify-center"
                     >
-                        <div className="flex flex-col gap-4">
-                            {navLinks.map(link => (
-                                <button
+                        <div className="flex flex-col items-center gap-8">
+                            {navLinks.map((link, i) => (
+                                <motion.button
                                     key={link.target}
+                                    initial={{ opacity: 0, y: 20 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ delay: i * 0.08 + 0.1 }}
                                     onClick={() => scrollTo(link.target)}
-                                    className={`text-sm font-display uppercase tracking-[0.15em] text-left py-2 transition-colors ${activeSection === link.target ? 'text-amber' : 'text-text-muted'
+                                    className={`text-lg font-display tracking-[0.2em] uppercase transition-colors ${activeSection === link.target ? 'text-amber' : 'text-text-muted'
                                         }`}
                                 >
                                     {link.label}
-                                </button>
+                                </motion.button>
                             ))}
-                            <button
+                            <motion.button
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ delay: 0.5 }}
                                 onClick={() => { onEnter(); setMobileOpen(false); }}
-                                className="mt-2 w-full text-[11px] font-display font-bold uppercase tracking-widest px-5 py-3 bg-gradient-to-r from-amber to-amber-dim text-white rounded-lg"
+                                className="mt-6 text-sm font-display font-600 uppercase tracking-[0.2em] px-8 py-3 border border-amber/40 text-amber rounded-full hover:border-amber/70 transition-all"
                             >
-                                Parla con Luminel
-                            </button>
+                                Entra
+                            </motion.button>
                         </div>
                     </motion.div>
                 )}
