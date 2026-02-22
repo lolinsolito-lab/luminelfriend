@@ -20,6 +20,8 @@ import GuardianSection from './components/Landing/GuardianSection';
 import InteractiveCursor from './components/Landing/InteractiveCursor';
 import ForWhoSection from './components/Landing/ForWhoSection';
 import TrustSection from './components/Landing/TrustSection';
+import HowItWorksSection from './components/Landing/HowItWorksSection';
+import FAQSection from './components/Landing/FAQSection';
 import LoginPage from './components/Auth/LoginPage';
 import RegisterPage from './components/Auth/RegisterPage';
 import RecoveryPage from './components/Auth/RecoveryPage';
@@ -231,10 +233,16 @@ function App() {
             {/* 5.8 Per chi è / Per chi non è */}
             <ForWhoSection />
 
+            {/* 5.9 Come Funziona — 3 Step */}
+            <HowItWorksSection />
+
             {/* 6. Pricing — The Premium Filter */}
             <div id="piani" className="scroll-mt-20">
               <PricingSection />
             </div>
+
+            {/* 6.5 FAQ — Riduce biezioni pre-acquisto */}
+            <FAQSection />
 
             {/* 7. Condividi — The Secret Invitation */}
             <ShadowInvite />

@@ -137,7 +137,7 @@ export default function HeroSection({ onEnter }: { onEnter: () => void }) {
                     </motion.button>
 
                     <p className="text-xs text-text-muted uppercase tracking-widest">
-                        Il tuo primo pensiero in 10 secondi · Senza account · Anonimato totale
+                        Gratuito per iniziare · La tua privacy è sacra · 15 messaggi al giorno
                     </p>
                 </div>
             </motion.div>
