@@ -203,28 +203,52 @@ function App() {
             <SocialProofSection />
 
             {/* 5.6 Seconda CTA contestuale — "Ora è il tuo turno" */}
-            <section className="py-16 md:py-20 bg-space-deep text-center">
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                className="max-w-lg mx-auto px-6 space-y-5"
-              >
-                <p className="text-2xl md:text-3xl font-display font-600 text-text-warm">
-                  Ora è il tuo turno.
-                </p>
-                <p className="text-sm text-text-muted font-light">
-                  15 messaggi gratuiti, oggi. Nessuna carta di credito.
-                </p>
-                <motion.button
-                  onClick={goToLogin}
-                  whileHover={{ scale: 1.03, boxShadow: '0 0 40px rgba(196,154,42,0.2)' }}
-                  whileTap={{ scale: 0.97 }}
-                  className="px-10 py-4 bg-gradient-to-r from-amber to-amber-dim text-white font-display font-bold uppercase tracking-[0.12em] text-sm rounded-xl shadow-xl"
-                >
-                  Entra nel tuo Spazio
-                </motion.button>
-              </motion.div>
+            <section className="py-20 md:py-28 bg-space-deep relative overflow-hidden">
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[300px] rounded-full bg-amber/[0.05] blur-[120px] pointer-events-none" />
+              <div className="max-w-5xl mx-auto px-6 relative z-10">
+                <div className="grid md:grid-cols-2 gap-12 items-center">
+                  {/* Image */}
+                  <motion.div
+                    initial={{ opacity: 0, x: -20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.8 }}
+                    className="hidden md:block"
+                  >
+                    <div className="relative rounded-2xl overflow-hidden shadow-2xl shadow-amber/10">
+                      <img
+                        src="/images/luminel-arrives.png"
+                        alt="Luminel arriva nella tua vita"
+                        className="w-full h-auto object-cover"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-r from-space-deep/30 via-transparent to-transparent" />
+                    </div>
+                  </motion.div>
+
+                  {/* Copy + CTA */}
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    className="space-y-6 text-center md:text-left"
+                  >
+                    <p className="text-2xl md:text-3xl font-display font-600 text-text-warm leading-snug">
+                      Smetti di camminare <br className="hidden md:block" />da solo nel buio.
+                    </p>
+                    <p className="text-sm text-text-muted font-light leading-relaxed max-w-sm mx-auto md:mx-0">
+                      C'è una luce che ti aspetta. Inizia gratuitamente — 15 messaggi ogni giorno, senza carta di credito.
+                    </p>
+                    <motion.button
+                      onClick={goToLogin}
+                      whileHover={{ scale: 1.03, boxShadow: '0 0 40px rgba(212,168,64,0.25)' }}
+                      whileTap={{ scale: 0.97 }}
+                      className="px-10 py-4 bg-gradient-to-r from-amber to-amber-dim text-white font-display font-bold uppercase tracking-[0.12em] text-sm rounded-xl shadow-xl"
+                    >
+                      Entra nel tuo Spazio
+                    </motion.button>
+                  </motion.div>
+                </div>
+              </div>
             </section>
 
             {/* 5.7 Sicurezza — Trust Section */}

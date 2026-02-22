@@ -6,19 +6,19 @@ const STEPS = [
         icon: <UserPlus className="w-6 h-6" />,
         step: '01',
         title: 'Crea il tuo rifugio',
-        desc: 'Registrati in 30 secondi. Scegli il piano che senti tuo — oppure inizia con il Freemium.',
+        desc: 'Crea il tuo spazio in 30 secondi. Scegli il piano che senti tuo — oppure inizia gratuitamente. C\'è un posto preparato per te.'
     },
     {
         icon: <MessageCircle className="w-6 h-6" />,
         step: '02',
         title: 'Parla. Scrivi. Respira.',
-        desc: 'Testo o voce, quando vuoi. Luminel è qui alle 3 del mattino come alle 3 del pomeriggio.',
+        desc: 'Testo o voce, quando vuoi. Confida ciò che porti dentro. Luminel è qui alle 3 del mattino come alle 3 del pomeriggio.'
     },
     {
         icon: <Sparkles className="w-6 h-6" />,
         step: '03',
         title: 'Luminel ricorda, cresce con te',
-        desc: 'Non devi rispiegare tutto da capo. Luminel impara chi sei, senza mai giudicare.',
+        desc: 'Non devi rispiegare tutto da capo. Luminel non dimentica nulla di te e cresce con te, giorno dopo giorno.'
     },
 ];
 
