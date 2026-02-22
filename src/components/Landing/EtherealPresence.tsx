@@ -50,7 +50,7 @@ export default function EtherealPresence() {
     }, [currentLine]);
 
     return (
-        <section className="relative min-h-[80vh] flex flex-col items-center justify-center overflow-hidden bg-space-deep">
+        <section className="min-h-screen flex flex-col items-center justify-center bg-space-deep relative overflow-hidden py-24">
             {/* Ambient depth glow behind presence */}
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full bg-amber/[0.06] blur-[150px] pointer-events-none" />
 
@@ -101,7 +101,7 @@ export default function EtherealPresence() {
                                     animate={{ opacity: 1, y: 0 }}
                                     exit={{ opacity: 0, y: -10 }}
                                     transition={{ duration: 0.6 }}
-                                    className="text-xl md:text-2xl font-display font-light text-text-warm tracking-wide max-w-2xl"
+                                    className="text-xl md:text-3xl font-display text-text-warm tracking-wide text-center"
                                 >
                                     {displayedText}
                                     {isTyping && (

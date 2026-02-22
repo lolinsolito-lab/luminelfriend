@@ -66,7 +66,7 @@ export default function PainSection() {
     };
 
     return (
-        <section className="py-24 md:py-32 px-6 section-warm relative overflow-hidden">
+        <section className="py-24 md:py-32 px-6 bg-space-deep relative overflow-hidden border-y border-white/[0.04]">
             {/* Ambient glow */}
             <div className="absolute top-[20%] left-[50%] -translate-x-1/2 w-[600px] h-[400px] rounded-full bg-amber/[0.03] blur-[120px] pointer-events-none" />
 
@@ -142,8 +142,8 @@ export default function PainSection() {
                         <button
                             onClick={() => scroll('left')}
                             className={`w-10 h-10 rounded-full border flex items-center justify-center transition-all ${canScrollLeft
-                                    ? 'border-amber/30 text-amber hover:bg-amber/10'
-                                    : 'border-space-border text-text-muted/30 cursor-not-allowed'
+                                ? 'border-amber/30 text-amber hover:bg-amber/10'
+                                : 'border-white/5 text-text-muted/30 cursor-not-allowed'
                                 }`}
                             disabled={!canScrollLeft}
                         >
@@ -161,8 +161,8 @@ export default function PainSection() {
                         <button
                             onClick={() => scroll('right')}
                             className={`w-10 h-10 rounded-full border flex items-center justify-center transition-all ${canScrollRight
-                                    ? 'border-amber/30 text-amber hover:bg-amber/10'
-                                    : 'border-space-border text-text-muted/30 cursor-not-allowed'
+                                ? 'border-amber/30 text-amber hover:bg-amber/10'
+                                : 'border-white/5 text-text-muted/30 cursor-not-allowed'
                                 }`}
                             disabled={!canScrollRight}
                         >

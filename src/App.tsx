@@ -167,50 +167,55 @@ function App() {
               </span>
             </button>
 
-            {/* 0. La Presenza — The Ethereal Guardian greets you */}
-            <EtherealPresence />
-
-            {/* 0.5 Il Viaggio Immersivo — Cinematic portal through 3 worlds */}
-            <ImmersiveJourney />
-
-            {/* 1. L'Ingresso — The Hook */}
+            {/* ATTO I: Il Riconoscimento del Vuoto */}
+            {/* 1. La Chiamata nel Buio (Mastery Degrees impatto visivo immediato) */}
             <div id="hero" className="scroll-mt-20">
               <HeroSection onEnter={goToLogin} />
             </div>
 
-            {/* 1.5 La Maschera — The Emotional Validation */}
+            {/* 2. Il Caos Quotidiano (Il Vortice emotivo) */}
             <TheMaskSection />
 
-            {/* 2. Lo Specchio — The Pain (Mindvalley-style portrait carousel) */}
+            {/* 3. Le Voci nel Vuoto (Card che scorrono - il caos condiviso) */}
+            <ImmersiveJourney />
+
+
+            {/* ATTO II: La Luce nel Buio (La Soluzione) */}
+            {/* 4. Il Guardiano Etereo (La presenza che ti accoglie, ora dark space) */}
+            <EtherealPresence />
+
+            {/* 5. Lo Specchio (Scegli il tuo dolore - Carousel portrait) */}
             <div id="perche" className="scroll-mt-20">
               <PainSection />
             </div>
 
-            {/* 2.3 Device Showcase — Luminel in action */}
+            {/* 6. Sempre con Te (Split 50/50 UX pura) */}
             <DeviceShowcase />
 
-            {/* 2.5 Il Guardiano di Luce — What Luminel IS */}
+            {/* 7. Il Guardiano di Luce (Cosa è Luminel) */}
             <GuardianSection />
 
-            {/* 3. Il Dialogo — Simulated Chat (Show, Don't Tell) */}
+            {/* 8. Il Dialogo (Show, Don't Tell - Chat in Overlay) */}
             <div id="simulazione" className="scroll-mt-20">
               <SimulatedChat />
             </div>
 
-            {/* 4. Come Funziona — The Architecture of Silence (Evolved Pillars) */}
+            {/* 9. Architettura del Silenzio (I Pilastri) */}
             <div id="pilastri" className="scroll-mt-20">
               <PillarsSection />
             </div>
 
-            {/* 5. La Differenza — The Paradigm */}
+
+            {/* ATTO III: La Dimostrazione e l'Invito */}
+            {/* 10. La Differenza (Paradigm) */}
             <div id="paradigma" className="scroll-mt-20">
               <ParadigmSection />
             </div>
 
-            {/* 5.5 Voci nella Luce — Social Proof */}
+            {/* 11. Voci nella Luce (Recensioni) */}
             <SocialProofSection />
 
-            {/* 5.6 Seconda CTA contestuale — "Ora è il tuo turno" */}
+            {/* 12. Seconda CTA contestuale */}
             <section className="py-20 md:py-28 bg-space-deep relative overflow-hidden">
               <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[300px] rounded-full bg-amber/[0.05] blur-[120px] pointer-events-none" />
               <div className="max-w-5xl mx-auto px-6 relative z-10">
@@ -259,27 +264,27 @@ function App() {
               </div>
             </section>
 
-            {/* 5.7 Sicurezza — Trust Section */}
+            {/* 13. Sicurezza */}
             <TrustSection />
 
-            {/* 5.8 Per chi è / Per chi non è */}
+            {/* 14. Per chi è / Per chi non è */}
             <ForWhoSection />
 
-            {/* 5.9 Come Funziona — 3 Step */}
+            {/* 15. Come Funziona - 3 Step */}
             <HowItWorksSection />
 
-            {/* 6. Pricing — The Premium Filter */}
+            {/* 16. Pricing */}
             <div id="piani" className="scroll-mt-20">
               <PricingSection />
             </div>
 
-            {/* 6.5 FAQ — Riduce biezioni pre-acquisto */}
+            {/* 17. FAQ */}
             <FAQSection />
 
-            {/* 7. Condividi — The Secret Invitation */}
+            {/* 18. Super Visione (Traguardo) */}
             <ShadowInvite />
 
-            {/* 8. Chiusura — The Final Trap */}
+            {/* 19. La Trappola Morbida */}
             <div id="contatto" className="scroll-mt-20">
               <ClosingCTA onEnter={goToLogin} />
             </div>
