@@ -54,7 +54,38 @@ export default function EtherealPresence() {
             {/* Ambient depth glow behind presence */}
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full bg-amber/[0.06] blur-[150px] pointer-events-none" />
 
-            {/* The Ethereal Being */}
+            {/* Flanking Seeker images — desktop only */}
+            <motion.div
+                initial={{ opacity: 0, x: -40 }}
+                animate={{ opacity: 0.6, x: 0 }}
+                transition={{ duration: 2, delay: 1.5 }}
+                className="hidden xl:block absolute left-0 top-1/2 -translate-y-1/2 w-[280px]"
+            >
+                <div className="relative rounded-r-3xl overflow-hidden" style={{ maskImage: 'linear-gradient(to right, transparent, black 20%, black 70%, transparent)' }}>
+                    <img
+                        src="/images/seeker-left.png"
+                        alt=""
+                        className="w-full h-auto object-cover opacity-70"
+                    />
+                </div>
+            </motion.div>
+
+            <motion.div
+                initial={{ opacity: 0, x: 40 }}
+                animate={{ opacity: 0.6, x: 0 }}
+                transition={{ duration: 2, delay: 2 }}
+                className="hidden xl:block absolute right-0 top-1/2 -translate-y-1/2 w-[280px]"
+            >
+                <div className="relative rounded-l-3xl overflow-hidden" style={{ maskImage: 'linear-gradient(to left, transparent, black 20%, black 70%, transparent)' }}>
+                    <img
+                        src="/images/seeker-right.png"
+                        alt=""
+                        className="w-full h-auto object-cover opacity-70"
+                    />
+                </div>
+            </motion.div>
+
+            {/* The Ethereal Being — center */}
             <AnimatePresence>
                 {showPresence && (
                     <motion.div
@@ -67,9 +98,9 @@ export default function EtherealPresence() {
                         <motion.div
                             animate={{
                                 filter: [
-                                    'brightness(1) drop-shadow(0 0 30px rgba(196,154,42,0.2))',
-                                    'brightness(1.08) drop-shadow(0 0 50px rgba(196,154,42,0.35))',
-                                    'brightness(1) drop-shadow(0 0 30px rgba(196,154,42,0.2))'
+                                    'brightness(1) drop-shadow(0 0 30px rgba(212,168,64,0.2))',
+                                    'brightness(1.08) drop-shadow(0 0 50px rgba(212,168,64,0.35))',
+                                    'brightness(1) drop-shadow(0 0 30px rgba(212,168,64,0.2))'
                                 ]
                             }}
                             transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
@@ -93,7 +124,7 @@ export default function EtherealPresence() {
                         </motion.div>
 
                         {/* Typewriter Text — The Guardian speaks */}
-                        <div className="text-center h-24 flex flex-col items-center justify-start">
+                        <div className="text-center h-24 flex flex-col items-center justify-start px-6">
                             <AnimatePresence mode="wait">
                                 <motion.p
                                     key={currentLine}
@@ -101,7 +132,7 @@ export default function EtherealPresence() {
                                     animate={{ opacity: 1, y: 0 }}
                                     exit={{ opacity: 0, y: -10 }}
                                     transition={{ duration: 0.6 }}
-                                    className="text-xl md:text-2xl font-display font-light text-text-warm tracking-wide"
+                                    className="text-xl md:text-2xl font-display font-light text-text-warm tracking-wide max-w-2xl"
                                 >
                                     {displayedText}
                                     {isTyping && (
