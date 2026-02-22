@@ -18,6 +18,8 @@ import LuminelOnboarding from './components/Landing/LuminelOnboarding';
 import EtherealPresence from './components/Landing/EtherealPresence';
 import GuardianSection from './components/Landing/GuardianSection';
 import InteractiveCursor from './components/Landing/InteractiveCursor';
+import ForWhoSection from './components/Landing/ForWhoSection';
+import TrustSection from './components/Landing/TrustSection';
 import LoginPage from './components/Auth/LoginPage';
 import RegisterPage from './components/Auth/RegisterPage';
 import RecoveryPage from './components/Auth/RecoveryPage';
@@ -195,8 +197,39 @@ function App() {
               <ParadigmSection />
             </div>
 
-            {/* 5.5 Voci nella Luce — Social Proof (The Whispers of Those Who Found Light) */}
+            {/* 5.5 Voci nella Luce — Social Proof */}
             <SocialProofSection />
+
+            {/* 5.6 Seconda CTA contestuale — "Ora è il tuo turno" */}
+            <section className="py-16 md:py-20 bg-space-deep text-center">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                className="max-w-lg mx-auto px-6 space-y-5"
+              >
+                <p className="text-2xl md:text-3xl font-display font-600 text-text-warm">
+                  Ora è il tuo turno.
+                </p>
+                <p className="text-sm text-text-muted font-light">
+                  15 messaggi gratuiti, oggi. Nessuna carta di credito.
+                </p>
+                <motion.button
+                  onClick={goToLogin}
+                  whileHover={{ scale: 1.03, boxShadow: '0 0 40px rgba(196,154,42,0.2)' }}
+                  whileTap={{ scale: 0.97 }}
+                  className="px-10 py-4 bg-gradient-to-r from-amber to-amber-dim text-white font-display font-bold uppercase tracking-[0.12em] text-sm rounded-xl shadow-xl"
+                >
+                  Entra nel tuo Spazio
+                </motion.button>
+              </motion.div>
+            </section>
+
+            {/* 5.7 Sicurezza — Trust Section */}
+            <TrustSection />
+
+            {/* 5.8 Per chi è / Per chi non è */}
+            <ForWhoSection />
 
             {/* 6. Pricing — The Premium Filter */}
             <div id="piani" className="scroll-mt-20">

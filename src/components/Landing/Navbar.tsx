@@ -59,11 +59,8 @@ export default function Navbar({ onEnter }: { onEnter: () => void }) {
                         onClick={() => scrollTo('hero')}
                         className="flex items-center gap-3 group"
                     >
-                        {/* Mini Orb instead of favicon */}
-                        <div className="w-8 h-8 rounded-full bg-gradient-to-br from-amber-glow via-amber to-amber-dim shadow-lg shadow-amber/20 group-hover:shadow-amber/40 transition-shadow relative">
-                            <div className="absolute inset-0 rounded-full bg-white/20 blur-[2px]" />
-                            <div className="absolute top-1.5 left-2 w-2 h-1.5 rounded-full bg-white/40" />
-                        </div>
+                        {/* Orb logo */}
+                        <img src="/luminel-orb.png" alt="Luminel" className="w-8 h-8 rounded-full shadow-lg shadow-amber/20 group-hover:shadow-amber/40 transition-shadow" />
                         <span className="font-display font-600 text-text-warm text-base tracking-[0.08em] uppercase">
                             Luminel
                         </span>

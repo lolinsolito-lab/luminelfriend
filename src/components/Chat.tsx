@@ -148,7 +148,7 @@ export default function Chat({ userProfile }: ChatProps) {
       {/* Header */}
       <header className="flex items-center justify-between px-6 py-4 border-b border-space-border bg-space/80 backdrop-blur-xl sticky top-0 z-10">
         <div className="flex items-center gap-3">
-          <img src="/favicon.svg" alt="Luminel" className="w-9 h-9 rounded-full" />
+          <img src="/luminel-orb.png" alt="Luminel" className="w-9 h-9 rounded-full" />
           <div>
             <h1 className="text-lg font-display font-600 tracking-wide text-text-warm">Luminel</h1>
             <p className="text-[10px] text-amber-dim uppercase tracking-[0.2em] font-display font-500">Online</p>

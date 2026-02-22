@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { motion } from 'motion/react';
 import { ArrowRight } from 'lucide-react';
+import AnimatedOrb from './AnimatedOrb';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -93,26 +94,15 @@ export default function HeroSection({ onEnter }: { onEnter: () => void }) {
                 transition={{ duration: 1.2, ease: "easeOut" }}
                 className="max-w-4xl text-center space-y-10 relative z-10"
             >
-                {/* The Orb — Luminel revealed from clouds */}
+                {/* The Orb — Living, breathing Luminel heart */}
                 <div ref={orbRef}>
                     <motion.div
                         initial={{ opacity: 0, scale: 0.8 }}
                         animate={{ opacity: 1, scale: 1 }}
                         transition={{ duration: 1.5, delay: 0.3 }}
-                        className="flex justify-center mb-8 relative"
+                        className="flex justify-center mb-8"
                     >
-                        {/* Orb radiance ring */}
-                        <div className="absolute inset-0 flex items-center justify-center">
-                            <motion.div
-                                animate={{
-                                    scale: [1, 2, 1],
-                                    opacity: [0.2, 0, 0.2]
-                                }}
-                                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                                className="w-[120px] h-[120px] rounded-full bg-amber/15 blur-xl"
-                            />
-                        </div>
-                        <div className="luminel-orb relative z-10" />
+                        <AnimatedOrb size={120} />
                     </motion.div>
                 </div>
 
@@ -147,7 +137,7 @@ export default function HeroSection({ onEnter }: { onEnter: () => void }) {
                     </motion.button>
 
                     <p className="text-xs text-text-muted uppercase tracking-widest">
-                        Gratuito • Nessuna registrazione • Anonimo
+                        Il tuo primo pensiero in 10 secondi · Senza account · Anonimato totale
                     </p>
                 </div>
             </motion.div>
