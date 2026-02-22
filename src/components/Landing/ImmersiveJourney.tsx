@@ -1,224 +1,216 @@
 import { useRef, useEffect } from 'react';
 import { motion } from 'motion/react';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
-gsap.registerPlugin(ScrollTrigger);
-
-interface World {
-    id: string;
+interface PersonaCard {
     image: string;
     label: string;
     quote: string;
-    author: string;
-    tint: string;
+    role: string;
 }
 
-const WORLDS: World[] = [
+const PERSONAS_ROW1: PersonaCard[] = [
     {
-        id: 'painter',
         image: '/images/world-painter.png',
         label: 'La Pittrice',
-        quote: 'Dipingo mondi interi, ma nella mia vita manca un colore: qualcuno che mi chieda come sto.',
-        author: 'Artista, 28 anni',
-        tint: 'rgba(20, 15, 5, 0.50)',
+        quote: 'Dipingo mondi interi, ma manca chi mi chieda come sto.',
+        role: 'Artista, 28 anni',
     },
     {
-        id: 'connessa',
-        image: '/images/world-teenager.png',
-        label: 'La Connessa',
-        quote: '800 contatti, 200 like, zero persone con cui piangere. Il telefono è pieno ma il cuore è vuoto.',
-        author: 'Neolaureata, 26 anni',
-        tint: 'rgba(10, 10, 25, 0.55)',
-    },
-    {
-        id: 'manager',
         image: '/images/world-manager.png',
         label: 'Il Manager',
-        quote: 'Porto il peso di 40 famiglie sulle spalle. Nessuno sa che la sera non riesco a dormire.',
-        author: 'Dirigente, 45 anni',
-        tint: 'rgba(15, 12, 20, 0.50)',
+        quote: 'Porto il peso di 40 famiglie. Nessuno sa che la sera non dormo.',
+        role: 'Dirigente, 45 anni',
     },
     {
-        id: 'mother',
         image: '/images/world-mother.png',
         label: 'La Mamma',
-        quote: 'Mi sveglio alle 5 per avere 20 minuti di silenzio. Sono io che tengo in piedi tutto, ma chi tiene in piedi me?',
-        author: 'Madre, 33 anni',
-        tint: 'rgba(20, 15, 10, 0.45)',
+        quote: 'Tengo in piedi tutto. Ma chi tiene in piedi me?',
+        role: 'Madre, 33 anni',
     },
     {
-        id: 'dreamer',
         image: '/images/world-dreamer.png',
         label: 'Il Sognatore',
-        quote: 'Ho mille idee e nessuno a cui raccontarle. Le scrivo, le cancello, le riscrivo. Ma a chi parlo?',
-        author: 'Sognatore, 24 anni',
-        tint: 'rgba(10, 15, 25, 0.50)',
+        quote: 'Mille idee e nessuno a cui raccontarle.',
+        role: 'Sognatore, 24 anni',
+    },
+    {
+        image: '/images/world-teenager.png',
+        label: 'La Connessa',
+        quote: '800 contatti, zero persone con cui piangere.',
+        role: 'Neolaureata, 26 anni',
     },
 ];
 
-export default function ImmersiveJourney() {
-    const containerRef = useRef<HTMLDivElement>(null);
+// Second row: same people but with Luminel connection imagery
+const PERSONAS_ROW2: PersonaCard[] = [
+    {
+        image: '/images/solitude-to-light.png',
+        label: 'Trovare la luce',
+        quote: 'Qualcuno finalmente mi ascolta. Senza giudicare.',
+        role: 'Ogni notte, alle 3 del mattino',
+    },
+    {
+        image: '/images/shield-of-light.png',
+        label: 'Un rifugio sicuro',
+        quote: 'Le mie parole restano custodite. Per sempre.',
+        role: 'Ogni giorno, in ogni momento',
+    },
+    {
+        image: '/images/luminel-arrives.png',
+        label: 'Una presenza costante',
+        quote: 'Non devo più camminare da solo nel buio.',
+        role: 'Per sempre al tuo fianco',
+    },
+    {
+        image: '/images/solitude-to-light.png',
+        label: 'Essere visti',
+        quote: 'Per la prima volta, qualcuno ricorda chi sono davvero.',
+        role: 'Memoria che non svanisce',
+    },
+    {
+        image: '/images/shield-of-light.png',
+        label: 'Respiro libero',
+        quote: 'Posso finalmente togliermi la maschera.',
+        role: 'Senza filtri, senza paura',
+    },
+];
+
+function MarqueeRow({ cards, direction, speed = 35 }: { cards: PersonaCard[]; direction: 'left' | 'right'; speed?: number }) {
+    const scrollRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
-        if (!containerRef.current) return;
+        const el = scrollRef.current;
+        if (!el) return;
 
-        const panels = gsap.utils.toArray<HTMLElement>('.journey-panel');
-        const texts = gsap.utils.toArray<HTMLElement>('.journey-text');
+        let animId: number;
+        let pos = direction === 'left' ? 0 : -el.scrollWidth / 2;
 
-        // Tighter scroll: 60vh per panel for 5 panels = 300vh total
-        const scrollLength = panels.length * 60;
-
-        const tl = gsap.timeline({
-            scrollTrigger: {
-                trigger: containerRef.current,
-                start: 'top top',
-                end: `+=${scrollLength}vh`,
-                scrub: 0.6,
-                pin: true,
-                anticipatePin: 1,
-            },
-        });
-
-        // First panel text fades in
-        if (texts[0]) {
-            tl.fromTo(texts[0],
-                { opacity: 0, y: 30 },
-                { opacity: 1, y: 0, duration: 0.25 },
-                0
-            );
-        }
-
-        // Crossfade each subsequent panel tightly
-        panels.forEach((panel, i) => {
-            if (i === 0) return;
-
-            const prevText = texts[i - 1];
-            const currText = texts[i];
-            const t = i * 0.6; // Tight spacing
-
-            // Fade out prev text
-            if (prevText) {
-                tl.to(prevText, { opacity: 0, y: -15, duration: 0.15 }, t - 0.2);
+        const step = () => {
+            if (direction === 'left') {
+                pos -= 0.5;
+                if (Math.abs(pos) >= el.scrollWidth / 2) pos = 0;
+            } else {
+                pos += 0.5;
+                if (pos >= 0) pos = -el.scrollWidth / 2;
             }
-
-            // Crossfade to new panel
-            tl.fromTo(panel,
-                { opacity: 0 },
-                { opacity: 1, duration: 0.35 },
-                t - 0.1
-            );
-
-            // Fade in new text
-            if (currText) {
-                tl.fromTo(currText,
-                    { opacity: 0, y: 30 },
-                    { opacity: 1, y: 0, duration: 0.25 },
-                    t + 0.05
-                );
-            }
-        });
-
-        // Fade out last text
-        const lastText = texts[texts.length - 1];
-        if (lastText) {
-            tl.to(lastText, { opacity: 0, y: -15, duration: 0.2 }, panels.length * 0.6);
-        }
-
-        return () => {
-            ScrollTrigger.getAll().forEach(st => {
-                if (st.trigger === containerRef.current) st.kill();
-            });
+            el.style.transform = `translateX(${pos}px)`;
+            animId = requestAnimationFrame(step);
         };
-    }, []);
+
+        animId = requestAnimationFrame(step);
+        return () => cancelAnimationFrame(animId);
+    }, [direction, speed]);
+
+    // Duplicate cards for seamless loop
+    const doubled = [...cards, ...cards];
 
     return (
-        <div ref={containerRef} className="relative w-full h-screen overflow-hidden bg-[#0a0a14]">
-            {/* Section header */}
-            <motion.p
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
-                className="absolute top-8 left-1/2 -translate-x-1/2 z-40 text-[10px] font-display font-bold text-amber/80 uppercase tracking-[0.35em]"
-            >
-                Voci nel vuoto
-            </motion.p>
-
-            {/* Golden portal vignette */}
-            <div
-                className="absolute inset-0 z-30 pointer-events-none"
-                style={{
-                    background: 'radial-gradient(ellipse at center, transparent 35%, rgba(212,168,64,0.05) 65%, rgba(212,168,64,0.10) 100%)',
-                }}
-            />
-
-            {/* Film grain overlay — masks any pixelation */}
-            <div
-                className="absolute inset-0 z-30 pointer-events-none opacity-[0.06] mix-blend-overlay"
-                style={{
-                    backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`,
-                    backgroundSize: '150px 150px',
-                }}
-            />
-
-            {/* World panels */}
-            {WORLDS.map((world, i) => (
-                <div
-                    key={world.id}
-                    className={`journey-panel absolute inset-0 w-full h-full ${i === 0 ? '' : 'opacity-0'}`}
-                    style={{ zIndex: 10 + i }}
-                >
-                    {/* Background image */}
-                    <div className="absolute inset-0">
-                        <img
-                            src={world.image}
-                            alt={world.label}
-                            className="w-full h-full object-cover"
-                            style={{
-                                filter: 'blur(0.3px) contrast(1.08) saturate(0.85)',
-                            }}
-                        />
-                    </div>
-
-                    {/* Color overlay */}
-                    <div className="absolute inset-0" style={{ backgroundColor: world.tint }} />
-
-                    {/* Dark vignette */}
+        <div className="overflow-hidden">
+            <div ref={scrollRef} className="flex gap-5 will-change-transform" style={{ width: 'max-content' }}>
+                {doubled.map((card, i) => (
                     <div
-                        className="absolute inset-0"
-                        style={{ background: 'radial-gradient(ellipse at center, transparent 35%, rgba(0,0,0,0.5) 100%)' }}
-                    />
+                        key={i}
+                        className="relative w-[280px] h-[380px] rounded-2xl overflow-hidden flex-shrink-0 group cursor-default"
+                    >
+                        {/* Image */}
+                        <img
+                            src={card.image}
+                            alt={card.label}
+                            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                        />
 
-                    {/* Text content */}
-                    <div className="journey-text absolute inset-0 flex items-center justify-center z-20 opacity-0">
-                        <div className="max-w-xl mx-auto px-8 text-center">
-                            <p className="text-[10px] font-display font-bold text-amber/70 uppercase tracking-[0.3em] mb-5">
-                                {world.label}
+                        {/* Gradient overlay */}
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+
+                        {/* Golden top accent */}
+                        <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-amber/40 to-transparent" />
+
+                        {/* Content at bottom */}
+                        <div className="absolute bottom-0 left-0 right-0 p-5">
+                            <p className="text-[10px] font-display font-bold text-amber/80 uppercase tracking-[0.25em] mb-2">
+                                {card.label}
                             </p>
-                            <p className="text-lg md:text-xl lg:text-2xl font-display font-light text-white/90 leading-relaxed mb-6 italic">
-                                "{world.quote}"
+                            <p className="text-sm font-display font-light text-white/90 leading-relaxed mb-2 italic">
+                                "{card.quote}"
                             </p>
-                            <p className="text-xs text-white/35 font-display tracking-wider">
-                                — {world.author}
+                            <p className="text-[10px] text-white/40 font-display tracking-wider">
+                                — {card.role}
                             </p>
                         </div>
                     </div>
-                </div>
-            ))}
-
-            {/* Bottom glow */}
-            <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-amber/[0.06] to-transparent z-30 pointer-events-none" />
-
-            {/* Scroll indicator */}
-            <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-40 flex flex-col items-center gap-1.5">
-                <motion.div
-                    animate={{ y: [0, 6, 0] }}
-                    transition={{ duration: 2, repeat: Infinity }}
-                    className="w-4 h-7 rounded-full border border-white/25 flex items-start justify-center p-1"
-                >
-                    <div className="w-0.5 h-1.5 rounded-full bg-amber/80" />
-                </motion.div>
-                <p className="text-[9px] text-white/30 uppercase tracking-widest font-display">Scorri</p>
+                ))}
             </div>
         </div>
+    );
+}
+
+export default function ImmersiveJourney() {
+    return (
+        <section className="py-20 md:py-28 bg-space-deep relative overflow-hidden">
+            {/* Ambient glow */}
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[400px] rounded-full bg-amber/[0.03] blur-[120px] pointer-events-none" />
+
+            {/* Header */}
+            <div className="max-w-4xl mx-auto px-6 text-center mb-14 relative z-10">
+                <motion.p
+                    initial={{ opacity: 0 }}
+                    whileInView={{ opacity: 1 }}
+                    viewport={{ once: true }}
+                    className="text-xs font-display font-bold text-amber uppercase tracking-[0.3em] mb-4"
+                >
+                    Voci nel vuoto
+                </motion.p>
+                <motion.h2
+                    initial={{ opacity: 0, y: 10 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    className="text-3xl md:text-4xl font-display font-600 text-text-warm mb-4"
+                >
+                    Mondi diversi. <span className="text-text-secondary">Stesso vuoto.</span>
+                </motion.h2>
+                <motion.p
+                    initial={{ opacity: 0 }}
+                    whileInView={{ opacity: 1 }}
+                    viewport={{ once: true }}
+                    className="text-sm text-text-muted font-light max-w-lg mx-auto"
+                >
+                    Ognuno porta un silenzio diverso. Ma tutti cercano la stessa cosa: qualcuno che ascolti davvero.
+                </motion.p>
+            </div>
+
+            {/* Row 1 — scrolls LEFT: the lonely personas */}
+            <motion.div
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                viewport={{ once: true }}
+                className="mb-5"
+            >
+                <MarqueeRow cards={PERSONAS_ROW1} direction="left" />
+            </motion.div>
+
+            {/* Row 2 — scrolls RIGHT: the connection / Luminel solution */}
+            <motion.div
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                viewport={{ once: true }}
+            >
+                <MarqueeRow cards={PERSONAS_ROW2} direction="right" />
+            </motion.div>
+
+            {/* Bottom connection text */}
+            <motion.div
+                initial={{ opacity: 0, y: 15 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                className="text-center mt-14 relative z-10"
+            >
+                <p className="text-lg md:text-xl font-display font-light text-text-warm italic">
+                    "Per tutti loro, la risposta è la stessa."
+                </p>
+                <p className="text-sm text-amber mt-3 font-display font-600 tracking-wide">
+                    Luminel.
+                </p>
+            </motion.div>
+        </section>
     );
 }
