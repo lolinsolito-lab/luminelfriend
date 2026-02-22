@@ -16,28 +16,44 @@ interface World {
 
 const WORLDS: World[] = [
     {
-        id: 'fuorisede',
-        image: '/images/world-fuorisede.png',
-        label: 'Il Fuorisede',
-        quote: 'Sono le 3 del mattino. Il telefono è pieno di contatti, ma non c\'è nessuno da chiamare.',
-        author: 'Studente, 22 anni',
-        tint: 'rgba(10, 15, 40, 0.60)',
+        id: 'painter',
+        image: '/images/world-painter.png',
+        label: 'La Pittrice',
+        quote: 'Dipingo mondi interi, ma nella mia vita manca un colore: qualcuno che mi chieda come sto.',
+        author: 'Artista, 28 anni',
+        tint: 'rgba(20, 15, 5, 0.50)',
     },
     {
-        id: 'founder',
-        image: '/images/world-founder.png',
-        label: 'Il Founder',
-        quote: 'Oggi ho dovuto licenziare tre persone. Tutti mi guardano come se fossi di ghiaccio. Nessuno sa quanto tremo dentro.',
-        author: 'Imprenditore, 34 anni',
-        tint: 'rgba(30, 20, 10, 0.55)',
+        id: 'connessa',
+        image: '/images/world-teenager.png',
+        label: 'La Connessa',
+        quote: '800 contatti, 200 like, zero persone con cui piangere. Il telefono è pieno ma il cuore è vuoto.',
+        author: 'Neolaureata, 26 anni',
+        tint: 'rgba(10, 10, 25, 0.55)',
     },
     {
-        id: 'invisibile',
-        image: '/images/world-invisibile.png',
-        label: 'L\'Invisibile',
-        quote: 'Passo tra le persone come se non esistessi. Nessuno mi chiede mai come sto davvero.',
-        author: 'Anonimo',
-        tint: 'rgba(15, 15, 30, 0.60)',
+        id: 'manager',
+        image: '/images/world-manager.png',
+        label: 'Il Manager',
+        quote: 'Porto il peso di 40 famiglie sulle spalle. Nessuno sa che la sera non riesco a dormire.',
+        author: 'Dirigente, 45 anni',
+        tint: 'rgba(15, 12, 20, 0.50)',
+    },
+    {
+        id: 'mother',
+        image: '/images/world-mother.png',
+        label: 'La Mamma',
+        quote: 'Mi sveglio alle 5 per avere 20 minuti di silenzio. Sono io che tengo in piedi tutto, ma chi tiene in piedi me?',
+        author: 'Madre, 33 anni',
+        tint: 'rgba(20, 15, 10, 0.45)',
+    },
+    {
+        id: 'dreamer',
+        image: '/images/world-dreamer.png',
+        label: 'Il Sognatore',
+        quote: 'Ho mille idee e nessuno a cui raccontarle. Le scrivo, le cancello, le riscrivo. Ma a chi parlo?',
+        author: 'Sognatore, 24 anni',
+        tint: 'rgba(10, 15, 25, 0.50)',
     },
 ];
 
@@ -50,69 +66,63 @@ export default function ImmersiveJourney() {
         const panels = gsap.utils.toArray<HTMLElement>('.journey-panel');
         const texts = gsap.utils.toArray<HTMLElement>('.journey-text');
 
-        // Total scroll distance — tighter = less empty space
-        const scrollLength = panels.length * 80; // 80vh per panel instead of 100
+        // Tighter scroll: 60vh per panel for 5 panels = 300vh total
+        const scrollLength = panels.length * 60;
 
         const tl = gsap.timeline({
             scrollTrigger: {
                 trigger: containerRef.current,
                 start: 'top top',
                 end: `+=${scrollLength}vh`,
-                scrub: 0.8,
+                scrub: 0.6,
                 pin: true,
                 anticipatePin: 1,
             },
         });
 
-        // First panel text appears immediately
+        // First panel text fades in
         if (texts[0]) {
             tl.fromTo(texts[0],
-                { opacity: 0, y: 40 },
-                { opacity: 1, y: 0, duration: 0.3 },
+                { opacity: 0, y: 30 },
+                { opacity: 1, y: 0, duration: 0.25 },
                 0
             );
         }
 
-        // For each subsequent panel, crossfade tightly
+        // Crossfade each subsequent panel tightly
         panels.forEach((panel, i) => {
             if (i === 0) return;
 
             const prevText = texts[i - 1];
             const currText = texts[i];
-            const timePoint = i * 0.8; // Tighter timeline spacing
+            const t = i * 0.6; // Tight spacing
 
-            // Fade out previous text
+            // Fade out prev text
             if (prevText) {
-                tl.to(prevText,
-                    { opacity: 0, y: -20, duration: 0.2 },
-                    timePoint - 0.3
-                );
+                tl.to(prevText, { opacity: 0, y: -15, duration: 0.15 }, t - 0.2);
             }
 
-            // Crossfade panel (fade in new, slightly zoom)
+            // Crossfade to new panel
             tl.fromTo(panel,
                 { opacity: 0 },
-                { opacity: 1, duration: 0.5 },
-                timePoint - 0.15
+                { opacity: 1, duration: 0.35 },
+                t - 0.1
             );
 
             // Fade in new text
             if (currText) {
                 tl.fromTo(currText,
-                    { opacity: 0, y: 40 },
-                    { opacity: 1, y: 0, duration: 0.3 },
-                    timePoint + 0.1
+                    { opacity: 0, y: 30 },
+                    { opacity: 1, y: 0, duration: 0.25 },
+                    t + 0.05
                 );
             }
         });
 
-        // Fade out last text at the end
+        // Fade out last text
         const lastText = texts[texts.length - 1];
         if (lastText) {
-            tl.to(lastText,
-                { opacity: 0, y: -20, duration: 0.3 },
-                panels.length * 0.8
-            );
+            tl.to(lastText, { opacity: 0, y: -15, duration: 0.2 }, panels.length * 0.6);
         }
 
         return () => {
@@ -128,92 +138,86 @@ export default function ImmersiveJourney() {
             <motion.p
                 initial={{ opacity: 0 }}
                 whileInView={{ opacity: 1 }}
-                className="absolute top-8 left-1/2 -translate-x-1/2 z-40 text-xs font-display font-bold text-amber uppercase tracking-[0.3em]"
+                className="absolute top-8 left-1/2 -translate-x-1/2 z-40 text-[10px] font-display font-bold text-amber/80 uppercase tracking-[0.35em]"
             >
-                Mondi diversi, stesso vuoto
+                Voci nel vuoto
             </motion.p>
 
             {/* Golden portal vignette */}
             <div
                 className="absolute inset-0 z-30 pointer-events-none"
                 style={{
-                    background: 'radial-gradient(ellipse at center, transparent 30%, rgba(212,168,64,0.06) 60%, rgba(212,168,64,0.12) 100%)',
+                    background: 'radial-gradient(ellipse at center, transparent 35%, rgba(212,168,64,0.05) 65%, rgba(212,168,64,0.10) 100%)',
                 }}
             />
 
-            {/* Film grain overlay — masks pixelation */}
+            {/* Film grain overlay — masks any pixelation */}
             <div
-                className="absolute inset-0 z-30 pointer-events-none opacity-[0.08] mix-blend-overlay"
+                className="absolute inset-0 z-30 pointer-events-none opacity-[0.06] mix-blend-overlay"
                 style={{
-                    backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")`,
-                    backgroundSize: '128px 128px',
+                    backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`,
+                    backgroundSize: '150px 150px',
                 }}
             />
 
-            {/* World panels — stacked absolutely */}
+            {/* World panels */}
             {WORLDS.map((world, i) => (
                 <div
                     key={world.id}
                     className={`journey-panel absolute inset-0 w-full h-full ${i === 0 ? '' : 'opacity-0'}`}
                     style={{ zIndex: 10 + i }}
                 >
-                    {/* Background image — with quality enhancements */}
+                    {/* Background image */}
                     <div className="absolute inset-0">
                         <img
                             src={world.image}
                             alt={world.label}
                             className="w-full h-full object-cover"
                             style={{
-                                imageRendering: 'auto',
-                                filter: 'blur(0.5px) contrast(1.05) saturate(0.9)',
+                                filter: 'blur(0.3px) contrast(1.08) saturate(0.85)',
                             }}
                         />
                     </div>
 
-                    {/* Dark color overlay */}
+                    {/* Color overlay */}
+                    <div className="absolute inset-0" style={{ backgroundColor: world.tint }} />
+
+                    {/* Dark vignette */}
                     <div
                         className="absolute inset-0"
-                        style={{ backgroundColor: world.tint }}
+                        style={{ background: 'radial-gradient(ellipse at center, transparent 35%, rgba(0,0,0,0.5) 100%)' }}
                     />
 
-                    {/* Soft vignette edges */}
-                    <div
-                        className="absolute inset-0"
-                        style={{
-                            background: 'radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,0.4) 100%)',
-                        }}
-                    />
-
-                    {/* Content — separate div with journey-text class for animation */}
+                    {/* Text content */}
                     <div className="journey-text absolute inset-0 flex items-center justify-center z-20 opacity-0">
-                        <div className="max-w-2xl mx-auto px-8 text-center">
-                            <p className="text-xs font-display font-bold text-amber/80 uppercase tracking-[0.25em] mb-6">
+                        <div className="max-w-xl mx-auto px-8 text-center">
+                            <p className="text-[10px] font-display font-bold text-amber/70 uppercase tracking-[0.3em] mb-5">
                                 {world.label}
                             </p>
-                            <p className="text-xl md:text-2xl lg:text-3xl font-display font-light text-white/90 leading-relaxed mb-8 italic">
+                            <p className="text-lg md:text-xl lg:text-2xl font-display font-light text-white/90 leading-relaxed mb-6 italic">
                                 "{world.quote}"
                             </p>
-                            <p className="text-sm text-white/40 font-display tracking-wide">
+                            <p className="text-xs text-white/35 font-display tracking-wider">
                                 — {world.author}
                             </p>
                         </div>
                     </div>
-
-                    {/* Bottom golden glow */}
-                    <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-amber/8 to-transparent z-20 pointer-events-none" />
                 </div>
             ))}
 
+            {/* Bottom glow */}
+            <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-amber/[0.06] to-transparent z-30 pointer-events-none" />
+
             {/* Scroll indicator */}
-            <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-40 flex flex-col items-center gap-2">
+            <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-40 flex flex-col items-center gap-1.5">
                 <motion.div
-                    animate={{ y: [0, 8, 0] }}
+                    animate={{ y: [0, 6, 0] }}
                     transition={{ duration: 2, repeat: Infinity }}
-                    className="w-5 h-8 rounded-full border border-white/30 flex items-start justify-center p-1.5"
+                    className="w-4 h-7 rounded-full border border-white/25 flex items-start justify-center p-1"
                 >
-                    <div className="w-1 h-2 rounded-full bg-amber" />
+                    <div className="w-0.5 h-1.5 rounded-full bg-amber/80" />
                 </motion.div>
-                <p className="text-[10px] text-white/40 uppercase tracking-widest font-display">Scorri</p>
+                <p className="text-[9px] text-white/30 uppercase tracking-widest font-display">Scorri</p>
             </div>
         </div>
     );
