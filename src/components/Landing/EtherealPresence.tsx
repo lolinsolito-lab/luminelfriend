@@ -54,38 +54,7 @@ export default function EtherealPresence() {
             {/* Ambient depth glow behind presence */}
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full bg-amber/[0.06] blur-[150px] pointer-events-none" />
 
-            {/* Flanking Seeker images — desktop only */}
-            <motion.div
-                initial={{ opacity: 0, x: -40 }}
-                animate={{ opacity: 0.6, x: 0 }}
-                transition={{ duration: 2, delay: 1.5 }}
-                className="hidden xl:block absolute left-0 top-1/2 -translate-y-1/2 w-[280px]"
-            >
-                <div className="relative rounded-r-3xl overflow-hidden" style={{ maskImage: 'linear-gradient(to right, transparent, black 20%, black 70%, transparent)' }}>
-                    <img
-                        src="/images/seeker-left.png"
-                        alt=""
-                        className="w-full h-auto object-cover opacity-70"
-                    />
-                </div>
-            </motion.div>
-
-            <motion.div
-                initial={{ opacity: 0, x: 40 }}
-                animate={{ opacity: 0.6, x: 0 }}
-                transition={{ duration: 2, delay: 2 }}
-                className="hidden xl:block absolute right-0 top-1/2 -translate-y-1/2 w-[280px]"
-            >
-                <div className="relative rounded-l-3xl overflow-hidden" style={{ maskImage: 'linear-gradient(to left, transparent, black 20%, black 70%, transparent)' }}>
-                    <img
-                        src="/images/seeker-right.png"
-                        alt=""
-                        className="w-full h-auto object-cover opacity-70"
-                    />
-                </div>
-            </motion.div>
-
-            {/* The Ethereal Being — center */}
+            {/* The Ethereal Being */}
             <AnimatePresence>
                 {showPresence && (
                     <motion.div

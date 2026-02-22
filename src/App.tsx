@@ -22,6 +22,7 @@ import ForWhoSection from './components/Landing/ForWhoSection';
 import TrustSection from './components/Landing/TrustSection';
 import HowItWorksSection from './components/Landing/HowItWorksSection';
 import FAQSection from './components/Landing/FAQSection';
+import ImmersiveJourney from './components/Landing/ImmersiveJourney';
 import LoginPage from './components/Auth/LoginPage';
 import RegisterPage from './components/Auth/RegisterPage';
 import RecoveryPage from './components/Auth/RecoveryPage';
@@ -167,6 +168,9 @@ function App() {
 
             {/* 0. La Presenza — The Ethereal Guardian greets you */}
             <EtherealPresence />
+
+            {/* 0.5 Il Viaggio Immersivo — Cinematic portal through 3 worlds */}
+            <ImmersiveJourney />
 
             {/* 1. L'Ingresso — The Hook */}
             <div id="hero" className="scroll-mt-20">
