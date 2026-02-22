@@ -19,16 +19,16 @@
   --color-space-border: #E2D9CC;
   /* Warm pearl border */
 
-  --color-amber: #C49A2A;
-  /* Rich Gold */
-  --color-amber-dim: #A47E1E;
-  /* Deep Gold */
-  --color-amber-glow: #D4AB3A;
-  /* Bright Gold */
+  --color-amber: #D4A840;
+  /* Luminous Gold */
+  --color-amber-dim: #C49A2A;
+  /* Warm Gold */
+  --color-amber-glow: #E8BF4A;
+  /* Champagne Bright */
 
-  --color-champagne: #B89B6A;
+  --color-champagne: #C9A96E;
   /* Warm champagne accent */
-  --color-champagne-dim: #9A825A;
+  --color-champagne-dim: #B08E58;
   /* Muted champagne */
 
   /* Text — Dark warm tones on light */
@@ -54,14 +54,14 @@ body {
 }
 
 .text-amber-gradient {
-  background: linear-gradient(135deg, #D4AB3A 0%, #C49A2A 50%, #A47E1E 100%);
+  background: linear-gradient(135deg, #E8BF4A 0%, #D4A840 50%, #C49A2A 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
 .text-warm-gradient {
-  background: linear-gradient(180deg, #2A2118 0%, #4A3D30 40%, #C49A2A 100%);
+  background: linear-gradient(180deg, #2A2118 0%, #4A3D30 40%, #D4A840 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
