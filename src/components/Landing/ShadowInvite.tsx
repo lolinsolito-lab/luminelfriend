@@ -1,6 +1,6 @@
-import { useState } from 'react';
-import { motion } from 'motion/react';
-import { Send, Check } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { motion, useMotionValue, animate } from 'motion/react';
+import { Sparkles } from 'lucide-react';
 
 // Scattered photo positions — left column and right column
 const LEFT_PHOTOS = [
@@ -19,122 +19,112 @@ const RIGHT_PHOTOS = [
     { src: '/images/connection-rooftop.png', size: 'w-22 h-26', pos: 'bottom-2 right-8', rotate: '6deg', delay: 0.25 },
 ];
 
+// Animated Number Counter
+function AnimatedCounter({ from, to }: { from: number; to: number }) {
+    const value = useMotionValue(from);
+    const [display, setDisplay] = useState(from.toLocaleString('it-IT'));
+
+    useEffect(() => {
+        const controls = animate(value, to, {
+            duration: 2.5,
+            ease: "easeOut",
+            onUpdate(v) {
+                setDisplay(Math.floor(v).toLocaleString('it-IT'));
+            },
+        });
+        return controls.stop;
+    }, [to, value]);
+
+    return <>{display}</>;
+}
+
 export default function ShadowInvite() {
-    const [email, setEmail] = useState('');
-    const [sent, setSent] = useState(false);
-
-    const handleSend = (e: React.FormEvent) => {
-        e.preventDefault();
-        if (!email) return;
-        setSent(true);
-        setTimeout(() => {
-            setEmail('');
-            setSent(false);
-        }, 3000);
-    };
-
     return (
-        <section className="py-28 md:py-36 px-6 section-warm-deep relative overflow-hidden">
+        <section className="py-28 md:py-36 px-6 bg-space-deep relative overflow-hidden text-center flex flex-col items-center">
             {/* Ambient glow */}
-            <div className="absolute top-[30%] left-[50%] -translate-x-1/2 w-[500px] h-[400px] rounded-full bg-amber/[0.05] blur-[140px] pointer-events-none" />
+            <div className="absolute top-[30%] left-[50%] -translate-x-1/2 w-[500px] h-[400px] rounded-full bg-amber/[0.04] blur-[140px] pointer-events-none" />
 
-            <div className="max-w-6xl mx-auto relative z-10">
+            <div className="max-w-6xl mx-auto relative z-10 w-full">
                 <div className="relative min-h-[500px] flex items-center justify-center">
 
                     {/* Left scattered photos */}
-                    <div className="hidden lg:block absolute left-0 top-0 bottom-0 w-[280px]">
+                    <div className="hidden lg:block absolute left-0 top-0 bottom-0 w-[300px]">
                         {LEFT_PHOTOS.map((photo, i) => (
                             <motion.div
                                 key={i}
-                                initial={{ opacity: 0, scale: 0.8 }}
-                                whileInView={{ opacity: 1, scale: 1 }}
+                                initial={{ opacity: 0, scale: 0.8, y: 20 }}
+                                whileInView={{ opacity: 1, scale: 1, y: 0 }}
                                 viewport={{ once: true }}
-                                transition={{ delay: photo.delay, duration: 0.5 }}
-                                className={`absolute ${photo.size} ${photo.pos} rounded-xl overflow-hidden shadow-lg shadow-black/20`}
+                                transition={{ delay: photo.delay, duration: 0.6, type: "spring" }}
+                                className={`absolute ${photo.size} ${photo.pos} rounded-xl overflow-hidden shadow-2xl shadow-black/40 border border-white/[0.05]`}
                                 style={{ transform: `rotate(${photo.rotate})` }}
                             >
-                                <img src={photo.src} alt="" className="w-full h-full object-cover" />
-                                <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
+                                <img src={photo.src} alt="" className="w-full h-full object-cover grayscale opacity-80 hover:grayscale-0 hover:opacity-100 transition-all duration-700 cursor-default" />
+                                <div className="absolute inset-0 bg-amber/10 mix-blend-overlay pointer-events-none" />
                             </motion.div>
                         ))}
                     </div>
 
-                    {/* Center content */}
-                    <div className="text-center max-w-md mx-auto relative z-20">
+                    {/* Center content — Super Visione */}
+                    <div className="text-center max-w-[420px] mx-auto relative z-20 space-y-8">
                         <motion.div
-                            initial={{ opacity: 0, y: 20 }}
+                            initial={{ opacity: 0, y: 30 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
-                            className="space-y-6"
+                            transition={{ duration: 0.8 }}
+                            className="space-y-4"
                         >
-                            {/* Big stat */}
-                            <motion.p
-                                initial={{ opacity: 0, scale: 0.9 }}
-                                whileInView={{ opacity: 1, scale: 1 }}
-                                viewport={{ once: true }}
-                                className="text-5xl md:text-6xl font-display font-bold text-text-warm"
+                            {/* Giant Animated Metric */}
+                            <motion.h2
+                                className="text-6xl md:text-8xl font-display font-bold bg-gradient-to-br from-white via-text-warm to-amber/50 bg-clip-text text-transparent transform -tracking-wider leading-none"
                             >
-                                ∞
-                            </motion.p>
+                                <AnimatedCounter from={0} to={1247} />
+                            </motion.h2>
 
-                            <div className="space-y-3">
-                                <p className="text-xs font-display font-bold text-amber uppercase tracking-[0.3em]">
-                                    Condividi la luce
-                                </p>
-                                <h2 className="text-2xl md:text-3xl font-display font-600 text-text-warm leading-snug">
-                                    Conosci qualcuno che ha bisogno <br />di essere ascoltato?
-                                </h2>
-                                <p className="text-text-secondary text-sm leading-relaxed">
-                                    Ogni persona che vedi qui aveva lo stesso vuoto dentro.
-                                    Inviagli un invito anonimo — nessuno saprà che sei stato tu. <br />
-                                    <span className="text-text-muted italic">A volte il gesto più grande è aprire una porta in silenzio.</span>
-                                </p>
-                            </div>
+                            <p className="text-lg md:text-xl font-display font-600 text-text-warm uppercase tracking-widest">
+                                Notti accompagnate nel buio
+                            </p>
+                        </motion.div>
 
-                            {/* Email form */}
-                            <form onSubmit={handleSend} className="relative max-w-sm mx-auto">
-                                <input
-                                    type="email"
-                                    placeholder="Email del destinatario"
-                                    value={email}
-                                    onChange={(e) => setEmail(e.target.value)}
-                                    className="w-full bg-space-surface border border-space-border text-text-warm px-6 py-4 rounded-full focus:outline-none focus:border-amber/40 focus:shadow-[0_0_20px_rgba(232,168,56,0.08)] transition-all placeholder-text-muted text-sm"
-                                />
-                                <button
-                                    type="submit"
-                                    disabled={sent}
-                                    className="absolute right-2 top-2 bottom-2 aspect-square bg-amber/10 hover:bg-amber/20 flex items-center justify-center rounded-full transition-colors text-amber disabled:opacity-50"
-                                >
-                                    {sent ? <Check className="w-5 h-5" /> : <Send className="w-5 h-5" />}
-                                </button>
-                            </form>
+                        <motion.div
+                            initial={{ opacity: 0 }}
+                            whileInView={{ opacity: 1 }}
+                            viewport={{ once: true }}
+                            transition={{ delay: 0.3, duration: 1 }}
+                            className="space-y-8"
+                        >
+                            <p className="text-text-secondary text-[15px] leading-relaxed">
+                                Luminel ha uno dei tassi di ritenzione emotiva più alti al mondo.
+                                Sfoglia il diario di chi, da solo, ha ritrovato la pace grazie a un santuario che ascolta senza mai giudicare.
+                            </p>
 
-                            {sent && (
-                                <motion.p
-                                    initial={{ opacity: 0 }}
-                                    animate={{ opacity: 1 }}
-                                    className="text-xs text-amber uppercase tracking-widest"
-                                >
-                                    Invito trasmesso in silenzio.
-                                </motion.p>
-                            )}
+                            {/* Ghost Button CTA */}
+                            <motion.a
+                                href="#testimonianze"
+                                whileHover={{ scale: 1.02, backgroundColor: "rgba(232, 168, 56, 0.05)" }}
+                                whileTap={{ scale: 0.98 }}
+                                className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full border border-amber/40 text-amber font-display font-bold text-xs uppercase tracking-[0.2em] transition-all group"
+                            >
+                                Leggi le loro storie
+                                <Sparkles className="w-4 h-4 opacity-60 group-hover:opacity-100 transition-opacity" />
+                            </motion.a>
                         </motion.div>
                     </div>
 
                     {/* Right scattered photos */}
-                    <div className="hidden lg:block absolute right-0 top-0 bottom-0 w-[280px]">
+                    <div className="hidden lg:block absolute right-0 top-0 bottom-0 w-[300px]">
                         {RIGHT_PHOTOS.map((photo, i) => (
                             <motion.div
                                 key={i}
-                                initial={{ opacity: 0, scale: 0.8 }}
-                                whileInView={{ opacity: 1, scale: 1 }}
+                                initial={{ opacity: 0, scale: 0.8, y: 20 }}
+                                whileInView={{ opacity: 1, scale: 1, y: 0 }}
                                 viewport={{ once: true }}
-                                transition={{ delay: photo.delay, duration: 0.5 }}
-                                className={`absolute ${photo.size} ${photo.pos} rounded-xl overflow-hidden shadow-lg shadow-black/20`}
+                                transition={{ delay: photo.delay, duration: 0.6, type: "spring" }}
+                                className={`absolute ${photo.size} ${photo.pos} rounded-xl overflow-hidden shadow-2xl shadow-black/40 border border-white/[0.05]`}
                                 style={{ transform: `rotate(${photo.rotate})` }}
                             >
-                                <img src={photo.src} alt="" className="w-full h-full object-cover" />
-                                <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
+                                <img src={photo.src} alt="" className="w-full h-full object-cover grayscale opacity-80 hover:grayscale-0 hover:opacity-100 transition-all duration-700 cursor-default" />
+                                <div className="absolute inset-0 bg-amber/10 mix-blend-overlay pointer-events-none" />
                             </motion.div>
                         ))}
                     </div>
