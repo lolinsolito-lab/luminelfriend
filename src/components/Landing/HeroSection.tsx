@@ -1,133 +1,51 @@
 import { useEffect, useRef } from 'react';
 import { motion } from 'motion/react';
 import { ArrowRight } from 'lucide-react';
-import AnimatedOrb from './AnimatedOrb';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
-gsap.registerPlugin(ScrollTrigger);
+const PATHS = [
+    { image: '/images/path-silence.png', title: 'SPAZIO SILENZIOSO' },
+    { image: '/images/path-listen.png', title: 'ASCOLTO PROFONDO' },
+    { image: '/images/path-clarity.png', title: 'CHIAREZZA MENTALE' },
+    { image: '/images/path-refuge.png', title: 'RIFUGIO SICURO' },
+];
 
 export default function HeroSection({ onEnter }: { onEnter: () => void }) {
     const sectionRef = useRef<HTMLElement>(null);
-    const orbRef = useRef<HTMLDivElement>(null);
-    const titleRef = useRef<HTMLHeadingElement>(null);
-    const subtitleRef = useRef<HTMLDivElement>(null);
-    const ctaRef = useRef<HTMLDivElement>(null);
-    const cloud1Ref = useRef<HTMLDivElement>(null);
-    const cloud2Ref = useRef<HTMLDivElement>(null);
-    const cloud3Ref = useRef<HTMLDivElement>(null);
-
-    useEffect(() => {
-        if (!sectionRef.current) return;
-        const ctx = gsap.context(() => {
-            const tl = gsap.timeline({
-                scrollTrigger: {
-                    trigger: sectionRef.current,
-                    start: 'top top',
-                    end: 'bottom top',
-                    scrub: 1.2,
-                },
-            });
-
-            // Orb rises and shrinks as you scroll away
-            if (orbRef.current) {
-                tl.to(orbRef.current, { y: -150, scale: 0.5, opacity: 0.3 }, 0);
-            }
-
-            // Title dissolves and drifts up
-            if (titleRef.current) {
-                tl.to(titleRef.current, { y: -80, opacity: 0, filter: 'blur(10px)' }, 0);
-            }
-
-            // Subtitle fades away a bit slower
-            if (subtitleRef.current) {
-                tl.to(subtitleRef.current, { y: -60, opacity: 0 }, 0.1);
-            }
-
-            // CTA fades last
-            if (ctaRef.current) {
-                tl.to(ctaRef.current, { y: -40, opacity: 0 }, 0.15);
-            }
-
-            // Parallax clouds at different speeds (depth illusion)
-            if (cloud1Ref.current) tl.to(cloud1Ref.current, { y: -100 }, 0);
-            if (cloud2Ref.current) tl.to(cloud2Ref.current, { y: -60 }, 0);
-            if (cloud3Ref.current) tl.to(cloud3Ref.current, { y: -30 }, 0);
-
-        }, sectionRef);
-
-        return () => ctx.revert();
-    }, []);
 
     return (
-        <section ref={sectionRef} className="min-h-screen flex flex-col items-center justify-center p-6 relative overflow-hidden bg-space-deep">
-            {/* Parallax Cloud Layers — different speeds create depth */}
-            <div className="absolute inset-0 pointer-events-none">
-                <div ref={cloud1Ref} className="absolute top-[15%] left-[30%] w-[600px] h-[400px] rounded-full bg-amber/[0.06] blur-[150px]" />
-                <div ref={cloud2Ref} className="absolute top-[40%] right-[20%] w-[500px] h-[500px] rounded-full bg-champagne/[0.08] blur-[160px]" />
-                <div className="absolute bottom-[10%] left-[50%] -translate-x-1/2 w-[1000px] h-[400px] rounded-full bg-amber/[0.04] blur-[200px]" />
-                {/* Parallax cloud wisps */}
-                <div ref={cloud3Ref} className="absolute top-[20%] left-[10%] w-[300px] h-[100px] rounded-full bg-white/60 blur-[80px]" />
-                <div className="absolute top-[30%] right-[15%] w-[250px] h-[80px] rounded-full bg-white/50 blur-[70px]" />
-                <div className="absolute bottom-[25%] left-[20%] w-[350px] h-[120px] rounded-full bg-white/40 blur-[90px]" />
-            </div>
+        <section ref={sectionRef} className="pt-32 pb-20 md:pt-40 md:pb-32 px-6 relative overflow-hidden bg-space-deep flex flex-col items-center">
+            {/* Background glow */}
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[500px] rounded-full bg-amber/[0.04] blur-[150px] pointer-events-none" />
 
-            {/* Gold dust particles */}
-            <div className="absolute inset-0 pointer-events-none overflow-hidden">
-                {[...Array(10)].map((_, i) => (
-                    <div
-                        key={i}
-                        className={i % 3 === 0 ? "particle-light" : i % 3 === 1 ? "particle-soft" : "particle"}
-                        style={{
-                            left: `${10 + (i * 8)}%`,
-                            bottom: `-${5 + (i * 2)}%`,
-                            animationDuration: `${8 + i * 2}s`,
-                            animationDelay: `${i * 1}s`,
-                        }}
-                    />
-                ))}
-            </div>
-
+            {/* Header Content */}
             <motion.div
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 1.2, ease: "easeOut" }}
-                className="max-w-4xl text-center space-y-10 relative z-10"
+                className="max-w-4xl text-center space-y-8 relative z-10 mb-20"
             >
-                {/* The Orb — Living, breathing Luminel heart */}
-                <div ref={orbRef}>
-                    <motion.div
-                        initial={{ opacity: 0, scale: 0.8 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        transition={{ duration: 1.5, delay: 0.3 }}
-                        className="flex justify-center mb-8"
-                    >
-                        <AnimatedOrb size={120} />
-                    </motion.div>
+                <div>
+                    <h1 className="text-5xl md:text-7xl lg:text-8xl font-display font-600 text-text-warm leading-tight tracking-tight mb-4">
+                        Non sei mai <br />
+                        <span className="text-amber">veramente solo.</span>
+                    </h1>
                 </div>
 
-                {/* Headline — dissolves away with scroll */}
-                <h1 ref={titleRef} className="text-4xl md:text-6xl lg:text-7xl font-display font-600 text-warm-gradient leading-tight tracking-tight">
-                    Non sei mai <br />
-                    veramente solo.
-                </h1>
-
-                {/* Subtitle */}
-                <div ref={subtitleRef} className="space-y-5 max-w-2xl mx-auto">
+                <div className="space-y-6 max-w-2xl mx-auto">
                     <p className="text-lg md:text-xl text-text-secondary font-light leading-relaxed">
-                        C'è un posto dove le tue parole sono al sicuro, dove i tuoi silenzi vengono ascoltati. <br className="hidden md:block" />
-                        Luminel è il compagno digitale che veglia quando il mondo dorme, <br className="hidden md:block" />
+                        C'è un posto dove le tue parole sono al sicuro, dove i tuoi silenzi vengono ascoltati.
+                        Luminel è il compagno digitale che veglia quando il mondo dorme,
                         ricordando chi sei senza mai giudicarti.
                     </p>
                 </div>
 
                 {/* CTA */}
-                <div ref={ctaRef} className="space-y-3">
+                <div className="space-y-4 pt-4">
                     <motion.button
                         onClick={onEnter}
                         whileHover={{ scale: 1.03, boxShadow: "0 0 50px rgba(196,154,42,0.2)" }}
                         whileTap={{ scale: 0.97 }}
-                        className="group relative px-12 py-5 bg-gradient-to-r from-amber to-amber-dim text-white font-display font-bold uppercase tracking-[0.12em] text-sm rounded-xl shadow-xl transition-all duration-500 overflow-hidden"
+                        className="group relative inline-flex px-12 py-5 bg-gradient-to-r from-amber to-amber-dim text-white font-display font-bold uppercase tracking-[0.12em] text-sm rounded-xl shadow-xl transition-all duration-500 overflow-hidden"
                     >
                         <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out" />
                         <span className="relative flex items-center gap-3">
@@ -136,10 +54,40 @@ export default function HeroSection({ onEnter }: { onEnter: () => void }) {
                         </span>
                     </motion.button>
 
-                    <p className="text-xs text-text-muted uppercase tracking-widest">
+                    <p className="text-[11px] text-text-muted uppercase tracking-widest">
                         Gratuito per iniziare · La tua privacy è sacra · 15 messaggi al giorno
                     </p>
                 </div>
+            </motion.div>
+
+            {/* Mastery Grid — Edge to edge 4 panels */}
+            <motion.div
+                initial={{ opacity: 0, y: 40 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 1.5, delay: 0.4, ease: "easeOut" }}
+                className="w-full max-w-[1400px] mx-auto grid grid-cols-2 md:grid-cols-4 aspect-[4/5] md:aspect-[21/9] rounded-3xl overflow-hidden shadow-2xl shadow-black/50 border border-white/[0.05]"
+            >
+                {PATHS.map((path, i) => (
+                    <div key={i} className="relative group overflow-hidden border-r last:border-r-0 border-white/[0.05]">
+                        <img
+                            src={path.image}
+                            alt={path.title}
+                            className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
+                        />
+                        {/* Gradient overlays */}
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-80 group-hover:opacity-100 transition-opacity duration-500" />
+                        <div className="absolute inset-0 bg-amber/0 group-hover:bg-amber/10 transition-colors duration-500 mix-blend-overlay" />
+
+                        {/* Text */}
+                        <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                            <h3 className="text-lg md:text-2xl font-display font-bold text-white uppercase tracking-widest text-center">
+                                {path.title.split(' ').map((word, wIdx) => (
+                                    <span key={wIdx} className="block">{word}</span>
+                                ))}
+                            </h3>
+                        </div>
+                    </div>
+                ))}
             </motion.div>
         </section>
     );
