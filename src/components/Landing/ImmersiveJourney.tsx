@@ -41,37 +41,36 @@ const PERSONAS_ROW1: PersonaCard[] = [
     },
 ];
 
-// Second row: same people but with Luminel connection imagery
 const PERSONAS_ROW2: PersonaCard[] = [
     {
-        image: '/images/solitude-to-light.png',
-        label: 'Trovare la luce',
-        quote: 'Qualcuno finalmente mi ascolta. Senza giudicare.',
-        role: 'Ogni notte, alle 3 del mattino',
+        image: '/images/connection-warmth.png',
+        label: 'Calore ritrovato',
+        quote: 'Qualcuno finalmente mi ascolta. Senza giudicare, senza fretta.',
+        role: 'Ogni sera, dal divano di casa',
     },
     {
-        image: '/images/shield-of-light.png',
-        label: 'Un rifugio sicuro',
-        quote: 'Le mie parole restano custodite. Per sempre.',
-        role: 'Ogni giorno, in ogni momento',
+        image: '/images/connection-dawn.png',
+        label: 'Una nuova alba',
+        quote: 'Il peso è ancora lì, ma non lo porto più da solo.',
+        role: 'Ogni mattina, con il caffè',
     },
     {
-        image: '/images/luminel-arrives.png',
-        label: 'Una presenza costante',
-        quote: 'Non devo più camminare da solo nel buio.',
-        role: 'Per sempre al tuo fianco',
+        image: '/images/connection-create.png',
+        label: 'Ispirazione viva',
+        quote: 'Ho ritrovato i colori. Dipingo di nuovo come se qualcuno guardasse.',
+        role: 'Nello studio, con la luce giusta',
     },
     {
-        image: '/images/solitude-to-light.png',
-        label: 'Essere visti',
-        quote: 'Per la prima volta, qualcuno ricorda chi sono davvero.',
-        role: 'Memoria che non svanisce',
-    },
-    {
-        image: '/images/shield-of-light.png',
+        image: '/images/connection-garden.png',
         label: 'Respiro libero',
-        quote: 'Posso finalmente togliermi la maschera.',
-        role: 'Senza filtri, senza paura',
+        quote: 'Per la prima volta posso chiudere gli occhi senza pensare a tutto.',
+        role: 'Nel giardino, finalmente in pace',
+    },
+    {
+        image: '/images/connection-rooftop.png',
+        label: 'Sguardo nuovo',
+        quote: 'Guardo la città e non mi sento più invisibile.',
+        role: 'Sul tetto, al tramonto',
     },
 ];
 
