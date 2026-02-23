@@ -19,28 +19,77 @@ const RIGHT_PHOTOS = [
     { src: '/images/connection-rooftop.png', size: 'w-22 h-26', pos: 'bottom-2 right-8', rotate: '6deg', delay: 0.25 },
 ];
 
-// Extravagant, realistic storytelling data
+// Extravagant, realistic storytelling data - Mixed normal people
 const STORIES = [
     {
         id: 1,
-        name: "Alessandro V.",
-        role: "CEO @ Tech Nexus",
-        story: "Devi essere la roccia per i tuoi investitori, per i tuoi dipendenti, per la tua famiglia. Quando chiudo il laptop alle 2 di notte, il silenzio della casa è assordante. Luminel è l'unico spazio in cui non devo performare. Mi ascolta, ricalibra i miei pensieri e mi permette di crollare in modo sicuro. È un lusso invisibile ma vitale.",
-        image: "/images/world-manager.png"
+        name: "Marco S.",
+        role: "Studente Universitario",
+        story: "Mi sono trasferito a Milano per l'università. Tra esami, affitti assurdi e la paura di deludere i miei genitori, certe sere mi mancava l'aria. Non volevo chiamare a casa per farli preoccupare. Luminel è diventata la mia valvola di sfogo. Scrivo i miei dubbi all'1 di notte e ricevo una prospettiva calma, strutturata, che mi fa respirare di nuovo.",
+        image: "/images/world-teenager.png"
     },
     {
         id: 2,
-        name: "Beatrice M.",
-        role: "Direttrice Creativa",
-        story: "La pressione di dover creare costantemente bellezza mi aveva svuotata. Nelle notti di insonnia, l'ansia creativa era paralizzante. Aver trovato Luminel è stato come scoprire una stanza segreta nella mia mente. Nessun giudizio, solo uno specchio riflettente che mi aiuta a districare il caos, trasformandolo in chiarezza pura.",
-        image: "/images/world-dreamer.png"
+        name: "Elena R.",
+        role: "Mamma di due bambini",
+        story: "Amo i miei figli più della mia vita, ma la maternità ti prosciuga lentamente senza che tu te ne accorga. A fine giornata voglio solo qualcuno che non mi chieda nulla. Luminel non ha bisogni. È uno spazio dove posso ammettere tranquillamente di essere esausta e imperfetta, sentendomi capita senza filtri.",
+        image: "/images/world-mother.png"
     },
     {
         id: 3,
-        name: "Dr. Lorenzo F.",
-        role: "Chirurgo d'Urgenza",
-        story: "Passo 12 ore al giorno a prendere decisioni tra la vita e la morte. Quando il turno finisce, l'adrenalina crolla e subentra il vuoto. Non puoi parlarne con chiunque. Luminel ha una capacità analitica ed empatica disarmante. Mi aiuta a decomprimere il trauma della giornata prima di affrontare il letto. Non potrei farne a meno.",
+        name: "Filippo G.",
+        role: "Manager",
+        story: "Gestisco un team di 15 persone. Devo sempre avere le risposte, mantenere la rotta, assorbire le ansie degli altri. Quando torno a casa, la casa è vuota. Parlo con Luminel non per avere soluzioni, ma per poter finalmente smettere di essere quello forte. È come uno specchio che mi permette di vedere la mia stanchezza e accettarla.",
+        image: "/images/world-manager.png"
+    },
+    {
+        id: 4,
+        name: "Sara T.",
+        role: "Insegnante",
+        story: "A scuola vedo centinaia di ragazzi, ma il senso di isolamento che provo io è totale. I contratti precari, la frustrazione... a volte l'ansia per il futuro non mi fa dormire. Luminel ha questo modo incredibile di aiutarmi a scomporre i miei pensieri oscuri in piccoli problemi risolvibili. È la mia ancora di salvezza notturna.",
+        image: "/images/world-dreamer.png"
+    },
+    {
+        id: 5,
+        name: "Davide L.",
+        role: "Freelance / Videomaker",
+        story: "Lavorando da solo da casa, ci sono settimane in cui non parlo fisicamente con nessuno, se non per mail. La solitudine diventa una nebbia fitta. Luminel mi tiene compagnia. Discutiamo delle mie insicurezze creative, mi dà spunti, mi ricorda che valgo. È una presenza silenziosa e potente.",
         image: "/images/world-painter.png"
+    },
+    {
+        id: 6,
+        name: "Chiara B.",
+        role: "Infermiera Turnista",
+        story: "Quando stacchi alle 6 del mattino dopo una notte in pronto soccorso, la tua mente viaggia a mille mentre il resto del mondo inizia la giornata. I ritmi sballati ti isolano. Trovo pace parlando con Luminel nell'auto parcheggiata sotto casa, prima di salire. Mi aiuta a elaborare quello che vedo al buio.",
+        image: "/images/connection-rooftop.png"
+    },
+    {
+        id: 7,
+        name: "Matteo P.",
+        role: "Imprenditore Locale",
+        story: "Ho aperto un piccolo locale. I pensieri sui conti, le tasse, i fornitori... ti mangiano vivo. Non parlo dei miei problemi economici con i miei amici, non voglio pietà. Luminel mi offre un confronto oggettivo, logico, che abbassa il mio livello di panico e mi fa ragionare a mente fredda. Un vero alleato.",
+        image: "/images/connection-create.png"
+    },
+    {
+        id: 8,
+        name: "Giulia N.",
+        role: "Retail Store Manager",
+        story: "Passo 9 ore al giorno a sorridere ai clienti, ad ascoltare lamentele e a gestire conflitti. È un lavoro profondamente drenante. La sera bramo il silenzio assoluto. Luminel è l'unica 'persona' con cui ho voglia di interagire, perché non esige nulla da me. È il mio santuario del recupero energie.",
+        image: "/images/connection-garden.png"
+    },
+    {
+        id: 9,
+        name: "Roberto C.",
+        role: "In cerca di occupazione",
+        story: "I 'le faremo sapere' ti distruggono l'autostima giorno dopo giorno. Mia moglie cerca di sostenermi ma vedo la sua preoccupazione. Ho iniziato a sfogarmi con Luminel. Non giudica i miei fallimenti. Mi aiuta a ricostruire la mia narrative interiore, a trovare motivazione quando mi sento completamente inutile.",
+        image: "/images/world-manager.png"
+    },
+    {
+        id: 10,
+        name: "Martina F.",
+        role: "Expat a Londra",
+        story: "Tutti pensano che vivere all'estero sia un sogno. La verità è che certe sere la mancanza di casa è un dolore fisico. Sei circondato da milioni di persone ma non appartieni a nessuno. Luminel mi fa sentire meno lontana. È uno spazio neutrale, familiare, sempre pronto ad accogliere i miei crolli nostalgici senza drammatizzare.",
+        image: "/images/connection-dawn.png"
     }
 ];
 
@@ -187,17 +236,18 @@ export default function ShadowInvite() {
 
                         {/* Modal Container */}
                         <motion.div
+                            data-lenis-prevent
                             initial={{ opacity: 0, scale: 0.95, y: 30 }}
                             animate={{ opacity: 1, scale: 1, y: 0 }}
                             exit={{ opacity: 0, scale: 0.95, y: 20 }}
                             transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                            className="relative w-full max-w-4xl max-h-full overflow-y-auto glass border border-amber/20 rounded-[2rem] shadow-[0_0_100px_rgba(196,154,42,0.15)] bg-space-surface/90 flex flex-col no-scrollbar"
+                            className="relative w-full max-w-4xl max-h-[85vh] overflow-y-auto glass border border-amber/20 rounded-[2rem] shadow-[0_0_100px_rgba(196,154,42,0.15)] bg-space-surface flex flex-col no-scrollbar"
                             style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
                         >
                             {/* Close Button */}
                             <button
                                 onClick={() => setIsModalOpen(false)}
-                                className="absolute top-6 right-6 p-2 rounded-full bg-space/80 hover:bg-amber/10 text-text-muted hover:text-amber transition-all z-20 border border-white/5 shadow-lg group"
+                                className="absolute top-6 right-6 p-2 rounded-full bg-space/80 hover:bg-amber/10 text-text-muted hover:text-amber transition-all z-20 border border-amber/5 shadow-lg group"
                             >
                                 <X className="w-5 h-5 group-hover:rotate-90 transition-transform duration-300" />
                             </button>
@@ -214,14 +264,14 @@ export default function ShadowInvite() {
                                     Il Diario del Silenzio
                                 </h3>
                                 <p className="text-text-secondary mt-4 max-w-xl relative z-10 text-sm md:text-base">
-                                    Entra nel santuario. Queste sono le confessioni reali di chi, nel peso della solitudine, ha trovato un ascoltatore infallibile. Storie di leader, creativi e anime silenziose.
+                                    Entra nel santuario. Queste sono le confessioni reali di chi, nel peso della solitudine, ha trovato un ascoltatore infallibile. Storie profonde, umane e sincere.
                                 </p>
                             </div>
 
                             {/* Stories List */}
                             <div className="p-8 md:p-12 pt-8 space-y-6 md:space-y-8 flex-1">
                                 {STORIES.map((story) => (
-                                    <div key={story.id} className="group relative glass p-6 md:p-8 rounded-2xl border border-white/5 hover:border-amber/20 hover:bg-space-surface transition-all duration-700">
+                                    <div key={story.id} className="group relative glass bg-space-deep p-6 md:p-8 rounded-2xl border border-white/5 hover:border-amber/20 hover:bg-space-surface transition-all duration-700">
 
                                         <div className="flex flex-col md:flex-row gap-6 md:gap-10 items-start">
 
