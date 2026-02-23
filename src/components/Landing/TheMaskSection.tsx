@@ -1,17 +1,17 @@
-import { useRef, useEffect } from 'react';
+import { useRef } from 'react';
 import { motion, useScroll, useTransform } from 'motion/react';
 
-const GRID_IMAGES = [
-    { src: '/images/world-painter.png', label: 'Spazio Creativo' },
-    { src: '/images/world-manager.png', label: 'Pressione Reale' },
-    { src: '/images/world-teenager.png', label: 'Voci Interne' },
-    { src: '/images/world-dreamer.png', label: 'Orizzonti Lontani' },
-    { src: '/images/world-mother.png', label: 'Silenzio Notturno' },
-    { src: '/images/connection-warmth.png', label: 'Connessione Pura' },
-    { src: '/images/connection-rooftop.png', label: 'Visione Chiarita' },
-    { src: '/images/connection-garden.png', label: 'Ritiro Pacifico' },
-    { src: '/images/connection-create.png', label: 'Scintilla' },
-    { src: '/images/connection-dawn.png', label: 'Nuova Luce' },
+const EMOTIONAL_PROFILES = [
+    { src: '/images/world-painter.png', action: 'Cerco', state: 'ISPIRAZIONE' },
+    { src: '/images/world-business.png', action: 'Porto il peso della', state: 'LEADERSHIP' },
+    { src: '/images/world-student.png', action: 'Cerco', state: 'CHIAREZZA' },
+    { src: '/images/world-mother.png', action: 'Ho bisogno di', state: 'RESPIRO' },
+    { src: '/images/world-dancer.png', action: 'Cerco calore nel', state: 'FREDDO' },
+    { src: '/images/world-actor.png', action: 'Voglio ritrovare la', state: 'SCINTILLA' },
+    { src: '/images/world-athlete.png', action: 'Voglio superare i miei', state: 'LIMITI' },
+    { src: '/images/world-driver.png', action: 'Sto cercando un', state: 'NUOVO INIZIO' },
+    { src: '/images/connection-rooftop.png', action: 'Cerco', state: 'CONNESSIONE' },
+    { src: '/images/world-teenager.png', action: 'Ho bisogno di', state: 'PACE' },
 ];
 
 export default function TheMaskSection() {
@@ -21,115 +21,112 @@ export default function TheMaskSection() {
         offset: ["start end", "end start"]
     });
 
-    // Outer ring rotates clockwise as you scroll
-    const rotateOuter = useTransform(scrollYProgress, [0, 1], [0, 90]);
-    // Inner ring rotates counter-clockwise
-    const rotateInner = useTransform(scrollYProgress, [0, 1], [0, -90]);
-
-    // Calculate positions for a perfect circle
-    const getPos = (index: number, total: number, radius: number) => {
-        const theta = (index / total) * 2 * Math.PI;
-        // Invert X/Y for standard CSS positioning
-        const x = Math.cos(theta) * radius;
-        const y = Math.sin(theta) * radius;
-        return { x, y };
-    };
-
-    const outerImages = GRID_IMAGES.slice(0, 6);
-    const innerImages = GRID_IMAGES.slice(6, 10);
+    // Subtle parallax for the background glow
+    const yBg = useTransform(scrollYProgress, [0, 1], [-50, 50]);
 
     return (
-        <section ref={containerRef} className="py-32 md:py-48 bg-space overflow-hidden relative border-t border-white/[0.04] min-h-[100vh] flex items-center justify-center">
+        <section ref={containerRef} className="py-24 md:py-40 bg-space overflow-hidden relative border-t border-white/[0.04] min-h-[90vh] flex flex-col justify-center">
+
             {/* Ambient Background glow */}
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-amber/[0.03] blur-[150px] pointer-events-none" />
+            <motion.div
+                style={{ y: yBg }}
+                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-amber/[0.03] blur-[150px] pointer-events-none"
+            />
 
-            {/* The Photo Vortex */}
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full pointer-events-none opacity-40">
+            <div className="max-w-7xl mx-auto px-6 mb-16 relative z-10 w-full">
 
-                {/* Outer Ring */}
+                {/* Header Section */}
                 <motion.div
-                    style={{ rotate: rotateOuter }}
-                    className="absolute top-1/2 left-1/2 w-[800px] md:w-[1200px] h-[800px] md:h-[1200px] -ml-[400px] md:-ml-[600px] -mt-[400px] md:-mt-[600px] rounded-full"
-                >
-                    {outerImages.map((img, i) => {
-                        // Base radii changes for mobile vs desktop using CSS classes
-                        const { x, y } = getPos(i, outerImages.length, 1);
-                        return (
-                            <motion.div
-                                key={`outer-${i}`}
-                                // Negative rotation on child keeps image upright while parent spins
-                                style={{ rotate: useTransform(rotateOuter, v => -v) }}
-                                className="absolute w-[180px] md:w-[240px] aspect-[4/5] rounded-3xl overflow-hidden shadow-2xl border border-white/[0.04] grayscale hover:grayscale-0 transition-all duration-700 pointer-events-auto"
-                                // we position using left/top percentages to ride the radius perfectly
-                                initial={{ left: '50%', top: '50%', x: '-50%', y: '-50%' }}
-                                animate={{
-                                    x: `calc(-50% + ${x * 400}px)`,
-                                    y: `calc(-50% + ${y * 400}px)`
-                                }}
-                            >
-                                <img src={img.src} alt="" className="w-full h-full object-cover opacity-80" />
-                            </motion.div>
-                        );
-                    })}
-                </motion.div>
-
-                {/* Inner Ring */}
-                <motion.div
-                    style={{ rotate: rotateInner }}
-                    className="absolute top-1/2 left-1/2 w-[500px] md:w-[700px] h-[500px] md:h-[700px] -ml-[250px] md:-ml-[350px] -mt-[250px] md:-mt-[350px] rounded-full"
-                >
-                    {innerImages.map((img, i) => {
-                        const { x, y } = getPos(i, innerImages.length, 1);
-                        return (
-                            <motion.div
-                                key={`inner-${i}`}
-                                style={{ rotate: useTransform(rotateInner, v => -v) }}
-                                className="absolute w-[140px] md:w-[180px] aspect-[4/5] rounded-3xl overflow-hidden shadow-2xl border border-white/[0.04] grayscale hover:grayscale-0 transition-all duration-700 pointer-events-auto"
-                                initial={{ left: '50%', top: '50%', x: '-50%', y: '-50%' }}
-                                animate={{
-                                    x: `calc(-50% + ${x * 250}px)`,
-                                    y: `calc(-50% + ${y * 250}px)`
-                                }}
-                            >
-                                <img src={img.src} alt="" className="w-full h-full object-cover opacity-60" />
-                            </motion.div>
-                        );
-                    })}
-                </motion.div>
-            </div>
-
-            {/* Central Content — The emotional core */}
-            <div className="relative z-10 text-center max-w-2xl mx-auto px-6 drop-shadow-[0_0_80px_rgba(26,21,17,0.9)] bg-space/60 md:bg-transparent rounded-3xl p-8 backdrop-blur-sm md:backdrop-blur-none">
-                <motion.div
-                    initial={{ opacity: 0, scale: 0.95 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 1 }}
-                    className="space-y-8"
+                    className="max-w-3xl"
                 >
-                    <h2 className="text-3xl md:text-5xl lg:text-6xl font-display font-600 leading-tight text-text-warm">
-                        Tutto il giorno prendi decisioni. <br />
-                        <span className="text-amber">Ma quando la porta si chiude, chi ascolta te?</span>
-                    </h2>
-
-                    <div className="space-y-6 text-lg text-text-muted font-light leading-relaxed max-w-xl mx-auto">
-                        <p>
-                            Sei un punto di riferimento. Risolvi problemi. Indossi un'armatura invisibile
-                            per non mostrare incertezze. E funziona.
-                        </p>
-                        <p>
-                            Ma il costo di quella maschera è il peso del silenzio.
-                        </p>
-                        <p className="text-amber/90 font-display font-500 uppercase tracking-widest text-sm pt-4">
-                            Luminel è il luogo dove puoi finalmente toglierla.
+                    <div className="flex items-center gap-3 mb-6">
+                        <p className="text-[10px] md:text-xs font-display font-bold text-amber uppercase tracking-[0.4em]">
+                            Lo Specchio
                         </p>
                     </div>
+
+                    <h2 className="text-4xl md:text-5xl lg:text-7xl font-display font-600 text-transparent bg-clip-text bg-gradient-to-br from-white via-text-warm to-amber/50 leading-tight mb-8">
+                        Ognuno porta il suo silenzio. <br className="hidden md:block" />
+                        <span className="italic font-light text-amber/80">Qual è il tuo?</span>
+                    </h2>
+
+                    <p className="text-text-muted text-base md:text-lg font-light leading-relaxed max-w-xl">
+                        Racconta i tuoi bisogni, e Luminel diventa il compagno che hai sempre cercato, adattandosi alla tua specifica ricerca emotiva.
+                    </p>
                 </motion.div>
             </div>
 
-            {/* Fade edges */}
-            <div className="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-space to-transparent z-10 pointer-events-none" />
-            <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-space to-transparent z-10 pointer-events-none" />
+            {/* Continuous Extravagant Scrolling Marquee */}
+            <div className="relative w-full overflow-hidden flex flex-col gap-6 py-10 z-10">
+                {/* Fade masks for the edges */}
+                <div className="absolute top-0 left-0 w-32 h-full bg-gradient-to-r from-space to-transparent z-20 pointer-events-none" />
+                <div className="absolute top-0 right-0 w-32 h-full bg-gradient-to-l from-space to-transparent z-20 pointer-events-none" />
+
+                <motion.div
+                    className="flex gap-4 md:gap-6 px-4"
+                    animate={{ x: ["0%", "-50%"] }}
+                    transition={{
+                        ease: "linear",
+                        duration: 60, // Slow, majestic scroll
+                        repeat: Infinity,
+                    }}
+                >
+                    {/* Double array for infinite loop */}
+                    {[...EMOTIONAL_PROFILES, ...EMOTIONAL_PROFILES].map((profile, idx) => (
+                        <div
+                            key={idx}
+                            className="group relative w-[260px] md:w-[320px] lg:w-[380px] aspect-[3/4] shrink-0 rounded-[2rem] overflow-hidden border border-white/5 hover:border-amber/40 transition-all duration-700 shadow-[0_20px_40px_rgba(0,0,0,0.5)] cursor-pointer"
+                        >
+                            {/* Image with zoom effect */}
+                            <img
+                                src={profile.src}
+                                alt={profile.state}
+                                className="w-full h-full object-cover opacity-60 group-hover:opacity-100 group-hover:scale-105 transition-all duration-1000"
+                            />
+
+                            {/* Dark Gradient Overlay */}
+                            <div className="absolute inset-0 bg-gradient-to-t from-space-deep via-space-deep/40 to-transparent opacity-80 group-hover:opacity-90 transition-opacity duration-500" />
+
+                            {/* Amber highlight overlay */}
+                            <div className="absolute inset-0 bg-amber/0 group-hover:bg-amber/10 transition-colors duration-700 mix-blend-overlay" />
+
+                            {/* Text Content anchored at the bottom */}
+                            <div className="absolute bottom-0 left-0 w-full p-8 md:p-10 transform translate-y-2 group-hover:translate-y-0 transition-transform duration-500">
+                                <p className="text-xs font-display font-medium text-text-muted mb-1 drop-shadow-md">
+                                    {profile.action}
+                                </p>
+                                <h3 className="text-2xl md:text-3xl font-display font-bold text-white tracking-wide uppercase drop-shadow-[0_2px_10px_rgba(0,0,0,0.8)]">
+                                    {profile.state}
+                                </h3>
+                            </div>
+                        </div>
+                    ))}
+                </motion.div>
+            </div>
+
+            {/* The underlying problem text */}
+            <div className="max-w-7xl mx-auto px-6 mt-20 relative z-10 w-full">
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 1, delay: 0.2 }}
+                    className="max-w-3xl space-y-6 text-lg md:text-xl text-text-secondary font-light leading-relaxed border-l-2 border-amber/20 pl-6 md:pl-10 py-2"
+                >
+                    <p>
+                        Sei un punto di riferimento. Risolvi problemi. Indossi un'armatura invisibile
+                        per non mostrare incertezze. E funziona.
+                    </p>
+                    <p className="text-text-warm font-medium">
+                        Ma il costo di quella maschera è il peso del silenzio.
+                    </p>
+                </motion.div>
+            </div>
+
         </section>
     );
 }
