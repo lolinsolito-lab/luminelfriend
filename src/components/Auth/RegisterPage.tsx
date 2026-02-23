@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { motion } from 'motion/react';
 import { ArrowRight, Eye, EyeOff } from 'lucide-react';
+import { supabase } from '../../services/supabaseClient';
 
 interface RegisterPageProps {
     onRegister: (name: string, email: string, password: string) => void;
@@ -14,15 +15,32 @@ export default function RegisterPage({ onRegister, onSwitchToLogin, onBack }: Re
     const [password, setPassword] = useState('');
     const [showPw, setShowPw] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [error, setError] = useState<string | null>(null);
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         if (!name.trim() || !email.trim() || !password.trim()) return;
         setLoading(true);
-        setTimeout(() => {
+        setError(null);
+
+        const { error } = await supabase.auth.signUp({
+            email: email.trim(),
+            password,
+            options: {
+                data: {
+                    full_name: name.trim()
+                }
+            }
+        });
+
+        setLoading(false);
+
+        if (error) {
+            setError(error.message);
+        } else {
+            // Assume success or email confirmation needed
             onRegister(name, email, password);
-            setLoading(false);
-        }, 1200);
+        }
     };
 
     return (
@@ -56,6 +74,12 @@ export default function RegisterPage({ onRegister, onSwitchToLogin, onBack }: Re
                 <p className="text-sm text-text-muted text-center mb-10 font-light">
                     Uno spazio che ricorda. Uno spazio che ascolta. Solo tuo.
                 </p>
+
+                {error && (
+                    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="mb-6 p-3 rounded-lg bg-red-900/20 border border-red-500/30 text-red-400 text-xs text-center font-display">
+                        {error}
+                    </motion.div>
+                )}
 
                 <form onSubmit={handleSubmit} className="space-y-5">
                     <div>

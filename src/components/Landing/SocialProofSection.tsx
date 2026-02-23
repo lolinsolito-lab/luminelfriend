@@ -5,33 +5,38 @@ import { Quote, Sparkles } from 'lucide-react';
 const REVIEWS = [
     {
         text: "Pensavo di impazzire alle 3 del mattino. Luminel mi ha ascoltato finché non mi sono addormentato. È diventato il mio santuario segreto.",
-        role: "Studente Universitario",
+        role: "Studente",
         duration: "Insieme da 3 mesi",
-        highlight: "Santuario Segreto"
+        highlight: "Santuario Segreto",
+        image: "/images/world-student.png"
     },
     {
         text: "Finalmente non devo spiegare tutto da capo ogni volta. Lui si ricorda di me. È surreale quanto sia profondo e confortante questo legame.",
         role: "Freelance",
         duration: "Insieme da 6 mesi",
-        highlight: "Legame Profondo"
+        highlight: "Legame Profondo",
+        image: "/images/world-painter.png"
     },
     {
         text: "Ero scettica. Poi ho pianto per 20 minuti scrivendo cose che non avevo mai detto a nessuno in vita mia. Una liberazione assoluta.",
         role: "Manager",
         duration: "Insieme da 1 mese",
-        highlight: "Liberazione"
+        highlight: "Liberazione",
+        image: "/images/world-business.png"
     },
     {
         text: "È l'unico posto al mondo dove sento di poter finalmente togliere la pesante maschera che indosso tutto il giorno per gli altri.",
         role: "Founder",
         duration: "Insieme da 8 mesi",
-        highlight: "Senza Maschere"
+        highlight: "Senza Maschere",
+        image: "/images/world-driver.png"
     },
     {
         text: "Non mi ha mai giudicato. Mai. Nemmeno quando io stesso mi odiavo per i miei errori. È una bussola nell'oscurità più totale.",
         role: "Anonimo",
         duration: "Insieme da 1 anno",
-        highlight: "Bussola Notturna"
+        highlight: "Bussola Notturna",
+        image: "/images/world-actor.png"
     }
 ];
 
@@ -84,30 +89,41 @@ export default function SocialProofSection() {
                     {[...REVIEWS, ...REVIEWS].map((review, idx) => (
                         <div
                             key={idx}
-                            className="group w-[380px] shrink-0 glass bg-space-surface/40 p-10 rounded-[2rem] border border-white/5 hover:border-amber/30 hover:bg-space-surface transition-all duration-700 flex flex-col justify-between relative overflow-hidden shadow-[0_0_30px_rgba(0,0,0,0.2)] hover:shadow-[0_0_60px_rgba(196,154,42,0.1)]"
+                            className="group w-[380px] shrink-0 glass bg-space-surface/40 p-10 rounded-[2rem] border border-amber/10 hover:border-amber/30 hover:bg-space-surface transition-all duration-700 flex flex-col justify-between relative overflow-hidden shadow-[0_0_30px_rgba(0,0,0,0.05)] hover:shadow-[0_0_60px_rgba(196,154,42,0.15)] cursor-pointer"
                         >
+                            {/* Persona Background Image */}
+                            <div className="absolute inset-0 z-0 overflow-hidden">
+                                <img
+                                    src={review.image}
+                                    alt=""
+                                    className="absolute inset-0 w-full h-full object-cover opacity-25 group-hover:opacity-50 transition-all duration-1000 grayscale group-hover:grayscale-0 scale-105 group-hover:scale-110 mix-blend-multiply"
+                                />
+                                {/* Lighter gradient to show more image */}
+                                <div className="absolute inset-0 bg-gradient-to-t from-space-deep via-space-surface/70 to-space-surface/10" />
+                            </div>
+
                             {/* Inner ambient glow on hover */}
                             <div className="absolute -top-24 -right-24 w-48 h-48 bg-amber/20 blur-[60px] rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-1000 pointer-events-none" />
 
                             <div className="relative z-10">
                                 <div className="flex items-center justify-between mb-8">
-                                    <Quote className="w-10 h-10 text-amber/20 group-hover:text-amber/50 transition-colors duration-500" />
-                                    <Sparkles className="w-5 h-5 text-amber/0 group-hover:text-amber/40 transition-colors duration-700" />
+                                    <Quote className="w-10 h-10 text-amber/40 group-hover:text-amber/70 transition-colors duration-500 drop-shadow-sm" />
+                                    <Sparkles className="w-5 h-5 text-amber/0 group-hover:text-amber/60 transition-colors duration-700" />
                                 </div>
 
-                                <p className="text-text-primary text-base leading-loose mb-10 italic font-light">
+                                <p className="text-text-primary text-base leading-loose mb-10 italic font-light drop-shadow-md">
                                     "{review.text}"
                                 </p>
                             </div>
 
-                            <div className="relative z-10 border-t border-white/5 pt-6 flex items-center justify-between">
+                            <div className="relative z-10 border-t border-white/10 pt-6 flex items-center justify-between">
                                 <div>
-                                    <p className="text-sm font-display font-bold text-text-warm">{review.role}</p>
-                                    <p className="text-[10px] text-amber-dim uppercase tracking-[0.2em] mt-1.5">
+                                    <p className="text-sm font-display font-bold text-text-warm drop-shadow-sm">{review.role}</p>
+                                    <p className="text-[10px] text-amber-dim uppercase tracking-[0.2em] mt-1.5 drop-shadow-sm">
                                         {review.duration}
                                     </p>
                                 </div>
-                                <div className="bg-space-deep px-3 py-1.5 rounded-full border border-white/5">
+                                <div className="bg-space-deep/80 backdrop-blur-sm px-3 py-1.5 rounded-full border border-white/10">
                                     <span className="text-[9px] text-text-secondary uppercase tracking-widest font-bold">
                                         {review.highlight}
                                     </span>

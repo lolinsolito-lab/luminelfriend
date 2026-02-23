@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { motion } from 'motion/react';
 import { ArrowRight, CheckCircle } from 'lucide-react';
+import { supabase } from '../../services/supabaseClient';
 
 interface RecoveryPageProps {
     onSwitchToLogin: () => void;
@@ -11,16 +12,25 @@ export default function RecoveryPage({ onSwitchToLogin, onBack }: RecoveryPagePr
     const [email, setEmail] = useState('');
     const [loading, setLoading] = useState(false);
     const [sent, setSent] = useState(false);
+    const [error, setError] = useState<string | null>(null);
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         if (!email.trim()) return;
         setLoading(true);
-        // Simulate — will be replaced with Supabase auth
-        setTimeout(() => {
+        setError(null);
+
+        const { error } = await supabase.auth.resetPasswordForEmail(email.trim(), {
+            redirectTo: window.location.origin + '/reset-password',
+        });
+
+        setLoading(false);
+
+        if (error) {
+            setError(error.message);
+        } else {
             setSent(true);
-            setLoading(false);
-        }, 1500);
+        }
     };
 
     return (
@@ -51,6 +61,12 @@ export default function RecoveryPage({ onSwitchToLogin, onBack }: RecoveryPagePr
                         <p className="text-sm text-text-muted text-center mb-10 font-light">
                             Inserisci la tua email e ti manderemo un link per rientrare nel tuo spazio.
                         </p>
+
+                        {error && (
+                            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="mb-6 p-3 rounded-lg bg-red-900/20 border border-red-500/30 text-red-400 text-xs text-center font-display">
+                                {error}
+                            </motion.div>
+                        )}
 
                         <form onSubmit={handleSubmit} className="space-y-5">
                             <div>

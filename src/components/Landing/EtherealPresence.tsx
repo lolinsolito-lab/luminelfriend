@@ -50,7 +50,7 @@ export default function EtherealPresence() {
     }, [currentLine]);
 
     return (
-        <section className="min-h-screen flex flex-col items-center justify-center bg-space-deep relative overflow-hidden py-24">
+        <section className="flex flex-col items-center justify-center bg-space-deep relative overflow-hidden py-16 md:py-24">
             {/* Ambient depth glow behind presence */}
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full bg-amber/[0.06] blur-[150px] pointer-events-none" />
 
@@ -73,7 +73,7 @@ export default function EtherealPresence() {
                                 ]
                             }}
                             transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                            className="w-[360px] h-[360px] md:w-[450px] md:h-[450px] rounded-full overflow-hidden relative mb-10"
+                            className="w-[280px] h-[280px] md:w-[360px] md:h-[360px] rounded-full overflow-hidden relative mb-8"
                         >
                             <video
                                 src="/luminel-presence.mp4"
@@ -101,7 +101,7 @@ export default function EtherealPresence() {
                                     animate={{ opacity: 1, y: 0 }}
                                     exit={{ opacity: 0, y: -10 }}
                                     transition={{ duration: 0.6 }}
-                                    className="text-xl md:text-3xl font-display text-text-warm tracking-wide text-center"
+                                    className="text-lg md:text-2xl font-display text-text-warm tracking-wide text-center"
                                 >
                                     {displayedText}
                                     {isTyping && (

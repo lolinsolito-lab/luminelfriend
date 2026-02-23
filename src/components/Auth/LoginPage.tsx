@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { motion } from 'motion/react';
 import { ArrowRight, Eye, EyeOff } from 'lucide-react';
+import { supabase } from '../../services/supabaseClient';
 
 interface LoginPageProps {
     onLogin: (email: string, password: string) => void;
@@ -14,16 +15,26 @@ export default function LoginPage({ onLogin, onSwitchToRegister, onSwitchToRecov
     const [password, setPassword] = useState('');
     const [showPw, setShowPw] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [error, setError] = useState<string | null>(null);
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         if (!email.trim() || !password.trim()) return;
         setLoading(true);
-        // Simulate — will be replaced with Supabase auth
-        setTimeout(() => {
+        setError(null);
+
+        const { error } = await supabase.auth.signInWithPassword({
+            email: email.trim(),
+            password
+        });
+
+        setLoading(false);
+
+        if (error) {
+            setError(error.message);
+        } else {
             onLogin(email, password);
-            setLoading(false);
-        }, 1200);
+        }
     };
 
     return (
@@ -52,6 +63,12 @@ export default function LoginPage({ onLogin, onSwitchToRegister, onSwitchToRecov
                 <p className="text-sm text-text-muted text-center mb-10 font-light">
                     Il tuo spazio ti stava aspettando.
                 </p>
+
+                {error && (
+                    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="mb-6 p-3 rounded-lg bg-red-900/20 border border-red-500/30 text-red-400 text-xs text-center font-display">
+                        {error}
+                    </motion.div>
+                )}
 
                 <form onSubmit={handleSubmit} className="space-y-5">
                     <div>

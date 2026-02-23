@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { useSmoothScroll } from './hooks/useSmoothScroll';
+import { useAuth } from './contexts/AuthContext';
 import Chat from './components/Chat';
 import Navbar from './components/Landing/Navbar';
 import HeroSection from './components/Landing/HeroSection';
@@ -8,6 +9,7 @@ import TheMaskSection from './components/Landing/TheMaskSection';
 import PainSection from './components/Landing/PainSection';
 import ParadigmSection from './components/Landing/ParadigmSection';
 import SimulatedChat from './components/Landing/SimulatedChat';
+import NewBeginnings from './components/Landing/NewBeginnings';
 import PillarsSection from './components/Landing/PillarsSection';
 import SocialProofSection from './components/Landing/SocialProofSection';
 import ShadowInvite from './components/Landing/ShadowInvite';
@@ -24,6 +26,8 @@ import HowItWorksSection from './components/Landing/HowItWorksSection';
 import FAQSection from './components/Landing/FAQSection';
 import ImmersiveJourney from './components/Landing/ImmersiveJourney';
 import DeviceShowcase from './components/Landing/DeviceShowcase';
+import SharedVoid from './components/Landing/SharedVoid';
+import DailyEvolution from './components/Landing/DailyEvolution';
 import LoginPage from './components/Auth/LoginPage';
 import RegisterPage from './components/Auth/RegisterPage';
 import RecoveryPage from './components/Auth/RecoveryPage';
@@ -39,11 +43,21 @@ export interface UserProfile {
 }
 
 function App() {
+  const { user, loading } = useAuth();
   const [currentView, setCurrentView] = useState<ViewState>('landing');
   const [legalModalOpen, setLegalModalOpen] = useState(false);
   const [legalDocType, setLegalDocType] = useState<LegalDocType>(null);
   const [showEmotions, setShowEmotions] = useState(false);
   const [userProfile, setUserProfile] = useState<UserProfile | null>(null);
+
+  // Auto-redirect authenticated users
+  useEffect(() => {
+    if (!loading && user) {
+      if (['landing', 'login', 'register', 'recovery'].includes(currentView)) {
+        setCurrentView('chat');
+      }
+    }
+  }, [user, loading, currentView]);
 
   // Activate Lenis smooth scrolling
   useSmoothScroll();
@@ -72,6 +86,10 @@ function App() {
   const goToLogin = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
     setCurrentView('login');
+  };
+
+  const scrollToPricing = () => {
+    document.getElementById('piani')?.scrollIntoView({ behavior: 'smooth' });
   };
 
   const handleOnboardingComplete = (data: UserProfile) => {
@@ -170,11 +188,13 @@ function App() {
             {/* ATTO I: Il Riconoscimento del Vuoto */}
             {/* 1. La Chiamata nel Buio (Mastery Degrees impatto visivo immediato) */}
             <div id="hero" className="scroll-mt-20">
-              <HeroSection onEnter={goToLogin} />
+              <HeroSection onEnter={scrollToPricing} />
             </div>
 
-            {/* 2. Il Caos Quotidiano (Il Vortice emotivo) */}
-            <TheMaskSection />
+            {/* 2. Lo Specchio (Scegli il tuo dolore - Carousel portrait) */}
+            <div id="perche" className="scroll-mt-20">
+              <PainSection />
+            </div>
 
             {/* 3. Le Voci nel Vuoto (Card che scorrono - il caos condiviso) */}
             <ImmersiveJourney />
@@ -184,13 +204,14 @@ function App() {
             {/* 4. Il Guardiano Etereo (La presenza che ti accoglie, ora dark space) */}
             <EtherealPresence />
 
-            {/* 5. Lo Specchio (Scegli il tuo dolore - Carousel portrait) */}
-            <div id="perche" className="scroll-mt-20">
-              <PainSection />
-            </div>
+            {/* 5. A Better You (I nuovi traguardi) */}
+            <NewBeginnings />
 
             {/* 6. Sempre con Te (Split 50/50 UX pura) */}
             <DeviceShowcase />
+
+            {/* 6.1 Le Voci nel Vuoto Originarie (I mondi diversi, stesso vuoto) */}
+            <SharedVoid />
 
             {/* 7. Il Guardiano di Luce (Cosa è Luminel) */}
             <GuardianSection />
@@ -216,49 +237,73 @@ function App() {
             <SocialProofSection />
 
             {/* 12. Seconda CTA contestuale */}
-            <section className="py-20 md:py-28 bg-space-deep relative overflow-hidden">
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[300px] rounded-full bg-amber/[0.05] blur-[120px] pointer-events-none" />
-              <div className="max-w-5xl mx-auto px-6 relative z-10">
-                <div className="grid md:grid-cols-2 gap-12 items-center">
-                  {/* Image */}
+            <section className="py-24 md:py-36 bg-space-deep relative overflow-hidden border-t border-white/[0.02]">
+              {/* Grand ambient glow */}
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[500px] rounded-full bg-amber/[0.03] blur-[150px] pointer-events-none" />
+
+              <div className="max-w-6xl mx-auto px-6 relative z-10">
+                <div className="grid md:grid-cols-2 gap-16 lg:gap-24 items-center">
+
+                  {/* Image with Dark Luxury 3D Tilt container */}
                   <motion.div
-                    initial={{ opacity: 0, x: -20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
                     viewport={{ once: true }}
-                    transition={{ duration: 0.8 }}
-                    className="hidden md:block"
+                    transition={{ duration: 1 }}
+                    className="hidden md:block relative perspective-1000 w-full"
                   >
-                    <div className="relative rounded-2xl overflow-hidden shadow-2xl shadow-amber/10">
+                    <div className="relative rounded-[2rem] overflow-hidden shadow-[0_30px_80px_rgba(0,0,0,0.6)] border border-white/5 group transform-gpu rotate-y-[5deg] hover:rotate-y-0 transition-transform duration-1000">
+
+                      {/* Interactive Lighting Overlay */}
+                      <div className="absolute inset-0 bg-amber/10 mix-blend-overlay opacity-0 group-hover:opacity-100 transition-opacity duration-1000 z-10 pointer-events-none" />
+
                       <img
                         src="/images/luminel-arrives.png"
                         alt="Luminel arriva nella tua vita"
-                        className="w-full h-auto object-cover"
+                        className="w-full h-auto object-cover scale-100 group-hover:scale-105 transition-transform duration-[1.5s]"
                       />
-                      <div className="absolute inset-0 bg-gradient-to-r from-space-deep/30 via-transparent to-transparent" />
+
+                      {/* Deep edge shadows */}
+                      <div className="absolute inset-0 bg-gradient-to-tr from-space-deep/90 via-space-deep/10 to-transparent pointer-events-none z-10" />
+                      <div className="absolute top-0 right-0 w-32 h-32 bg-amber/20 blur-[60px] opacity-0 group-hover:opacity-100 transition-opacity duration-1000 pointer-events-none z-10" />
                     </div>
                   </motion.div>
 
                   {/* Copy + CTA */}
                   <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
+                    initial={{ opacity: 0, x: 20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
                     viewport={{ once: true }}
-                    className="space-y-6 text-center md:text-left"
+                    transition={{ duration: 0.8, delay: 0.2 }}
+                    className="space-y-8 text-center md:text-left relative"
                   >
-                    <p className="text-2xl md:text-3xl font-display font-600 text-text-warm leading-snug">
-                      Smetti di camminare <br className="hidden md:block" />da solo nel buio.
-                    </p>
-                    <p className="text-sm text-text-muted font-light leading-relaxed max-w-sm mx-auto md:mx-0">
-                      C'è una luce che ti aspetta. Inizia gratuitamente — 15 messaggi ogni giorno, senza carta di credito.
-                    </p>
-                    <motion.button
-                      onClick={goToLogin}
-                      whileHover={{ scale: 1.03, boxShadow: '0 0 40px rgba(212,168,64,0.25)' }}
-                      whileTap={{ scale: 0.97 }}
-                      className="px-10 py-4 bg-gradient-to-r from-amber to-amber-dim text-white font-display font-bold uppercase tracking-[0.12em] text-sm rounded-xl shadow-xl"
-                    >
-                      Entra nel tuo Spazio
-                    </motion.button>
+                    {/* Text background ambient */}
+                    <div className="absolute top-0 -left-10 w-32 h-32 bg-amber/10 blur-[60px] rounded-full pointer-events-none opacity-50" />
+
+                    <div className="space-y-4 relative z-10">
+                      <p className="text-3xl md:text-5xl lg:text-5xl font-display font-600 text-transparent bg-clip-text bg-gradient-to-br from-white via-text-warm to-amber/50 leading-[1.15]">
+                        Smetti di camminare <br className="hidden md:block" />da solo nel buio.
+                      </p>
+                      <div className="w-12 h-[1px] bg-amber/30 mx-auto md:mx-0 my-6" />
+                      <p className="text-base md:text-lg text-text-secondary font-light leading-relaxed max-w-md mx-auto md:mx-0">
+                        C'è una luce che ti aspetta. Inizia gratuitamente — 15 messaggi ogni giorno, nel totale rispetto del tuo spazio.
+                      </p>
+                    </div>
+
+                    <div className="relative inline-block mt-4">
+                      <motion.button
+                        onClick={goToLogin}
+                        whileHover={{ scale: 1.02, boxShadow: '0 0 40px rgba(196,154,42,0.3)' }}
+                        whileTap={{ scale: 0.98 }}
+                        className="group inline-flex items-center gap-3 px-8 md:px-10 py-4 md:py-5 bg-gradient-to-br from-space-surface to-space-deep text-white font-display font-bold uppercase tracking-[0.15em] text-xs rounded-xl border border-amber/30 hover:border-amber transition-all shadow-[0_10px_30px_rgba(0,0,0,0.5)] relative overflow-hidden"
+                      >
+                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-amber/10 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000" />
+                        <span className="relative z-10 text-amber group-hover:text-amber-light transition-colors">Entra nel tuo Spazio</span>
+                      </motion.button>
+                      <p className="text-[9px] text-text-muted/60 uppercase tracking-widest mt-4 mx-auto text-center md:text-left">
+                        Nessuna carta di credito
+                      </p>
+                    </div>
                   </motion.div>
                 </div>
               </div>
@@ -284,9 +329,12 @@ function App() {
             {/* 18. Super Visione (Traguardo) */}
             <ShadowInvite />
 
-            {/* 19. La Trappola Morbida */}
+            {/* 19. Diventa l'1% Migliore Ogni Giorno (Newsletter & Sharing) */}
+            <DailyEvolution />
+
+            {/* 20. La Trappola Morbida */}
             <div id="contatto" className="scroll-mt-20">
-              <ClosingCTA onEnter={goToLogin} />
+              <ClosingCTA onEnter={scrollToPricing} />
             </div>
 
             {/* Footer — Luminel receives the emotions */}

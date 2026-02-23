@@ -3,10 +3,10 @@ import { motion } from 'motion/react';
 import { ArrowRight } from 'lucide-react';
 
 const PATHS = [
-    { image: '/images/path-silence.png', title: 'SPAZIO SILENZIOSO' },
-    { image: '/images/path-listen.png', title: 'ASCOLTO PROFONDO' },
-    { image: '/images/path-clarity.png', title: 'CHIAREZZA MENTALE' },
-    { image: '/images/path-refuge.png', title: 'RIFUGIO SICURO' },
+    { image: '/images/hero_actress.png', title: 'SPAZIO SILENZIOSO' },
+    { image: '/images/hero_pittrice.png', title: 'ASCOLTO PROFONDO' },
+    { image: '/images/hero_danzatrice.png', title: 'CHIAREZZA MENTALE' },
+    { image: '/images/hero_manager_libro.png', title: 'RIFUGIO SICURO' },
 ];
 
 export default function HeroSection({ onEnter }: { onEnter: () => void }) {
@@ -49,7 +49,7 @@ export default function HeroSection({ onEnter }: { onEnter: () => void }) {
                     >
                         <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out" />
                         <span className="relative flex items-center gap-3">
-                            Entra nel tuo Spazio
+                            Inizia il percorso
                             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                         </span>
                     </motion.button>

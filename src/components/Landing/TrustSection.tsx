@@ -56,25 +56,29 @@ export default function TrustSection() {
                 </motion.p>
 
                 {/* Image + Cards layout */}
-                <div className="grid lg:grid-cols-5 gap-10 items-center">
+                <div className="grid lg:grid-cols-5 gap-12 lg:gap-16 items-center">
                     {/* Cards — left side */}
-                    <div className="lg:col-span-3 grid sm:grid-cols-2 gap-5">
+                    <div className="lg:col-span-3 grid sm:grid-cols-2 gap-6 relative z-10">
                         {TRUST_ITEMS.map((item, i) => (
                             <motion.div
                                 key={i}
-                                initial={{ opacity: 0, y: 15 }}
+                                initial={{ opacity: 0, y: 20 }}
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true }}
-                                transition={{ delay: i * 0.1 }}
-                                className="glass p-5 rounded-2xl border border-space-border hover:border-amber/15 transition-colors group"
+                                transition={{ delay: i * 0.1, duration: 0.6 }}
+                                className="glass bg-space-surface/40 p-6 md:p-8 rounded-[1.5rem] border border-white/5 hover:border-amber/30 hover:bg-space-surface transition-all duration-700 group relative overflow-hidden shadow-[0_0_30px_rgba(0,0,0,0.1)] hover:shadow-[0_0_50px_rgba(196,154,42,0.1)]"
                             >
-                                <div className="flex items-start gap-4">
-                                    <div className="p-2.5 rounded-xl bg-amber/10 text-amber group-hover:bg-amber/15 transition-colors shrink-0">
+                                {/* Hover Glow */}
+                                <div className="absolute -top-12 -right-12 w-32 h-32 bg-amber/15 blur-[40px] rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-1000 pointer-events-none" />
+
+                                <div className="flex flex-col gap-5 relative z-10">
+                                    <div className="w-12 h-12 flex items-center justify-center rounded-2xl bg-gradient-to-br from-space-deep to-space-surface border border-white/10 text-amber group-hover:text-amber-light group-hover:border-amber/30 group-hover:shadow-[0_0_20px_rgba(196,154,42,0.2)] transition-all duration-500 shrink-0 relative overflow-hidden">
+                                        <div className="absolute inset-0 bg-amber/5 opacity-0 group-hover:opacity-100 transition-opacity" />
                                         {item.icon}
                                     </div>
                                     <div>
-                                        <h3 className="text-sm font-display font-600 text-text-warm mb-1">{item.title}</h3>
-                                        <p className="text-xs text-text-muted leading-relaxed">{item.desc}</p>
+                                        <h3 className="text-base font-display font-600 text-text-warm mb-2 drop-shadow-sm">{item.title}</h3>
+                                        <p className="text-sm text-text-secondary leading-relaxed font-light">{item.desc}</p>
                                     </div>
                                 </div>
                             </motion.div>
@@ -83,19 +87,22 @@ export default function TrustSection() {
 
                     {/* Image — right side */}
                     <motion.div
-                        initial={{ opacity: 0, x: 30 }}
-                        whileInView={{ opacity: 1, x: 0 }}
+                        initial={{ opacity: 0, scale: 0.95 }}
+                        whileInView={{ opacity: 1, scale: 1 }}
                         viewport={{ once: true }}
-                        transition={{ duration: 0.8 }}
-                        className="lg:col-span-2 hidden lg:block"
+                        transition={{ duration: 1 }}
+                        className="lg:col-span-2 hidden lg:block perspective-1000"
                     >
-                        <div className="relative rounded-2xl overflow-hidden shadow-2xl shadow-amber/10">
+                        <div className="relative rounded-[2.5rem] overflow-hidden shadow-[0_20px_60px_rgba(0,0,0,0.5)] border border-white/5 group transform-gpu rotate-y-[-5deg] hover:rotate-y-0 transition-transform duration-1000">
+                            <div className="absolute inset-0 bg-amber/10 mix-blend-overlay opacity-0 group-hover:opacity-100 transition-opacity duration-1000 z-10 pointer-events-none" />
                             <img
                                 src="/images/shield-of-light.png"
                                 alt="Scudo di luce protettiva"
-                                className="w-full h-auto object-cover"
+                                className="w-full h-auto object-cover scale-100 group-hover:scale-105 transition-transform duration-1000"
                             />
-                            <div className="absolute inset-0 bg-gradient-to-t from-space-deep/40 via-transparent to-transparent" />
+                            {/* Cinematic gradients */}
+                            <div className="absolute inset-0 bg-gradient-to-tr from-space-deep/90 via-space-deep/20 to-transparent pointer-events-none" />
+                            <div className="absolute inset-0 bg-gradient-to-t from-space-deep via-transparent to-transparent pointer-events-none" />
                         </div>
                     </motion.div>
                 </div>
