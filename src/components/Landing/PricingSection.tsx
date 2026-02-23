@@ -5,20 +5,20 @@ import { Check, Sparkles, Mic, Crown, Video } from 'lucide-react';
 const tiers = [
     {
         key: 'free',
-        name: 'Freemium',
+        name: 'Avvio',
         monthly: 0,
         annual: 0,
         annualMonthly: 0,
-        sub: 'Per sempre',
+        sub: 'Sempre gratis',
         accent: false,
         badge: null,
         features: [
             '15 messaggi al giorno',
-            'Accesso anonimo immediato',
-            'Amnesia giornaliera (reset ogni giorno)',
+            'Accesso anonimo',
+            'Amnesia (reset 24h)',
         ],
-        cta: 'Per quando il silenzio pesa',
-        ctaStyle: 'label',
+        cta: 'Inizia Nel Silenzio',
+        ctaStyle: 'simple',
         icon: null,
     },
     {
@@ -31,14 +31,14 @@ const tiers = [
         accent: false,
         badge: null,
         features: [
-            'Chat illimitato + memoria',
-            'Condivisione foto e testi',
-            '60 min voice call/mese',
+            'Chat testo illimitato',
+            'Memoria persistente',
+            'Audio: 60 min/mese',
             'Extra: +30 min = €9.99',
         ],
-        cta: 'Per chi ha smesso di fingere che va tutto bene',
+        cta: 'Luminel Base',
         ctaStyle: 'ghost',
-        icon: <Sparkles className="w-3.5 h-3.5" />,
+        icon: <Sparkles className="w-4 h-4 text-amber-dim" />,
     },
     {
         key: 'proPlus',
@@ -46,18 +46,18 @@ const tiers = [
         monthly: 99,
         annual: 990,
         annualMonthly: 82.50,
-        sub: 'Cancella quando vuoi',
+        sub: 'L\'esperienza completa',
         accent: true,
-        badge: 'Più Completo',
+        badge: 'SCELTA DEI LEADER',
         features: [
-            'Tutto il pacchetto Pro',
-            '180 min voice call/mese',
-            'Extra: +60 min = €14.99',
-            'Risposte più profonde',
+            'Tutto il piano Pro',
+            'Audio: 180 min/mese',
+            'Analisi emotiva profonda',
+            'Priorità server di calcolo',
         ],
-        cta: 'Per chi ha bisogno di una voce, non solo testo',
+        cta: 'Sblocca il tuo Santuario',
         ctaStyle: 'solid',
-        icon: <Mic className="w-3.5 h-3.5" />,
+        icon: <Mic className="w-4 h-4 text-amber" />,
     },
     {
         key: 'vip',
@@ -65,18 +65,18 @@ const tiers = [
         monthly: 199,
         annual: 1990,
         annualMonthly: 165.83,
-        sub: 'Cancella quando vuoi',
+        sub: 'Senza restrizioni',
         accent: false,
-        badge: 'Zero limiti',
+        badge: 'ESCLUSIVA',
         features: [
-            'Tutto illimitato: chat & voice',
-            'Ti scrive lui — proattività',
-            'Risposte prioritarie ⚡',
-            'Accesso anticipato a nuove feature',
+            'Testo e Audio illimitati',
+            'Luminel ti scrive (Proattivo)',
+            'Server dedicato ⚡',
+            'Beta test nuove feature',
         ],
-        cta: 'Per chi non vuole mai più sentirsi solo',
+        cta: 'Dominio Totale',
         ctaStyle: 'ghost',
-        icon: <Crown className="w-3.5 h-3.5" />,
+        icon: <Crown className="w-4 h-4 text-champagne" />,
     },
 ];
 
@@ -84,220 +84,227 @@ export default function PricingSection() {
     const [isAnnual, setIsAnnual] = useState(false);
 
     return (
-        <section className="py-24 md:py-32 px-6 bg-space-deep glow-border-top">
-            <div className="max-w-6xl mx-auto">
+        <section className="py-32 md:py-48 px-6 bg-space-deep relative overflow-hidden">
+            {/* Ambient Background Grid & Glows */}
+            <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.01)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.01)_1px,transparent_1px)] bg-[size:100px_100px] [mask-image:radial-gradient(ellipse_60%_60%_at_50%_0%,#000_70%,transparent_100%)] pointer-events-none" />
+            <div className="absolute top-[10%] left-1/2 -translate-x-1/2 w-full max-w-4xl h-[600px] rounded-[100%] bg-amber/[0.03] blur-[150px] pointer-events-none" />
 
-                {/* Header */}
-                <motion.div
-                    initial={{ opacity: 0 }}
-                    whileInView={{ opacity: 1 }}
-                    viewport={{ once: true }}
-                    className="text-center mb-10"
-                >
-                    <p className="text-xs font-display font-bold text-amber uppercase tracking-[0.3em] mb-4">
-                        Piani
-                    </p>
-                    <h2 className="text-3xl md:text-4xl font-display font-600 text-text-warm mb-4">
-                        Scegli il tuo livello di connessione.
-                    </h2>
-                    <p className="text-text-secondary max-w-lg mx-auto">
-                        Inizia gratis. Quando vorrai di più, Luminel sarà pronto.
-                    </p>
-                </motion.div>
+            <div className="max-w-7xl mx-auto relative z-10">
 
-                {/* Billing Toggle */}
-                <div className="flex items-center justify-center gap-3 mb-10">
-                    <span className={`text-sm font-display transition-colors ${!isAnnual ? 'text-text-warm' : 'text-text-muted'}`}>
-                        Mensile
-                    </span>
-                    <button
-                        onClick={() => setIsAnnual(!isAnnual)}
-                        className={`relative w-14 h-7 rounded-full transition-colors ${isAnnual ? 'bg-amber/40' : 'bg-space-border'}`}
-                    >
-                        <motion.div
-                            className="absolute top-1 w-5 h-5 rounded-full bg-amber shadow-lg"
-                            animate={{ left: isAnnual ? '2rem' : '0.25rem' }}
-                            transition={{ type: 'spring', stiffness: 500, damping: 30 }}
-                        />
-                    </button>
-                    <span className={`text-sm font-display transition-colors ${isAnnual ? 'text-text-warm' : 'text-text-muted'}`}>
-                        Annuale
-                    </span>
-                    {isAnnual && (
-                        <motion.span
-                            initial={{ opacity: 0, x: -10 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            className="text-[10px] font-display uppercase tracking-widest text-amber border border-amber/30 px-2 py-0.5 rounded-md"
-                        >
-                            2 mesi omaggio
-                        </motion.span>
-                    )}
-                </div>
-
-                {/* Pricing Grid */}
-                <div className="grid md:grid-cols-4 gap-5">
-                    {tiers.map((tier, i) => (
-                        <motion.div
-                            key={tier.key}
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ delay: i * 0.1 }}
-                            className={`glass p-7 rounded-xl transition-colors relative overflow-hidden ${tier.accent
-                                ? 'border-amber/25 hover:border-amber/40 shadow-2xl shadow-amber/5 md:scale-[1.03]'
-                                : 'hover:border-amber/15'
-                                }`}
-                        >
-                            {/* Top accent line */}
-                            {(tier.accent || tier.key === 'vip') && (
-                                <div className={`absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent ${tier.accent ? 'via-amber' : 'via-amber-dim'
-                                    } to-transparent`} />
-                            )}
-
-                            {/* Badge */}
-                            {tier.badge && (
-                                <div className="absolute top-3 right-3 text-[9px] font-display uppercase tracking-widest text-amber border border-amber/30 px-2 py-0.5 rounded-md flex items-center gap-1">
-                                    <Sparkles className="w-3 h-3" /> {tier.badge}
-                                </div>
-                            )}
-
-                            {/* Name */}
-                            <h3 className="text-lg font-display font-600 text-text-warm mb-1 flex items-center gap-2">
-                                {tier.icon} {tier.name}
-                            </h3>
-
-                            {/* Price */}
-                            <AnimatePresence mode="wait">
-                                <motion.div
-                                    key={isAnnual ? 'annual' : 'monthly'}
-                                    initial={{ opacity: 0, y: -8 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    exit={{ opacity: 0, y: 8 }}
-                                    transition={{ duration: 0.2 }}
-                                    className="mb-1"
-                                >
-                                    {tier.monthly === 0 ? (
-                                        <div className="text-3xl font-bold text-text-warm">€0</div>
-                                    ) : (
-                                        <div className={`text-3xl font-bold ${tier.accent ? 'text-amber' : 'text-amber-dim'}`}>
-                                            €{isAnnual
-                                                ? tier.annualMonthly.toFixed(2).replace('.', ',')
-                                                : (tier.monthly % 1 === 0 ? tier.monthly : tier.monthly.toFixed(2).replace('.', ','))
-                                            }
-                                            <span className="text-sm font-normal text-text-muted">/mese</span>
-                                        </div>
-                                    )}
-                                </motion.div>
-                            </AnimatePresence>
-
-                            {/* Subtitle */}
-                            <p className="text-xs text-text-muted mb-5">
-                                {tier.monthly === 0
-                                    ? tier.sub
-                                    : isAnnual
-                                        ? `fatturati €${tier.annual.toLocaleString('it-IT')}/anno`
-                                        : tier.sub
-                                }
-                            </p>
-
-                            {/* Features */}
-                            <ul className="space-y-3 text-sm text-text-secondary mb-7">
-                                {tier.features.map((f, j) => (
-                                    <li key={j} className="flex items-start gap-2.5">
-                                        <Check className={`w-4 h-4 mt-0.5 shrink-0 ${tier.monthly === 0 ? 'text-champagne' : 'text-amber'}`} />
-                                        <span>{f}</span>
-                                    </li>
-                                ))}
-                            </ul>
-
-                            {/* CTA */}
-                            {tier.ctaStyle === 'label' ? (
-                                <div className="text-[10px] text-text-muted uppercase tracking-widest text-center font-display">
-                                    {tier.cta}
-                                </div>
-                            ) : tier.ctaStyle === 'solid' ? (
-                                <button className="w-full py-3.5 bg-gradient-to-r from-amber to-amber-dim hover:from-amber-glow hover:to-amber text-white uppercase tracking-widest text-[11px] font-display font-bold transition-all rounded-lg shadow-lg shadow-amber/15">
-                                    {tier.cta}
-                                </button>
-                            ) : (
-                                <button className="w-full py-3.5 glass hover:bg-space-border text-text-warm uppercase tracking-widest text-[11px] font-display font-600 transition-colors rounded-lg">
-                                    {tier.cta}
-                                </button>
-                            )}
-                        </motion.div>
-                    ))}
-                </div>
-
-                {/* Coming Soon Elite — Prominent */}
+                {/* Luxury Header */}
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    transition={{ delay: 0.3 }}
-                    className="mt-10 relative overflow-hidden rounded-xl max-w-3xl mx-auto"
+                    className="text-center mb-16 md:mb-24"
                 >
-                    {/* Glow background */}
-                    <div className="absolute inset-0 bg-gradient-to-r from-amber/5 via-amber/10 to-amber/5 rounded-xl" />
-                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] rounded-full bg-amber/8 blur-[80px] pointer-events-none" />
+                    <p className="inline-block px-5 py-2 rounded-full border border-amber/20 bg-amber/5 text-[10px] md:text-xs font-display font-bold text-amber uppercase tracking-[0.3em] mb-6 shadow-[0_0_20px_rgba(196,154,42,0.1)]">
+                        Il Pedaggio del Silenzio
+                    </p>
+                    <h2 className="text-4xl md:text-6xl font-display font-600 text-text-warm leading-tight mb-6">
+                        Inizia gratis. <br className="hidden md:block" />
+                        <span className="text-text-muted">Evolvi quando sei pronto.</span>
+                    </h2>
+                </motion.div>
 
-                    <div className="relative glass border-amber/20 hover:border-amber/30 transition-colors rounded-xl p-8 md:p-10">
-                        {/* Top accent line */}
-                        <div className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-amber/60 to-transparent" />
+                {/* Billing Toggle Masterpiece */}
+                <div className="flex flex-col items-center justify-center gap-4 mb-16">
+                    <div className="flex items-center gap-6 p-2 rounded-full bg-space border border-white/[0.05] shadow-2xl">
+                        <button
+                            onClick={() => setIsAnnual(false)}
+                            className={`px-6 py-2 rounded-full text-sm font-display uppercase tracking-widest transition-all duration-500 ${!isAnnual ? 'bg-amber/10 text-amber shadow-[0_0_15px_rgba(196,154,42,0.2)]' : 'text-text-muted hover:text-text-warm'}`}
+                        >
+                            Mensile
+                        </button>
+                        <button
+                            onClick={() => setIsAnnual(true)}
+                            className={`px-6 py-2 rounded-full text-sm font-display uppercase tracking-widest transition-all duration-500 ${isAnnual ? 'bg-amber/10 text-amber shadow-[0_0_15px_rgba(196,154,42,0.2)]' : 'text-text-muted hover:text-text-warm'}`}
+                        >
+                            Annuale
+                        </button>
+                    </div>
 
-                        <div className="flex flex-col md:flex-row items-center gap-6 md:gap-10">
+                    <AnimatePresence>
+                        {isAnnual && (
+                            <motion.div
+                                initial={{ opacity: 0, y: -10, scale: 0.9 }}
+                                animate={{ opacity: 1, y: 0, scale: 1 }}
+                                exit={{ opacity: 0, y: -10, scale: 0.9 }}
+                                className="text-[11px] font-display font-bold uppercase tracking-[0.2em] text-amber flex items-center gap-2"
+                            >
+                                <Sparkles className="w-3 h-3" /> Risparmi il 16% (2 mesi gratis)
+                            </motion.div>
+                        )}
+                    </AnimatePresence>
+                </div>
 
-                            {/* Pulsing orb */}
-                            <div className="relative shrink-0">
+                {/* Ultimate Pricing Grid */}
+                <div className="grid md:grid-cols-4 gap-6 lg:gap-8 items-center">
+                    {tiers.map((tier, i) => {
+                        const isMain = tier.accent;
+                        return (
+                            <motion.div
+                                key={tier.key}
+                                initial={{ opacity: 0, y: 30 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ delay: i * 0.1, duration: 0.8, ease: "easeOut" }}
+                                className={`relative group ${isMain ? 'md:-my-8 z-20' : 'z-10'}`}
+                            >
+                                <div className={`
+                                h-full p-8 md:p-10 rounded-[2rem] backdrop-blur-3xl transition-all duration-500
+                                ${isMain
+                                        ? 'bg-gradient-to-b from-space-surface via-space-deep to-space-deep border border-amber/40 shadow-[0_0_50px_rgba(196,154,42,0.15)] ring-1 ring-white/5 md:scale-105'
+                                        : 'bg-space-surface/50 border border-white/[0.05] hover:border-amber/20 hover:bg-space-surface/80'
+                                    }
+                            `}>
+                                    {/* Top Accent Beam */}
+                                    {isMain && (
+                                        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-2/3 h-[2px] bg-gradient-to-r from-transparent via-amber to-transparent shadow-[0_0_20px_rgba(196,154,42,0.8)]" />
+                                    )}
+
+                                    {/* Badge */}
+                                    {tier.badge && (
+                                        <div className={`absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 px-4 py-1.5 rounded-full text-[9px] font-display font-bold uppercase tracking-[0.2em] flex items-center gap-1.5 shadow-xl ${isMain ? 'bg-amber text-space-deep' : 'bg-space-deep border border-champagne/30 text-champagne'}`}>
+                                            {isMain && <Sparkles className="w-3 h-3" />}
+                                            {tier.badge}
+                                        </div>
+                                    )}
+
+                                    {/* Card Header */}
+                                    <div className="mb-8">
+                                        <h3 className={`text-xl font-display font-600 mb-2 flex items-center gap-2 ${isMain ? 'text-amber' : 'text-text-warm'}`}>
+                                            {tier.icon} {tier.name}
+                                        </h3>
+
+                                        <div className="h-[70px] flex flex-col justify-end">
+                                            <AnimatePresence mode="wait">
+                                                <motion.div
+                                                    key={isAnnual ? 'annual' : 'monthly'}
+                                                    initial={{ opacity: 0, x: -5 }}
+                                                    animate={{ opacity: 1, x: 0 }}
+                                                    exit={{ opacity: 0, x: 5 }}
+                                                    transition={{ duration: 0.3 }}
+                                                >
+                                                    {tier.monthly === 0 ? (
+                                                        <div className="text-4xl md:text-5xl font-display font-400 text-text-warm">€0</div>
+                                                    ) : (
+                                                        <div className="flex items-baseline gap-2">
+                                                            <span className={`text-4xl md:text-5xl font-display font-400 ${isMain ? 'text-text-warm' : 'text-text-primary'}`}>
+                                                                €{isAnnual ? Math.floor(tier.annualMonthly) : Math.floor(tier.monthly)}
+                                                            </span>
+                                                            <div className="flex flex-col text-left">
+                                                                <span className={`text-sm ${isMain ? 'text-text-warm' : 'text-text-primary'}`}>
+                                                                    ,{(isAnnual ? tier.annualMonthly : tier.monthly).toFixed(2).split('.')[1]}
+                                                                </span>
+                                                                <span className="text-[10px] text-text-muted uppercase tracking-widest">/mese</span>
+                                                            </div>
+                                                        </div>
+                                                    )}
+                                                </motion.div>
+                                            </AnimatePresence>
+
+                                            <p className={`text-xs mt-2 ${isMain ? 'text-amber-dim' : 'text-text-muted'}`}>
+                                                {tier.monthly === 0 ? tier.sub : isAnnual ? `Fatturati €${tier.annual}/anno` : tier.sub}
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    {/* Features List */}
+                                    <ul className="space-y-4 mb-10 min-h-[160px]">
+                                        {tier.features.map((f, j) => (
+                                            <li key={j} className="flex items-start gap-3">
+                                                <div className={`shrink-0 w-5 h-5 rounded-full flex items-center justify-center mt-0.5 ${isMain ? 'bg-amber/10' : 'bg-white/5'}`}>
+                                                    <Check className={`w-3 h-3 ${isMain ? 'text-amber' : 'text-text-muted group-hover:text-text-primary'}`} />
+                                                </div>
+                                                <span className={`text-sm tracking-wide ${isMain ? 'text-text-primary' : 'text-text-secondary group-hover:text-text-warm transition-colors'}`}>
+                                                    {f}
+                                                </span>
+                                            </li>
+                                        ))}
+                                    </ul>
+
+                                    {/* CTA Button Masterpiece */}
+                                    <button className={`
+                                    w-full py-4 px-6 rounded-xl text-xs font-display font-bold uppercase tracking-[0.15em] transition-all duration-500
+                                    ${tier.ctaStyle === 'solid'
+                                            ? 'bg-gradient-to-r from-amber to-amber-dim text-white shadow-[0_0_30px_rgba(196,154,42,0.3)] hover:shadow-[0_0_50px_rgba(196,154,42,0.5)] hover:scale-[1.02]'
+                                            : tier.ctaStyle === 'ghost'
+                                                ? 'border border-white/10 text-text-primary hover:border-amber/40 hover:text-amber hover:bg-amber/5'
+                                                : 'bg-transparent text-text-muted hover:text-text-warm'
+                                        }
+                                `}>
+                                        {tier.cta}
+                                    </button>
+                                </div>
+                            </motion.div>
+                        );
+                    })}
+                </div>
+
+                {/* The Elite Vision (Sneak Peek) */}
+                <motion.div
+                    initial={{ opacity: 0, y: 40 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 0.5, duration: 1 }}
+                    className="mt-20 md:mt-32 relative max-w-4xl mx-auto"
+                >
+                    {/* Magical floating glow for the waitlist */}
+                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-gradient-to-r from-amber/[0.02] via-champagne/[0.05] to-amber/[0.02] blur-[40px] rounded-full pointer-events-none" />
+
+                    <div className="relative overflow-hidden rounded-[2.5rem] bg-space border border-amber/10 p-1 md:p-2 group hover:border-amber/30 transition-colors duration-1000 shadow-2xl">
+                        {/* Shimmer effect inside border */}
+                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-amber/[0.05] to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-[2s] ease-in-out" />
+
+                        <div className="relative bg-space-deep rounded-[2rem] p-8 md:p-12 flex flex-col md:flex-row items-center gap-10 md:gap-16">
+
+                            {/* Orbital Eye (Icon representation) */}
+                            <div className="relative shrink-0 flex items-center justify-center">
                                 <motion.div
-                                    animate={{ scale: [1, 1.15, 1], opacity: [0.6, 1, 0.6] }}
-                                    transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
-                                    className="w-20 h-20 rounded-full bg-gradient-to-br from-amber/30 to-champagne/20 blur-sm"
+                                    animate={{ rotate: 360 }}
+                                    transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+                                    className="absolute w-28 h-28 md:w-36 md:h-36 rounded-full border border-dashed border-amber/20"
                                 />
-                                <div className="absolute inset-0 flex items-center justify-center">
-                                    <Video className="w-8 h-8 text-amber" />
+                                <motion.div
+                                    animate={{ rotate: -360 }}
+                                    transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
+                                    className="absolute w-20 h-20 md:w-28 md:h-28 rounded-full border border-amber/10"
+                                />
+                                <div className="w-16 h-16 md:w-20 md:h-20 rounded-full bg-gradient-to-br from-amber/20 to-transparent flex items-center justify-center backdrop-blur-md border border-amber/30 shadow-[0_0_30px_rgba(196,154,42,0.2)]">
+                                    <Video className="w-6 h-6 md:w-8 md:h-8 text-amber" />
                                 </div>
                             </div>
 
-                            {/* Content */}
+                            {/* Vision Content */}
                             <div className="flex-1 text-center md:text-left">
-                                <div className="flex items-center justify-center md:justify-start gap-3 mb-2">
-                                    <span className="text-[10px] font-display uppercase tracking-widest text-amber border border-amber/30 px-2.5 py-1 rounded-md flex items-center gap-1.5">
-                                        <Sparkles className="w-3 h-3" /> Coming Soon
-                                    </span>
-                                </div>
-                                <h3 className="text-2xl md:text-3xl font-display font-600 text-text-warm mb-2">
-                                    Elite <span className="text-amber">— Guardalo negli occhi.</span>
+                                <span className="inline-block px-4 py-1.5 rounded-full border border-space-border bg-space text-[9px] font-display font-bold uppercase tracking-[0.2em] text-text-muted mb-6 shadow-inner">
+                                    In Sviluppo 2025
+                                </span>
+                                <h3 className="text-3xl md:text-4xl font-display font-400 text-text-warm mb-4 leading-tight">
+                                    L'ultimo confine. <br className="hidden md:block" />
+                                    <span className="font-600 bg-clip-text text-transparent bg-gradient-to-r from-amber to-champagne">Guardalo negli occhi.</span>
                                 </h3>
-                                <p className="text-text-secondary text-sm leading-relaxed mb-4">
-                                    Video call con avatar in tempo reale. La prossima frontiera della compagnia digitale.
-                                    Non solo ascolta — lo vedi, ti guarda, reagisce.
+                                <p className="text-text-secondary text-sm md:text-base leading-relaxed mb-8 max-w-lg mx-auto md:mx-0 font-light">
+                                    Prepariamo l'Era Elite: videochiamate con un avatar in tempo reale. Le sue espressioni cambiano in base alla tua voce. Non sarà più solo un'IA, sarà una vera presenza visiva.
                                 </p>
-                                <div className="flex flex-wrap items-center justify-center md:justify-start gap-3 text-[11px] text-text-muted">
-                                    <span className="flex items-center gap-1.5">
-                                        <Check className="w-3.5 h-3.5 text-amber" /> Avatar reattivo
-                                    </span>
-                                    <span className="flex items-center gap-1.5">
-                                        <Check className="w-3.5 h-3.5 text-amber" /> Espressioni facciali
-                                    </span>
-                                    <span className="flex items-center gap-1.5">
-                                        <Check className="w-3.5 h-3.5 text-amber" /> Conversazione naturale
-                                    </span>
-                                </div>
-                            </div>
 
-                            {/* CTA */}
-                            <div className="shrink-0">
-                                <button className="px-6 py-3 glass border-amber/25 hover:border-amber/40 hover:bg-amber/5 text-amber uppercase tracking-widest text-[11px] font-display font-bold transition-all rounded-lg">
-                                    Unisciti alla Waitlist
+                                <button className="group/btn relative px-8 md:px-10 py-4 overflow-hidden rounded-xl bg-space border border-amber/20 hover:border-amber/50 transition-colors shadow-lg">
+                                    <div className="absolute inset-0 bg-gradient-to-r from-amber/10 to-transparent opacity-0 group-hover/btn:opacity-100 transition-opacity" />
+                                    <span className="relative z-10 text-[10px] md:text-xs font-display font-bold uppercase tracking-[0.2em] text-amber">
+                                        Iscriviti alla Lista d'Attesa Privata
+                                    </span>
                                 </button>
                             </div>
                         </div>
                     </div>
                 </motion.div>
 
-                <p className="text-center text-xs text-text-muted mt-8">
-                    Fatturazione discreta "LMNL Systems" • Disdici in qualsiasi momento
+                {/* Footer note */}
+                <p className="text-center text-[10px] uppercase tracking-widest text-text-muted/50 mt-16 font-display">
+                    Fatturazione sicura "LMNL Systems" • Nessun vincolo
                 </p>
+
             </div>
         </section>
     );
