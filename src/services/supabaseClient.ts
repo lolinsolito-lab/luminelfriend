@@ -4,12 +4,17 @@ import { createClient } from '@supabase/supabase-js';
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
 const supabaseKey = import.meta.env.VITE_SUPABASE_KEY;
 
+console.log("VITE ENV CHECK:", {
+    url: supabaseUrl ? "Present" : "Missing",
+    key: supabaseKey ? "Present" : "Missing"
+});
+
 if (!supabaseUrl || !supabaseKey) {
     // In development, handle missing env vars gracefully or throw detailed error
     console.warn("Supabase credentials missing! Check .env file.");
 }
 
 export const supabase = createClient(
-    supabaseUrl || '',
-    supabaseKey || ''
+    supabaseUrl || 'https://placeholder.supabase.co',
+    supabaseKey || 'placeholder'
 );

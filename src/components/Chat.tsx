@@ -7,9 +7,7 @@ import { clsx } from 'clsx';
 import PaywallOverlay from './PaywallOverlay';
 import DisclaimerOverlay from './DisclaimerOverlay';
 import { UserProfile } from '../App';
-
-// FREEMIUM LIMIT: 15 messages
-const MESSAGE_LIMIT = 15;
+import { useTierLimits } from '../hooks/useTierLimits';
 
 interface ChatProps {
   userProfile?: UserProfile | null;
@@ -19,17 +17,16 @@ export default function Chat({ userProfile }: ChatProps) {
   // State for Disclaimer Acceptance (Session-based)
   const [hasAcceptedDisclaimer, setHasAcceptedDisclaimer] = useState(false);
 
+  const { tier, messageCount, messageLimit, incrementMessageCount, isPaywallActive, loadingConfig } = useTierLimits();
+
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [messageCount, setMessageCount] = useState(0);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const [showPaywall, setShowPaywall] = useState(false);
 
-  // AMNESIA LOGIC & SESSION INIT
+  // AMNESIA LOGIC (Just initial welcome message)
   useEffect(() => {
-    const today = new Date().toDateString();
-    const lastSession = localStorage.getItem('luminel_last_session_date');
 
     // Create the initial cinematic message if the user came through onboarding
     const initialMessages: Message[] = [];
@@ -56,25 +53,10 @@ export default function Chat({ userProfile }: ChatProps) {
       });
     }
 
-    if (lastSession !== today) {
+    if (userProfile && initialMessages.length > 0 && messages.length === 0) {
       setMessages(initialMessages);
-      setMessageCount(0);
-      localStorage.setItem('luminel_last_session_date', today);
-    } else {
-      const savedCount = parseInt(localStorage.getItem('luminel_msg_count') || '0');
-      setMessageCount(savedCount);
-      // If we restore a session but it's empty, and we just onboarded
-      if (initialMessages.length > 0 && messages.length === 0) {
-        setMessages(initialMessages);
-      }
     }
   }, [userProfile]);
-
-  useEffect(() => {
-    localStorage.setItem('luminel_msg_count', messageCount.toString());
-  }, [messageCount]);
-
-  const isPaywallActive = messageCount >= MESSAGE_LIMIT;
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -92,7 +74,7 @@ export default function Chat({ userProfile }: ChatProps) {
     setInput('');
     setIsLoading(true);
 
-    setMessageCount(prev => prev + 1);
+    incrementMessageCount();
 
     try {
       const responseContent = await sendMessageToLuminel(messages, input);
@@ -119,6 +101,10 @@ export default function Chat({ userProfile }: ChatProps) {
   // 1. LEGAL GATEKEEPER
   if (!hasAcceptedDisclaimer) {
     return <DisclaimerOverlay onAccept={() => setHasAcceptedDisclaimer(true)} />;
+  }
+
+  if (loadingConfig) {
+    return <div className="h-screen bg-space-deep flex items-center justify-center"><Loader2 className="w-8 h-8 animate-spin text-amber/50" /></div>;
   }
 
   return (
@@ -159,7 +145,9 @@ export default function Chat({ userProfile }: ChatProps) {
         <div className="flex flex-col items-end">
           {!isPaywallActive && (
             <div className="text-xs font-mono text-text-muted mb-1">
-              <span className={messageCount > 10 ? "text-red-400" : "text-text-secondary"}>{messageCount}/{MESSAGE_LIMIT}</span>
+              <span className={messageCount > (messageLimit === Infinity ? 9999 : messageLimit - 5) ? "text-red-400" : "text-text-secondary"}>
+                {messageCount}/{messageLimit === Infinity ? '∞' : messageLimit}
+              </span>
             </div>
           )}
           <div className="flex items-center gap-1 text-[10px] text-text-muted uppercase tracking-wider">
