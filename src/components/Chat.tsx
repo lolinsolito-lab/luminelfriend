@@ -88,7 +88,13 @@ export default function Chat({ userProfile, onNavigate }: ChatProps) {
     incrementMessageCount();
 
     try {
-      const responseContent = await sendMessageToLuminel(messages, input);
+      const aiConfig = {
+        persona: user?.user_metadata?.ai_persona || 'Il Mentore',
+        tone: user?.user_metadata?.ai_tone || 'Calmo e Riflessivo',
+        customPrompt: user?.user_metadata?.ai_custom_prompt || '',
+        tier: tier
+      };
+      const responseContent = await sendMessageToLuminel(messages, input, aiConfig);
       const botMessage: Message = { role: 'model', content: responseContent };
       setMessages(prev => [...prev, botMessage]);
     } catch (error) {

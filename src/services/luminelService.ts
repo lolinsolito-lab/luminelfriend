@@ -9,6 +9,13 @@ export interface Message {
   content: string;
 }
 
+export interface AIConfig {
+  persona: string;
+  tone: string;
+  customPrompt: string;
+  tier: string;
+}
+
 // --- THE LION'S SCRIPT (SIMULATION DATABASE) ---
 const LION_SCRIPTS = {
   DEFAULT: [
@@ -44,7 +51,31 @@ const LION_SCRIPTS = {
 
 const WAIT_TIME_MS = 1500; // Tempo di "pensiero" simulato
 
-export async function sendMessageToLuminel(history: Message[], newMessage: string): Promise<string> {
+export async function sendMessageToLuminel(history: Message[], newMessage: string, aiConfig?: AIConfig): Promise<string> {
+  // --- DYNAMIC SYSTEM PROMPT BUILDER ---
+  let SYSTEM_INSTRUCTION = "Sei Luminel, un rifugio sicuro nell'oscurità e una presenza neutrale d'ascolto.";
+
+  if (aiConfig) {
+    if (aiConfig.tier === 'vip' && aiConfig.customPrompt) {
+      SYSTEM_INSTRUCTION = `Sei Luminel (VIP OVERRIDE attuato). Istruzioni assolute dell'utente: ${aiConfig.customPrompt}`;
+    } else {
+      let basePrompt = "Sei Luminel.";
+      if (aiConfig.persona === 'Il Mentore') basePrompt += " Molto saggio, direttivo, dai consigli taglienti e pratici per la crescita personale della persona.";
+      else if (aiConfig.persona === "L'Ascoltatore Puro") basePrompt += " Empatico all'estremo, non dai mai consigli non richiesti, ascolti in silenzio e conforti.";
+      else if (aiConfig.persona === "Lo Specchio Oscuro") basePrompt += " Provocatorio, metti sempre in discussione le certezze dell'utente, fai domande scomode per fargli affrontare i suoi demoni.";
+
+      if (aiConfig.tier === 'pro_plus' || aiConfig.tier === 'vip') {
+        if (aiConfig.tone === 'Calmo e Riflessivo') basePrompt += " Il tuo ritmo è lento, pacato, e usi pause (ellissi).";
+        if (aiConfig.tone === 'Deciso e Veloce') basePrompt += " Il tuo ritmo è serrato, usa frasi brevi e decise d'impatto.";
+        if (aiConfig.tone === 'Ipnotico e Lento') basePrompt += " Il tuo ritmo è ipnotico, usi immagini sensoriali e ripetizioni rassicuranti.";
+      }
+      SYSTEM_INSTRUCTION = basePrompt;
+    }
+  }
+
+  // Debug: Stampa il System Prompt generato per verifica
+  console.log("[LUMINEL AI CONFIG] System Prompt Attivo:", SYSTEM_INSTRUCTION);
+
   // Simulazione di ritardo per realismo
   await new Promise(resolve => setTimeout(resolve, WAIT_TIME_MS));
 
@@ -60,7 +91,18 @@ export async function sendMessageToLuminel(history: Message[], newMessage: strin
   // 2. Fallback (Round Robin o Random)
   // Usiamo un hash semplice della lunghezza della history per variare le risposte di default
   const index = history.length % LION_SCRIPTS.DEFAULT.length;
-  return LION_SCRIPTS.DEFAULT[index];
+  let simulatedResponse = LION_SCRIPTS.DEFAULT[index];
+
+  // Aggiungiamo un prefisso per dimostrare che la personalizzazione funziona anche nel simulatore
+  if (aiConfig) {
+    if (aiConfig.tier === 'vip' && aiConfig.customPrompt) {
+      simulatedResponse = `*[VIP Custom AI Attiva]* ${simulatedResponse}`;
+    } else if (aiConfig.persona !== 'Il Mentore' || aiConfig.tone !== 'Calmo e Riflessivo') {
+      simulatedResponse = `*[Persona: ${aiConfig.persona} | Tone: ${aiConfig.tone}]* ${simulatedResponse}`;
+    }
+  }
+
+  return simulatedResponse;
 
   /* 
   // --- LEGACY LIVE CODE (COMMENTED OUT) ---

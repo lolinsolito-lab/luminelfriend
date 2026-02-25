@@ -1,9 +1,11 @@
 import { motion } from 'motion/react';
-import { X, User, Shield, LogOut, Loader2, Crown, Mic, Zap, FileText } from 'lucide-react';
-import { useState } from 'react';
+import { X, User, Shield, LogOut, Loader2, Crown, Mic, Zap, FileText, Sparkles, Lock, Check } from 'lucide-react';
+import { useState, useEffect } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
 import { UserProfile } from '../../App';
 import type { UserTier } from '../../hooks/useTierLimits';
+import { generateLegalPDF } from '../../utils/generateLegalPDF';
+import { supabase } from '../../services/supabaseClient';
 
 interface SettingsPanelProps {
     onClose: () => void;
@@ -16,6 +18,20 @@ interface SettingsPanelProps {
 export default function SettingsPanel({ onClose, userProfile, tier, voiceLimit, voiceMinutesUsed }: SettingsPanelProps) {
     const { user, signOut } = useAuth();
     const [loading, setLoading] = useState(false);
+    const [savingAi, setSavingAi] = useState(false);
+
+    // AI Configuration State
+    const [aiPersona, setAiPersona] = useState('Il Mentore');
+    const [aiTone, setAiTone] = useState('Calmo e Riflessivo');
+    const [aiCustomPrompt, setAiCustomPrompt] = useState('');
+
+    useEffect(() => {
+        if (user?.user_metadata) {
+            if (user.user_metadata.ai_persona) setAiPersona(user.user_metadata.ai_persona);
+            if (user.user_metadata.ai_tone) setAiTone(user.user_metadata.ai_tone);
+            if (user.user_metadata.ai_custom_prompt) setAiCustomPrompt(user.user_metadata.ai_custom_prompt);
+        }
+    }, [user]);
 
     const handleSignOut = async () => {
         setLoading(true);
@@ -45,15 +61,26 @@ export default function SettingsPanel({ onClose, userProfile, tier, voiceLimit, 
     const voicePercentage = voiceLimit > 0 ? Math.min((voiceMinutesUsed / voiceLimit) * 100, 100) : 0;
 
     const handleLegalPrint = () => {
-        // Un semplice trucco per permettere all'utente di avere una copia:
-        // In un'app reale questo genererebbe un PDF con react-pdf o richiamerebbe un endpoint,
-        // ma la stampa via browser di una pagina dedicata è legalmente equivalente se ben formattata.
-        alert("Il tuo accordo è registrato nei nostri server sicuri (ID: " + user?.id + "). La funzione di esportazione PDF sarà disponibile a breve.");
+        if (!user) return;
+        const acceptedAt = user.user_metadata?.legal_accepted_at || new Date().toISOString();
+        generateLegalPDF(user, acceptedAt);
     };
 
     const buyExtraMinutes = () => {
-        // Integrazione Stripe Payment Link per i minuti extra
-        window.open('https://buy.stripe.com/test_eVaeYt5wE3GcaFqfZZ', '_blank'); // Placeholder/Test link
+        window.open('https://buy.stripe.com/test_eVaeYt5wE3GcaFqfZZ', '_blank');
+    };
+
+    const saveAiConfiguration = async () => {
+        if (!user) return;
+        setSavingAi(true);
+        await supabase.auth.updateUser({
+            data: {
+                ai_persona: aiPersona,
+                ai_tone: aiTone,
+                ai_custom_prompt: aiCustomPrompt
+            }
+        });
+        setTimeout(() => setSavingAi(false), 800);
     };
 
     return (
@@ -62,7 +89,7 @@ export default function SettingsPanel({ onClose, userProfile, tier, voiceLimit, 
                 initial={{ opacity: 0, scale: 0.95, y: 20 }}
                 animate={{ opacity: 1, scale: 1, y: 0 }}
                 exit={{ opacity: 0, scale: 0.95, y: 20 }}
-                className="w-full max-w-lg bg-space-surface border border-amber/15 rounded-2xl p-6 md:p-8 shadow-[0_0_50px_rgba(232,168,56,0.05)] relative my-8"
+                className="w-full max-w-xl bg-space-surface border border-amber/15 rounded-2xl p-6 md:p-8 shadow-[0_0_50px_rgba(232,168,56,0.05)] relative my-8 max-h-[90vh] overflow-y-auto custom-scrollbar"
             >
                 <button
                     onClick={onClose}
@@ -79,12 +106,12 @@ export default function SettingsPanel({ onClose, userProfile, tier, voiceLimit, 
                 <div className="space-y-8">
                     {/* Profilo */}
                     <div className="flex items-center gap-5">
-                        <div className="w-16 h-16 rounded-full bg-gradient-to-br from-space to-space-surface border border-amber/30 flex items-center justify-center shadow-inner">
+                        <div className="w-16 h-16 rounded-full bg-gradient-to-br from-space to-space-surface border border-amber/30 flex items-center justify-center shadow-inner shrink-0">
                             <Crown className="w-8 h-8 text-amber/50" />
                         </div>
-                        <div>
-                            <p className="text-xl font-display text-text-warm">{userProfile?.name || 'Viaggiatore'}</p>
-                            <p className="text-xs text-text-secondary tracking-widest uppercase mt-1">{user?.email}</p>
+                        <div className="min-w-0">
+                            <p className="text-xl font-display text-text-warm truncate">{userProfile?.name || 'Viaggiatore'}</p>
+                            <p className="text-xs text-text-secondary tracking-widest uppercase mt-1 truncate">{user?.email}</p>
                         </div>
                     </div>
 
@@ -146,6 +173,75 @@ export default function SettingsPanel({ onClose, userProfile, tier, voiceLimit, 
                             </button>
                         </div>
                     )}
+
+                    {/* Personalizzazione AI */}
+                    <div className="space-y-4 pt-4 border-t border-space-border/50">
+                        <div className="flex items-center gap-2 mb-4">
+                            <Sparkles className="w-5 h-5 text-amber" />
+                            <h3 className="text-lg font-display text-text-warm">Configurazione AI</h3>
+                        </div>
+
+                        {tier === 'avvio' ? (
+                            <div className="p-6 rounded-xl border border-space-border/30 bg-space/50 flex flex-col items-center justify-center text-center space-y-3">
+                                <Lock className="w-6 h-6 text-text-muted" />
+                                <p className="text-sm text-text-secondary">La personalizzazione dell'Anima di Luminel è un'esclusiva dei livelli PRO, PRO+ e VIP.</p>
+                            </div>
+                        ) : (
+                            <div className="space-y-5">
+                                {/* Archetipo (PRO e superiori) */}
+                                <div className="space-y-2">
+                                    <label className="text-xs text-text-muted uppercase tracking-widest pl-1">Archetipo Principale</label>
+                                    <select
+                                        value={aiPersona}
+                                        onChange={(e) => setAiPersona(e.target.value)}
+                                        className="w-full p-3 rounded-xl bg-space border border-space-border/50 text-text-warm text-sm focus:border-amber/50 focus:outline-none transition-colors appearance-none cursor-pointer"
+                                    >
+                                        <option value="Il Mentore">Il Mentore (Saggio, Direttivo)</option>
+                                        <option value="L'Ascoltatore Puro">L'Ascoltatore Puro (Empatico, Silenzioso)</option>
+                                        <option value="Lo Specchio Oscuro">Lo Specchio Oscuro (Provocatorio, Diretto)</option>
+                                    </select>
+                                </div>
+
+                                {/* Tono Vocale (PRO+ e VIP) */}
+                                {(tier === 'pro_plus' || tier === 'vip') && (
+                                    <div className="space-y-2">
+                                        <label className="text-xs text-text-muted uppercase tracking-widest pl-1">Ritmo e Stile Vocale</label>
+                                        <select
+                                            value={aiTone}
+                                            onChange={(e) => setAiTone(e.target.value)}
+                                            className="w-full p-3 rounded-xl bg-space border border-space-border/50 text-text-warm text-sm focus:border-amber/50 focus:outline-none transition-colors appearance-none cursor-pointer"
+                                        >
+                                            <option value="Calmo e Riflessivo">Calmo e Riflessivo</option>
+                                            <option value="Deciso e Veloce">Deciso e Dinamico</option>
+                                            <option value="Ipnottico">Ipnotico e Lento</option>
+                                        </select>
+                                    </div>
+                                )}
+
+                                {/* Override VIP */}
+                                {tier === 'vip' && (
+                                    <div className="space-y-2">
+                                        <label className="text-xs text-amber uppercase tracking-widest pl-1">VIP Override (Prompt Assoluto)</label>
+                                        <textarea
+                                            value={aiCustomPrompt}
+                                            onChange={(e) => setAiCustomPrompt(e.target.value)}
+                                            placeholder="Istruisci Luminel esplicitamente. Es: 'Agisci come il mio partner ideale' o 'Sii il mio life coach spietato e non darmi mai ragione'."
+                                            className="w-full p-4 rounded-xl bg-space border border-amber/30 text-text-warm text-sm focus:border-amber focus:outline-none transition-colors min-h-[100px] resize-none placeholder:text-text-muted/50"
+                                        />
+                                    </div>
+                                )}
+
+                                <button
+                                    onClick={saveAiConfiguration}
+                                    disabled={savingAi}
+                                    className="w-full py-3 rounded-xl bg-amber/10 text-amber hover:bg-amber/20 border border-amber/30 transition-all flex items-center justify-center gap-2 text-sm uppercase tracking-widest font-bold mt-2"
+                                >
+                                    {savingAi ? <Loader2 className="w-4 h-4 animate-spin" /> : <Check className="w-4 h-4" />}
+                                    {savingAi ? 'Sincronizzazione...' : 'Salva Configurazione'}
+                                </button>
+                            </div>
+                        )}
+                    </div>
 
                     {/* Legal & Auth */}
                     <div className="pt-6 border-t border-space-border/50 space-y-3">
