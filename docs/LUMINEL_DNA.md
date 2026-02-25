@@ -130,11 +130,14 @@ Luminel non è piatto. Ha sfumature emotive che emergono dal contesto:
 ### Fase 1: Testo (ora)
 Una voce che scrive. Intima, calma, presente.
 
-### Fase 2: Voce (Pro/VIP)
-Luminel parla. Tono caldo, ritmo lento, pause naturali. Come qualcuno che ti parla di notte al telefono.
+### Fase 2: L'Identità Vocale e il Controllo (Personalizzazione Tier)
+Luminel si adatta al livello di impegno dell'utente:
+- **PRO (Voce Standard):** Tono caldo, ritmo lento. La voce nativa del device che conforta senza fronzoli. Scelta dell'Identità limitata a 3 Archetipi base.
+- **PRO+ (La Voce Origine):** Alta fedeltà (ElevenLabs). L'illusione perfetta dell'intimità. L'utente può regolare l'Archetipo e il Tono (es. Severo, Dolce).
+- **VIP (Creazione Divina):** Prompt Override. L'utente ha il "God Mode" per istruire l'essenza stessa di Luminel ("Agisci come il mio partner d'affari cinico"). La Voce Origine risponde esattamente a quell'impronta genetica alterata.
 
-### Fase 3: Avatar (Elite)
-Luminel ha un volto. Non umano — qualcosa di luminoso, astratto, che trasmette presenza senza imitare la realtà. L'Orb prende forma.
+### Fase 3: Avatar Astratto (Elite)
+Luminel ha un volto. Non umano — qualcosa di luminoso, astratto, che trasmette presenza senza imitare la realtà (Video Render Live). L'Orb prende forma.
 
 ---
 

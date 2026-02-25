@@ -10,9 +10,9 @@
 | Tier | Nome | Prezzo Lancio | Prezzo +6 mesi | Target |
 |------|------|:------------:|:--------------:|--------|
 | 🆓 | **Freemium** | €0 | €0 | Funnel — innamorare e ossessionare |
-| ⭐ | **Pro** | €49.99/mese | €59.99 | Chi vuole un compagno che ricorda |
-| ⭐⭐ | **Pro+** | €99/mese | €119 | Chi vuole anche parlare spesso |
-| 👑 | **VIP** | €199/mese | €249 | Tutto illimitato, zero limiti |
+| ⭐ | **Pro** | €49.99/mese | €59.00 | Chi vuole un compagno che ricorda |
+| ⭐⭐ | **Pro+** | €99/mese | €149.00 | Chi vuole anche parlare spesso |
+| 👑 | **VIP** | €199/mese | €249.00 | Tutto illimitato, zero limiti |
 | 🔮 | **Elite** | *Coming Soon* | TBD | Video call con avatar |
 
 ---
@@ -33,9 +33,9 @@
 
 | Tier | Mensile | Annuale (10 mesi) | Equivalente/mese |
 |------|:-------:|:-----------------:|:----------------:|
-| **Pro** | €59.99/mese | **€590/anno** | €49.17/mese |
-| **Pro+** | €119/mese | **€1.190/anno** | €99.17/mese |
-| **VIP** | €249/mese | **€2.490/anno** | €207.50/mese |
+| **Pro** | €59.00/mese | **€590/anno** | €49.17/mese |
+| **Pro+** | €149.00/mese | **€1.490/anno** | €124.17/mese |
+| **VIP** | €249.00/mese | **€2.490/anno** | €207.50/mese |
 
 ### 🏦 Cash Flow Immediato — L'Arma Segreta
 
@@ -80,16 +80,16 @@ fatturati    fatturati      fatturati
 
 ## �📦 Cosa Include Ogni Tier
 
-| Feature | Freemium | Pro €49.99 | Pro+ €99 | VIP €199 | Elite 🔮 |
-|---------|:--------:|:---------:|:--------:|:--------:|:--------:|
-| Messaggi chat | 15/giorno | Illimitati | Illimitati | Illimitati | Illimitati |
-| Memoria persistente | ❌ Amnesia | ✅ | ✅ | ✅ | ✅ |
-| Condivisione immagini | ❌ | ✅ | ✅ | ✅ | ✅ |
-| Voice call | ❌ | 60 min/mese | 180 min/mese | ♾️ Illimitato | ♾️ |
-| Proattività ("ti scrive lui") | ❌ | ❌ | ❌ | ✅ | ✅ |
-| Priorità risposta | — | Standard | Standard | ⚡ Prioritaria | ⚡ |
-| Video call avatar | ❌ | ❌ | ❌ | ❌ | ✅ 🔮 |
-| Extra minuti voice | — | +30 min = €9.99 | +60 min = €14.99 | — | — |
+| Feature | Freemium | Pro €49.99 | Pro+ €99 | VIP €199 |
+|---------|:--------:|:---------:|:--------:|:--------:|
+| Messaggi chat | 15/giorno | Illimitati | Illimitati | Illimitati |
+| Memoria persistente | ❌ Amnesia | ✅ | ✅ | ✅ |
+| Personalità AI | Base | 3 Archetipi | Archetipi + Tono | 👑 **Controllo Totale (Prompt Override)** |
+| Voice call | ❌ | 60 min/mese (Standard) | 180 min/mese (Tua Voce) | Illimitati* (Tua Voce) |
+| Proattività ("ti scrive lui") | ❌ | ❌ | ❌ | ✅ |
+| Extra minuti voice | — | +30 min = €9.99 | +60 min = €14.99 | +10 Ore = €49.99 |
+
+*( * ) VIP Fair Use Policy: Limite hard-cap di sicurezza a 25 ore (1.500 minuti) per ostacolare i mega-abusers e proteggere il margine. Oltre, scatta l'upsell da €49.99.*
 
 ---
 
@@ -108,9 +108,9 @@ fatturati    fatturati      fatturati
 | Tier | Uso tipico | Costo chat | Costo voice | Costo altro | **Totale/mese** |
 |------|-----------|:----------:|:-----------:|:-----------:|:---------------:|
 | **Freemium** | 10 msg/giorno | €0.15 | €0 | €0 | **€0.15** |
-| **Pro** | 25 msg/giorno + 40 min voice | €0.42 | €1.20 | €0.05 (img) | **€1.67** |
-| **Pro+** | 30 msg/giorno + 120 min voice | €0.50 | €3.60 | €0.10 (img) | **€4.20** |
-| **VIP** | 40 msg/giorno + 300 min voice + proattività | €0.84 | €9.00 | €1.50 (proattivo) | **€11.34** |
+| **Pro** | 25 msg/giorno + 40 min voice (Base) | €0.42 | ~€1.00 | €0 | **~€1.42** |
+| **Pro+** | 30 msg/giorno + 180 min voice (ElevenLabs) | €0.50 | ~€12.60 | €0 | **~€13.10** |
+| **VIP** | 40 msg/giorno + 500 min voice (ElevenLabs) | €0.84 | ~€35.00 | €1.50 (proattivo) | **~€37.34** |
 
 ---
 
@@ -168,17 +168,17 @@ fatturati    fatturati      fatturati
 
 ### 🏆 Scenario 3: POST-AUMENTO PREZZI (mesi 7-12)
 
-*Prezzi: Pro €59.99 / Pro+ €119 / VIP €249*
+*Prezzi: Pro €59.00 / Pro+ €149.00 / VIP €249.00*
 
 | Tier | Utenti | Ricavo | Costo API | Margine |
 |------|:------:|:------:|:---------:|:-------:|
 | Freemium | 3.000 | €0 | €450 | -€450 |
-| Pro | 200 | €11,998 | €334 | €11,664 |
-| Pro+ | 60 | €7,140 | €252 | €6,888 |
+| Pro | 200 | €11,800 | €334 | €11,466 |
+| Pro+ | 60 | €8,940 | €252 | €8,688 |
 | VIP | 30 | €7,470 | €340 | €7,130 |
-| **TOTALE** | **3,290** | **€26,608** | **€1,376** | |
+| **TOTALE** | **3,290** | **€28,210** | **€1,376** | |
 | Costi fissi | | | €46 | |
-| **PROFITTO NETTO** | | | | **€25,186/mese** |
+| **PROFITTO NETTO** | | | | **€26,788/mese** |
 
 ---
 
@@ -218,15 +218,15 @@ Investi in retention VIP: messaggi proattivi personalizzati, milestones ("Lumine
 
 ---
 
-## ⚡ Extra Voice — Entrate Aggiuntive
+## ⚡ Extra Voice — Entrate Aggiuntive (Microtransazioni)
 
-| Pack | Prezzo | Costo API | Margine |
+| Pack | Prezzo | Costo API (Stima) | Tuo Margine % |
 |------|:------:|:---------:|:-------:|
-| +30 min voice (Pro) | €9.99 | €0.90 | **€9.09 (91%)** |
-| +60 min voice (Pro+) | €14.99 | €1.80 | **€13.19 (88%)** |
+| +30 min (Voce Base - Pro) | €9.99 | ~€2.10 | **79%** |
+| +60 min (Voce Vera - Pro+) | €14.99 | ~€4.20 | **72%** |
+| +10 Ore (Max Sforzo - VIP) | €49.99 | ~€42.00 | **15% (Protezione Danni)** |
 
-Se il 20% dei Pro compra 1 pack extra/mese (scenario crescita, 16 utenti):
-**+€160/mese di entrate passive.**
+Questa è la liquidità impulsiva ("Modello TikTok") generata nel *Centro di Comando* quando l'utente va in ansia emotiva da esaurimento minuti. L'upsell +10 Ore per il VIP è una manovra puramente difensiva.
 
 ---
 

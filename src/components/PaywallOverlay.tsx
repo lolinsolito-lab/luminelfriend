@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Check, Crown, Sparkles, Mic, Video } from 'lucide-react';
+import { useAuth } from '../contexts/AuthContext';
 
 const tiers = {
     pro: {
@@ -9,11 +10,13 @@ const tiers = {
         monthly: 49.99,
         annual: 490,
         annualMonthly: 40.83,
+        paymentLinkMonthly: 'https://buy.stripe.com/test_cNiaEY88D98mcX4aoWcV200',
+        paymentLinkAnnual: 'https://buy.stripe.com/test_bJe00kfB598m9KS9kScV201',
         badge: null,
         features: [
             'Chat illimitato + memoria',
-            'Condivisione foto e testi',
-            '60 min voice call/mese',
+            'Personalità: 3 Archetipi',
+            '60 min audio/mese (Standard)',
             'Extra: +30 min = €9.99',
         ],
         cta: 'Inizia con Pro',
@@ -25,12 +28,14 @@ const tiers = {
         monthly: 99,
         annual: 990,
         annualMonthly: 82.50,
+        paymentLinkMonthly: 'https://buy.stripe.com/test_9B6aEY9cH2JY3mu9kScV202',
+        paymentLinkAnnual: 'https://buy.stripe.com/test_bJe14ofB5acqf5c9kScV203',
         badge: 'Più scelto',
         features: [
             'Tutto il pacchetto Pro',
-            '180 min voice call/mese',
+            'Personalità: Tono + Stile',
+            '180 min audio/mese (La Tua Voce)',
             'Extra: +60 min = €14.99',
-            'Risposte più profonde',
         ],
         cta: 'Scegli Pro+',
         accent: true,
@@ -41,12 +46,14 @@ const tiers = {
         monthly: 199,
         annual: 1990,
         annualMonthly: 165.83,
+        paymentLinkMonthly: 'https://buy.stripe.com/test_5kQ00k3Sn2JYaOW7cKcV204',
+        paymentLinkAnnual: 'https://buy.stripe.com/test_cNi00kbkP98m8GOgNkcV205',
         badge: 'Zero limiti',
         features: [
-            'Tutto illimitato: chat & voice',
-            'Ti scrive lui — proattività',
-            'Risposte prioritarie ⚡',
-            'Accesso anticipato a nuove feature',
+            'Controllo Totale (Prompt Override)',
+            'Audio Illimitato (La Tua Voce)',
+            'Luminel ti scrive (Proattivo)',
+            'Server dedicato ⚡',
         ],
         cta: 'Ascendi al VIP',
         accent: false,
@@ -54,7 +61,21 @@ const tiers = {
 };
 
 export default function PaywallOverlay() {
+    const { user } = useAuth();
     const [isAnnual, setIsAnnual] = useState(false);
+
+    const handleCheckout = (tierKey: string) => {
+        const tier = tiers[tierKey as keyof typeof tiers];
+        if (!tier || !user) return; // Prevent checkout if not logged in
+
+        const baseUrl = isAnnual ? tier.paymentLinkAnnual : tier.paymentLinkMonthly;
+        // The Emperor hasn't provided the exact links yet. 
+        // When he does, this code attaches the Supabase User ID to the Stripe session.
+        const checkoutUrl = `${baseUrl}?client_reference_id=${user.id}`;
+
+        // Redirect to Stripe Checkout
+        window.location.href = checkoutUrl;
+    };
 
     return (
         <div className="absolute inset-0 bg-space-deep/95 backdrop-blur-xl z-50 flex flex-col items-center justify-center p-4 md:p-6 text-center overflow-y-auto">
@@ -168,10 +189,12 @@ export default function PaywallOverlay() {
                             </ul>
 
                             {/* CTA */}
-                            <button className={`w-full py-3.5 uppercase tracking-widest text-xs font-display font-bold transition-all rounded-lg ${tier.accent
-                                ? 'bg-gradient-to-r from-amber to-amber-dim hover:from-amber-glow hover:to-amber text-white shadow-lg shadow-amber/15'
-                                : 'glass hover:bg-space-border text-text-warm'
-                                }`}>
+                            <button
+                                onClick={() => handleCheckout(key)}
+                                className={`w-full py-3.5 uppercase tracking-widest text-xs font-display font-bold transition-all rounded-lg ${tier.accent
+                                    ? 'bg-gradient-to-r from-amber to-amber-dim hover:from-amber-glow hover:to-amber text-white shadow-lg shadow-amber/15'
+                                    : 'glass hover:bg-space-border text-text-warm'
+                                    }`}>
                                 {tier.cta}
                             </button>
                         </motion.div>

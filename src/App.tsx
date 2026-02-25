@@ -32,9 +32,10 @@ import LoginPage from './components/Auth/LoginPage';
 import RegisterPage from './components/Auth/RegisterPage';
 import RecoveryPage from './components/Auth/RecoveryPage';
 import LegalModal, { LegalDocType } from './components/Legal/LegalModal';
+import AdminDashboard from './components/Admin/AdminDashboard';
 import { Instagram, Linkedin, CloudRain, CloudOff } from 'lucide-react';
 
-type ViewState = 'landing' | 'onboarding' | 'chat' | 'login' | 'register' | 'recovery';
+type ViewState = 'landing' | 'onboarding' | 'chat' | 'login' | 'register' | 'recovery' | 'admin';
 
 // We store the captured user profile
 export interface UserProfile {
@@ -58,6 +59,18 @@ function App() {
       }
     }
   }, [user, loading, currentView]);
+
+  // Secret God-Mode Trigger (Ctrl + Shift + L)
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === 'l') {
+        e.preventDefault();
+        setCurrentView('admin');
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
 
   // Activate Lenis smooth scrolling
   useSmoothScroll();
@@ -99,6 +112,12 @@ function App() {
 
   const renderCurrentView = () => {
     switch (currentView) {
+      case 'admin':
+        return (
+          <motion.div key="admin" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }} className="h-screen relative z-[100] bg-space-deep">
+            <AdminDashboard onClose={() => setCurrentView('landing')} />
+          </motion.div>
+        );
       case 'login':
         return (
           <motion.div key="login" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }}>
