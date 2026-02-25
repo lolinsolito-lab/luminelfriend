@@ -230,15 +230,19 @@ export default function PricingSection() {
 
                                     {/* CTA Button Masterpiece */}
                                     <button className={`
-                                    w-full py-4 px-6 rounded-xl text-xs font-display font-bold uppercase tracking-[0.15em] transition-all duration-500
+                                    w-full py-4 px-6 rounded-xl text-xs font-display font-bold uppercase tracking-[0.15em] transition-all duration-500 relative overflow-hidden group/btn
                                     ${tier.ctaStyle === 'solid'
-                                            ? 'bg-gradient-to-r from-amber to-amber-dim text-white shadow-[0_0_30px_rgba(196,154,42,0.3)] hover:shadow-[0_0_50px_rgba(196,154,42,0.5)] hover:scale-[1.02]'
-                                            : tier.ctaStyle === 'ghost'
-                                                ? 'border border-white/10 text-text-primary hover:border-amber/40 hover:text-amber hover:bg-amber/5'
-                                                : 'bg-transparent text-text-muted hover:text-text-warm'
+                                            ? 'bg-gradient-to-r from-amber to-amber-dim text-white shadow-[0_0_30px_rgba(196,154,42,0.3)] hover:shadow-[0_0_50px_rgba(196,154,42,0.5)] hover:scale-[1.02] active:scale-[0.98]'
+                                            : tier.key === 'vip'
+                                                ? 'bg-gradient-to-r from-space-surface to-space border-2 border-amber/30 text-amber hover:border-amber/70 hover:shadow-[0_0_40px_rgba(196,154,42,0.2)] hover:scale-[1.02] active:scale-[0.98]'
+                                                : tier.key === 'pro'
+                                                    ? 'bg-amber/10 border border-amber/30 text-amber hover:bg-amber/20 hover:border-amber/50 hover:shadow-[0_0_25px_rgba(196,154,42,0.15)] hover:scale-[1.02] active:scale-[0.98]'
+                                                    : 'bg-white/5 border border-white/10 text-text-warm hover:bg-white/10 hover:border-white/20 hover:scale-[1.02] active:scale-[0.98]'
                                         }
                                 `}>
-                                        {tier.cta}
+                                        {/* Shimmer sweep on hover */}
+                                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover/btn:translate-x-full transition-transform duration-700 ease-in-out" />
+                                        <span className="relative z-10">{tier.cta}</span>
                                     </button>
                                 </div>
                             </motion.div>
