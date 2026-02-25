@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Send, Loader2, Lock, Mic, Phone, Crown, Settings } from 'lucide-react';
+import { Menu, Send, Zap, LogOut, Settings, Crown, Mic, Shield, FileText, Lock, Sparkles, Loader2, Play, AlertCircle, Phone } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 import { sendMessageToLuminel, Message } from '../services/luminelService';
 import { clsx } from 'clsx';
@@ -187,10 +187,20 @@ export default function Chat({ userProfile, onNavigate }: ChatProps) {
         {/* Status */}
         <div className="flex flex-col items-end">
           {!isPaywallActive && (
-            <div className="text-xs font-mono text-text-muted mb-1">
-              <span className={messageCount > (messageLimit === Infinity ? 9999 : messageLimit - 5) ? "text-red-400" : "text-text-secondary"}>
-                {messageCount}/{messageLimit === Infinity ? '∞' : messageLimit}
+            <div className="text-[10px] uppercase font-mono mb-1 flex items-center gap-2">
+              {messageCount > (messageLimit === Infinity ? 9999 : messageLimit - 5) && (
+                <span className="text-amber animate-pulse flex items-center gap-1 font-display">
+                  <AlertCircle className="w-3 h-3" /> Limite Chat
+                </span>
+              )}
+              <span className={messageCount > (messageLimit === Infinity ? 9999 : messageLimit - 5) ? "text-amber font-bold" : "text-text-secondary"}>
+                Msg: {messageCount}/{messageLimit === Infinity ? '∞' : messageLimit}
               </span>
+            </div>
+          )}
+          {!isPaywallActive && voiceLimit > 0 && voiceLimit - voiceMinutesUsed <= 5 && (
+            <div className="text-[10px] text-amber animate-pulse mb-1 flex items-center gap-1 font-display uppercase tracking-widest">
+              <AlertCircle className="w-3 h-3" /> Voce Scarsa
             </div>
           )}
           <div className="flex items-center gap-1 text-[10px] text-text-muted uppercase tracking-wider">
