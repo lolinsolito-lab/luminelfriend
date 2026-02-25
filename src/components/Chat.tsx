@@ -298,6 +298,10 @@ export default function Chat({ userProfile, onNavigate }: ChatProps) {
           tier={tier}
           voiceLimit={voiceLimit}
           voiceMinutesUsed={voiceMinutesUsed}
+          onOpenPlans={() => {
+            setShowSettings(false);
+            setShowPaywall(true);
+          }}
         />
       )}
     </div>

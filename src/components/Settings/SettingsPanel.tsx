@@ -1,5 +1,5 @@
 import { motion } from 'motion/react';
-import { X, User, Shield, LogOut, Loader2, Crown, Mic, Zap, FileText, Sparkles, Lock, Check } from 'lucide-react';
+import { X, User, Shield, LogOut, Loader2, Crown, Mic, Zap, FileText, Sparkles, Lock, Check, ChevronRight } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
 import { UserProfile } from '../../App';
@@ -13,9 +13,10 @@ interface SettingsPanelProps {
     tier: UserTier;
     voiceLimit: number;
     voiceMinutesUsed: number;
+    onOpenPlans: () => void;
 }
 
-export default function SettingsPanel({ onClose, userProfile, tier, voiceLimit, voiceMinutesUsed }: SettingsPanelProps) {
+export default function SettingsPanel({ onClose, userProfile, tier, voiceLimit, voiceMinutesUsed, onOpenPlans }: SettingsPanelProps) {
     const { user, signOut } = useAuth();
     const [loading, setLoading] = useState(false);
     const [savingAi, setSavingAi] = useState(false);
@@ -154,25 +155,66 @@ export default function SettingsPanel({ onClose, userProfile, tier, voiceLimit, 
                         )}
                     </div>
 
-                    {/* Espansione (Acquisti) */}
-                    {tier !== 'avvio' && (
-                        <div className="space-y-3">
-                            <p className="text-xs text-text-muted uppercase tracking-widest pl-1">Espansione Spazio-Temporale</p>
+                    {/* Upgrade e Piani */}
+                    <div className="space-y-4 pt-4 border-t border-space-border/50">
+                        <div className="flex items-center gap-2 mb-4">
+                            <Crown className="w-5 h-5 text-amber" />
+                            <h3 className="text-lg font-display text-text-warm">Piani e Upgrade</h3>
+                        </div>
+
+                        <div className="grid grid-cols-1 gap-3">
+                            {tier !== 'vip' && (
+                                <button
+                                    onClick={() => {
+                                        onOpenPlans();
+                                    }}
+                                    className="w-full p-4 rounded-xl relative overflow-hidden group border border-amber/30 hover:border-amber/60 bg-gradient-to-r from-amber/10 to-transparent transition-all"
+                                >
+                                    <div className="absolute inset-0 bg-amber/5 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
+                                    <div className="relative z-10 flex items-center justify-between">
+                                        <div className="flex items-center gap-3 text-amber">
+                                            <Sparkles className="w-5 h-5" />
+                                            <span className="font-display tracking-widest uppercase text-sm font-bold">Esplora i Piani</span>
+                                        </div>
+                                        <ChevronRight className="w-4 h-4 text-amber/50 group-hover:text-amber" />
+                                    </div>
+                                    <p className="text-left text-xs text-text-muted mt-2 relative z-10">
+                                        Sblocca la Sintonia Vocale e l'Anima Personalizzata.
+                                    </p>
+                                </button>
+                            )}
+
+                            {/* Minuti Extra visible for everyone to see how to buy, but maybe locked if Avvio */}
                             <button
-                                onClick={buyExtraMinutes}
-                                className="w-full p-4 rounded-xl glass border border-amber/20 flex items-center justify-between group hover:border-amber/50 hover:bg-amber/5 transition-all duration-300"
+                                onClick={tier === 'avvio' ? () => { onOpenPlans(); } : buyExtraMinutes}
+                                className={`w-full p-4 rounded-xl glass border ${tier === 'avvio' ? 'border-space-border/50 opacity-70 cursor-pointer' : 'border-amber/20 hover:border-amber/50 hover:bg-amber/5'} flex flex-col gap-2 transition-all duration-300`}
                             >
-                                <div className="flex items-center gap-3 text-text-warm">
-                                    <Mic className="w-5 h-5 text-amber" />
-                                    <span className="text-sm font-display tracking-wide">Aggiungi +30 Minuti Vocali</span>
+                                <div className="flex items-center justify-between w-full">
+                                    <div className="flex items-center gap-3 text-text-warm">
+                                        <Mic className={`w-5 h-5 ${tier === 'avvio' ? 'text-text-muted' : 'text-amber'}`} />
+                                        <span className={`text-sm font-display tracking-wide ${tier === 'avvio' ? 'text-text-muted' : ''}`}>
+                                            Aggiungi +30 Minuti Vocali
+                                        </span>
+                                    </div>
+                                    <div className="flex items-center gap-2">
+                                        {tier === 'avvio' ? (
+                                            <Lock className="w-4 h-4 text-text-muted" />
+                                        ) : (
+                                            <>
+                                                <span className="text-xs font-mono text-amber">€9.99</span>
+                                                <Zap className="w-4 h-4 text-amber/50" />
+                                            </>
+                                        )}
+                                    </div>
                                 </div>
-                                <div className="flex items-center gap-2">
-                                    <span className="text-xs font-mono text-amber">€9.99</span>
-                                    <Zap className="w-4 h-4 text-amber/50 group-hover:text-amber transition-colors" />
-                                </div>
+                                {tier === 'avvio' && (
+                                    <p className="text-left text-[10px] text-amber/50 leading-relaxed mt-1">
+                                        *L'acquisto di minuti extra richiede un abbonamento PRO o superiore. Clicca qui per fare l'upgrade.
+                                    </p>
+                                )}
                             </button>
                         </div>
-                    )}
+                    </div>
 
                     {/* Personalizzazione AI */}
                     <div className="space-y-4 pt-4 border-t border-space-border/50">

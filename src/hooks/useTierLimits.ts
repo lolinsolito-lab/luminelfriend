@@ -45,9 +45,18 @@ export function useTierLimits() {
                 return;
             }
 
-            setTier(data.tier as UserTier);
+            let currentTier = data.tier as UserTier;
+            let currentLimit = data.voice_minutes_limit || 0;
+
+            // OVERRIDE IMPERIALE: Il Re vede sempre tutto sbloccato
+            if (user.email === 'jaramichael@hotmail.com') {
+                currentTier = 'vip';
+                currentLimit = 1500;
+            }
+
+            setTier(currentTier);
             setVoiceMinutesUsed(data.voice_minutes_used || 0);
-            setVoiceLimit(data.voice_minutes_limit || 0);
+            setVoiceLimit(currentLimit);
 
             // Check if amnesia (next day reset) should happen
             const todayStr = new Date().toISOString().split('T')[0]; // YYYY-MM-DD
