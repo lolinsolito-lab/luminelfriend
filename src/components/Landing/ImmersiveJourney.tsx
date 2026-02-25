@@ -1,6 +1,5 @@
 import { useRef, useEffect } from 'react';
 import { motion } from 'motion/react';
-import { Sparkles } from 'lucide-react';
 
 interface PersonaCard {
     image: string;
@@ -185,15 +184,27 @@ export default function ImmersiveJourney() {
 
                     {/* Phone Inner Content */}
                     <div className="flex-1 flex flex-col items-center justify-end pb-20 md:pb-28 relative z-10">
-                        {/* Central Glow / Icon */}
-                        <div className="mb-6 relative">
+                        {/* Central Glow / Entity */}
+                        <div className="mb-6 relative flex items-center justify-center">
                             {/* Inner ambient pulse */}
                             <motion.div
-                                animate={{ scale: [1, 1.2, 1], opacity: [0.5, 0.8, 0.5] }}
+                                animate={{ scale: [1, 1.2, 1], opacity: [0.4, 0.7, 0.4] }}
                                 transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-20 h-20 bg-amber-400/20 blur-[20px] rounded-full pointer-events-none"
+                                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-28 h-28 bg-[#C29532]/20 blur-[25px] rounded-full pointer-events-none"
                             />
-                            <Sparkles className="w-8 h-8 md:w-10 md:h-10 text-[#C29532] relative z-10 drop-shadow-sm group-hover:scale-110 transition-transform duration-700" strokeWidth={1.5} />
+                            {/* Entity Floating Animation */}
+                            <motion.div
+                                animate={{ y: [-4, 4, -4] }}
+                                transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+                                className="relative z-10 w-24 h-24 md:w-32 md:h-32 group-hover:scale-110 transition-transform duration-700"
+                            >
+                                <img
+                                    src="/images/entity-gold.png"
+                                    alt="Luminel Entity"
+                                    className="w-full h-full object-contain drop-shadow-[0_0_15px_rgba(194,149,50,0.5)] mix-blend-multiply"
+                                    style={{ filter: "contrast(1.2) brightness(1.1)" }}
+                                />
+                            </motion.div>
                         </div>
 
                         <p className="text-[10px] md:text-xs font-display text-[#1a1a1a] tracking-[0.25em] uppercase font-semibold mb-2 drop-shadow-sm">
