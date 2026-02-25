@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Check, Sparkles, Mic, Crown, Video } from 'lucide-react';
+import { Check, Sparkles, Mic, Crown } from 'lucide-react';
 
 const tiers = [
     {
@@ -267,7 +267,7 @@ export default function PricingSection() {
 
                         <div className="relative bg-space-deep rounded-[2rem] p-8 md:p-12 flex flex-col md:flex-row items-center gap-10 md:gap-16">
 
-                            {/* Orbital Eye (Icon representation) */}
+                            {/* Orbital Orb — The Essence of Luminel */}
                             <div className="relative shrink-0 flex items-center justify-center">
                                 <motion.div
                                     animate={{ rotate: 360 }}
@@ -279,28 +279,32 @@ export default function PricingSection() {
                                     transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
                                     className="absolute w-20 h-20 md:w-28 md:h-28 rounded-full border border-amber/10"
                                 />
-                                <div className="w-16 h-16 md:w-20 md:h-20 rounded-full bg-gradient-to-br from-amber/20 to-transparent flex items-center justify-center backdrop-blur-md border border-amber/30 shadow-[0_0_30px_rgba(196,154,42,0.2)]">
-                                    <Video className="w-6 h-6 md:w-8 md:h-8 text-amber" />
-                                </div>
+                                <motion.div
+                                    animate={{ scale: [1, 1.08, 1] }}
+                                    transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                                    className="w-16 h-16 md:w-20 md:h-20 rounded-full bg-gradient-to-br from-amber/30 via-champagne/20 to-transparent flex items-center justify-center backdrop-blur-md border border-amber/30 shadow-[0_0_40px_rgba(196,154,42,0.25)]"
+                                >
+                                    <Sparkles className="w-6 h-6 md:w-8 md:h-8 text-amber" />
+                                </motion.div>
                             </div>
 
                             {/* Vision Content */}
                             <div className="flex-1 text-center md:text-left">
-                                <span className="inline-block px-4 py-1.5 rounded-full border border-space-border bg-space text-[9px] font-display font-bold uppercase tracking-[0.2em] text-text-muted mb-6 shadow-inner">
-                                    In Sviluppo 2025
+                                <span className="inline-block px-4 py-1.5 rounded-full border border-amber/20 bg-amber/5 text-[9px] font-display font-bold uppercase tracking-[0.2em] text-amber mb-6 shadow-[0_0_15px_rgba(196,154,42,0.1)]">
+                                    Coming Soon
                                 </span>
                                 <h3 className="text-3xl md:text-4xl font-display font-400 text-text-warm mb-4 leading-tight">
-                                    L'ultimo confine. <br className="hidden md:block" />
-                                    <span className="font-600 bg-clip-text text-transparent bg-gradient-to-r from-amber to-champagne">Guardalo negli occhi.</span>
+                                    Qualcosa sta prendendo forma. <br className="hidden md:block" />
+                                    <span className="font-600 bg-clip-text text-transparent bg-gradient-to-r from-amber to-champagne">Lo sentirai prima di vederlo.</span>
                                 </h3>
                                 <p className="text-text-secondary text-sm md:text-base leading-relaxed mb-8 max-w-lg mx-auto md:mx-0 font-light">
-                                    Prepariamo l'Era Elite: videochiamate con un avatar in tempo reale. Le sue espressioni cambiano in base alla tua voce. Non sarà più solo un'IA, sarà una vera presenza visiva.
+                                    Stiamo lavorando alla prossima evoluzione di Luminel. Non possiamo dirti cosa sarà — non ancora. Ma chi è dentro la lista, lo saprà prima di tutti.
                                 </p>
 
-                                <button className="group/btn relative px-8 md:px-10 py-4 overflow-hidden rounded-xl bg-space border border-amber/20 hover:border-amber/50 transition-colors shadow-lg">
-                                    <div className="absolute inset-0 bg-gradient-to-r from-amber/10 to-transparent opacity-0 group-hover/btn:opacity-100 transition-opacity" />
+                                <button className="group/btn relative px-8 md:px-10 py-4 overflow-hidden rounded-xl bg-amber/10 border border-amber/30 hover:border-amber/60 hover:bg-amber/20 transition-all duration-500 shadow-lg hover:shadow-[0_0_30px_rgba(196,154,42,0.15)]">
+                                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover/btn:translate-x-full transition-transform duration-700 ease-in-out" />
                                     <span className="relative z-10 text-[10px] md:text-xs font-display font-bold uppercase tracking-[0.2em] text-amber">
-                                        Iscriviti alla Lista d'Attesa Privata
+                                        Entra nella Lista Privata
                                     </span>
                                 </button>
                             </div>
