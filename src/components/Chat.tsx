@@ -17,11 +17,17 @@ interface ChatProps {
 }
 
 export default function Chat({ userProfile, onNavigate }: ChatProps) {
-  // State for Disclaimer Acceptance (Session-based)
+  const { tier, messageCount, messageLimit, voiceMinutesUsed, voiceLimit, incrementMessageCount, isPaywallActive, loadingConfig } = useTierLimits();
+  const { user } = useAuth();
+
+  // State for Disclaimer Acceptance (Persistent via metadata)
   const [hasAcceptedDisclaimer, setHasAcceptedDisclaimer] = useState(false);
 
-  const { tier, messageCount, messageLimit, incrementMessageCount, isPaywallActive, loadingConfig } = useTierLimits();
-  const { user } = useAuth();
+  useEffect(() => {
+    if (user?.user_metadata?.legal_accepted === true) {
+      setHasAcceptedDisclaimer(true);
+    }
+  }, [user]);
 
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
@@ -105,7 +111,16 @@ export default function Chat({ userProfile, onNavigate }: ChatProps) {
 
   // 1. LEGAL GATEKEEPER
   if (!hasAcceptedDisclaimer) {
-    return <DisclaimerOverlay onAccept={() => setHasAcceptedDisclaimer(true)} />;
+    return <DisclaimerOverlay onAccept={async () => {
+      setHasAcceptedDisclaimer(true);
+      if (user) {
+        await import('../services/supabaseClient').then(({ supabase }) => {
+          supabase.auth.updateUser({
+            data: { legal_accepted: true, legal_accepted_at: new Date().toISOString() }
+          });
+        });
+      }
+    }} />;
   }
 
   if (loadingConfig) {
@@ -271,7 +286,13 @@ export default function Chat({ userProfile, onNavigate }: ChatProps) {
       </footer>
 
       {showSettings && (
-        <SettingsPanel onClose={() => setShowSettings(false)} />
+        <SettingsPanel
+          onClose={() => setShowSettings(false)}
+          userProfile={userProfile}
+          tier={tier}
+          voiceLimit={voiceLimit}
+          voiceMinutesUsed={voiceMinutesUsed}
+        />
       )}
     </div>
   );

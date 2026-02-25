@@ -8,6 +8,8 @@ export function useTierLimits() {
     const { user } = useAuth();
     const [tier, setTier] = useState<UserTier>('avvio');
     const [messageCount, setMessageCount] = useState(0);
+    const [voiceMinutesUsed, setVoiceMinutesUsed] = useState(0);
+    const [voiceLimit, setVoiceLimit] = useState(0);
     const [loadingConfig, setLoadingConfig] = useState(true);
 
     const messageLimit = tier === 'avvio' ? 15 : Infinity;
@@ -33,7 +35,7 @@ export function useTierLimits() {
             // Authenticated user: fetch from Supabase
             const { data, error } = await supabase
                 .from('profiles')
-                .select('tier, messages_count_today, last_message_date')
+                .select('tier, messages_count_today, last_message_date, voice_minutes_used, voice_minutes_limit')
                 .eq('id', user.id)
                 .single();
 
@@ -44,6 +46,8 @@ export function useTierLimits() {
             }
 
             setTier(data.tier as UserTier);
+            setVoiceMinutesUsed(data.voice_minutes_used || 0);
+            setVoiceLimit(data.voice_minutes_limit || 0);
 
             // Check if amnesia (next day reset) should happen
             const todayStr = new Date().toISOString().split('T')[0]; // YYYY-MM-DD
@@ -91,6 +95,8 @@ export function useTierLimits() {
         tier,
         messageCount,
         messageLimit,
+        voiceMinutesUsed,
+        voiceLimit,
         incrementMessageCount,
         isPaywallActive: messageCount >= messageLimit,
         loadingConfig
