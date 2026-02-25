@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { useSmoothScroll } from './hooks/useSmoothScroll';
 import { useAuth } from './contexts/AuthContext';
+import { supabase } from './services/supabaseClient';
 import Chat from './components/Chat';
 import Navbar from './components/Landing/Navbar';
 import HeroSection from './components/Landing/HeroSection';
@@ -33,9 +34,10 @@ import RegisterPage from './components/Auth/RegisterPage';
 import RecoveryPage from './components/Auth/RecoveryPage';
 import LegalModal, { LegalDocType } from './components/Legal/LegalModal';
 import AdminDashboard from './components/Admin/AdminDashboard';
+import GodMode from './pages/GodMode';
 import { Instagram, Linkedin, CloudRain, CloudOff } from 'lucide-react';
 
-type ViewState = 'landing' | 'onboarding' | 'chat' | 'login' | 'register' | 'recovery' | 'admin';
+type ViewState = 'landing' | 'onboarding' | 'chat' | 'login' | 'register' | 'recovery' | 'admin' | 'godmode';
 
 // We store the captured user profile
 export interface UserProfile {
@@ -54,11 +56,25 @@ function App() {
   // Auto-redirect authenticated users
   useEffect(() => {
     if (!loading && user) {
+      const hasCompletedOnboarding = user.user_metadata?.onboarding_completed === true;
+
+      // Also set userProfile if it's not set
+      if (!userProfile && hasCompletedOnboarding) {
+        setUserProfile({
+          name: user.user_metadata?.full_name || 'Viaggiatore',
+          burden: user.user_metadata?.burden || 'il tuo viaggio'
+        });
+      }
+
       if (['landing', 'login', 'register', 'recovery'].includes(currentView)) {
-        setCurrentView('chat');
+        if (hasCompletedOnboarding) {
+          setCurrentView('chat');
+        } else {
+          setCurrentView('onboarding');
+        }
       }
     }
-  }, [user, loading, currentView]);
+  }, [user, loading, currentView, userProfile]);
 
   // Secret God-Mode Trigger (Ctrl + Shift + L)
   useEffect(() => {
@@ -105,13 +121,28 @@ function App() {
     document.getElementById('piani')?.scrollIntoView({ behavior: 'smooth' });
   };
 
-  const handleOnboardingComplete = (data: UserProfile) => {
+  const handleOnboardingComplete = async (data: UserProfile) => {
     setUserProfile(data);
+    if (user) {
+      await supabase.auth.updateUser({
+        data: {
+          full_name: data.name,
+          burden: data.burden,
+          onboarding_completed: true
+        }
+      });
+    }
     setCurrentView('chat');
   };
 
   const renderCurrentView = () => {
     switch (currentView) {
+      case 'godmode':
+        return (
+          <motion.div key="godmode" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }} className="h-screen w-full relative z-[100] bg-[#FCFBF8]">
+            <GodMode onNavigate={setCurrentView} />
+          </motion.div>
+        );
       case 'admin':
         return (
           <motion.div key="admin" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }} className="h-screen relative z-[100] bg-space-deep">
@@ -122,7 +153,13 @@ function App() {
         return (
           <motion.div key="login" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }}>
             <LoginPage
-              onLogin={() => setCurrentView('onboarding')}
+              onLogin={() => {
+                if (user?.user_metadata?.onboarding_completed) {
+                  setCurrentView('chat');
+                } else {
+                  setCurrentView('onboarding');
+                }
+              }}
               onSwitchToRegister={() => setCurrentView('register')}
               onSwitchToRecovery={() => setCurrentView('recovery')}
               onBack={() => setCurrentView('landing')}
@@ -157,7 +194,7 @@ function App() {
             transition={{ duration: 0.8, ease: "easeOut" }}
             className="h-screen"
           >
-            <Chat userProfile={userProfile} />
+            <Chat userProfile={userProfile} onNavigate={setCurrentView} />
           </motion.div>
         );
       case 'onboarding':

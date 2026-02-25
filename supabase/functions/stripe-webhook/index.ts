@@ -79,6 +79,15 @@ serve(async (req) => {
                 console.error("Error adding minutes:", error);
                 return new Response('Database error on extra minutes', { status: 500 });
             }
+
+            // --- REGISTRAZIONE TRANSAZIONE ---
+            await supabase.from('transactions').insert({
+                user_id: userId,
+                amount: (session.amount_total || 0) / 100, // Stripe manda l'importo in centesimi
+                currency: session.currency || 'eur',
+                type: 'extra_minutes'
+            });
+
             console.log(`Successfully added ${extraMinutes} minutes. New limit: ${currentLimit + extraMinutes}`);
 
         } else {
@@ -108,6 +117,15 @@ serve(async (req) => {
                 console.error('Failed to update profile tier:', error)
                 return new Response('Database error on tier upgrade', { status: 500 })
             }
+
+            // --- REGISTRAZIONE TRANSAZIONE ---
+            await supabase.from('transactions').insert({
+                user_id: userId,
+                amount: (session.amount_total || 0) / 100,
+                currency: session.currency || 'eur',
+                type: 'subscription_upgrade',
+                tier: chosenTier
+            });
 
             console.log(`Successfully upgraded user ${userId} to ${chosenTier} with ${baseVoiceLimit}m voice limit.`)
         }
