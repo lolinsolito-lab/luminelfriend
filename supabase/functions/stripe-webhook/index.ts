@@ -99,7 +99,8 @@ serve(async (req) => {
                     messages_count_today: 0,
                     last_message_date: todayStr,
                     voice_minutes_limit: baseVoiceLimit,
-                    voice_minutes_used: 0 // Reset dei consumi per il nuovo abbonamento
+                    voice_minutes_used: 0, // Reset dei consumi per il nuovo abbonamento
+                    voice_minutes_reset_date: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString() // Reset tra 30 giorni
                 })
                 .eq('id', userId)
 

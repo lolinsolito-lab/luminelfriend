@@ -85,11 +85,11 @@ fatturati    fatturati      fatturati
 | Messaggi chat | 15/giorno | Illimitati | Illimitati | Illimitati |
 | Memoria persistente | ❌ Amnesia | ✅ | ✅ | ✅ |
 | Personalità AI | Base | 3 Archetipi | Archetipi + Tono | 👑 **Controllo Totale (Prompt Override)** |
-| Voice call | ❌ | 60 min/mese (Standard) | 180 min/mese (Tua Voce) | Illimitati* (Tua Voce) |
+| Voice call | ❌ | 60 min/mese (Sintesi Digitale) | 180 min/mese (Voce Premium HD) | 25 Ore/mese (Voce Premium HD) |
 | Proattività ("ti scrive lui") | ❌ | ❌ | ❌ | ✅ |
 | Extra minuti voice | — | +30 min = €9.99 | +60 min = €14.99 | +10 Ore = €49.99 |
 
-*( * ) VIP Fair Use Policy: Limite hard-cap di sicurezza a 25 ore (1.500 minuti) per ostacolare i mega-abusers e proteggere il margine. Oltre, scatta l'upsell da €49.99.*
+*( * ) VIP Fair Use Policy: Hard-cap di sicurezza a 25 ore (1.500 minuti). Comunicato chiaramente nella card pubblica. Oltre, scatta l'upsell da €49.99.*
 
 ---
 

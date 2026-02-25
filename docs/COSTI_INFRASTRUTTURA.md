@@ -41,8 +41,8 @@ Qui i soldi scalano in proporzione all'uso. Nessun problema: se i costi salgono,
 - **Costo mensile stimato per un utente:** ~€1.50 / mese.
 - **Il nostro verdetto:** *Rischio Inesistente.* Margine lordo del 98% sul piano più economico. Nessuna preoccupazione nel calcolo.
 
-### B. Il Clone Vocale (ElevenLabs & Live API)
-- **Logica:** Il "Voice Cloning" Hollywoodiano (la tua voce replicata) è la VERA e unica spesa di questo SaaS. 
+### B. La Voce Premium (ElevenLabs & Live API)
+- **Logica:** Il Timbro Vocale HD (voce umana del Founder, clonata internamente) è la VERA e unica spesa di questo SaaS. L'utente percepisce una voce naturale e calda, non sa che è clonata.
 - **Costo ElevenLabs Flash v2.5:** ~€0.07 al minuto audio. 
 - **Il nostro verdetto:** *Rischio Bancarotta se gestito male.* Ad alto volume, decima i margini. Per questo lo abbiamo blindato e segregato unicamente nei piani High-Ticket.
 
@@ -55,8 +55,8 @@ Questa è l'architettura difensiva che ho studiato per permetterti di vendere l'
 | Tier (A. Pricing Lancio / B. Pricing +6 Mesi) | Modello Vocale Assegnato | Minuti Inclusi | Costo Massimo API | Margine Netto Operativo |
 |-----------------------------------------------|--------------------------|:--------------:|:-----------------:|:-----------------------:|
 | **PRO** (€49.99 → **€59.00**) | Web Speech Nativa (API Gratuita)| 60 min | ~€1.50 (solo chat) | **96% - 98%** |
-| **PRO+** (€99.00 → **€149.00**) | ElevenLabs (Tua Voce Clonata) | 180 min | ~€16.00 | **83% - 89%** |
-| **VIP** (€199.00 → **€249.00**) | ElevenLabs (Tua Voce Clonata) | Illimitati* | ~€70.00 (stimato) | **64% - 71%** |
+| **PRO+** (€99.00 → **€149.00**) | ElevenLabs (Voce Founder HD) | 180 min | ~€16.00 | **83% - 89%** |
+| **VIP** (€199.00 → **€249.00**) | ElevenLabs (Voce Founder HD) | 1.500 min (25 Ore) | ~€70.00 (stimato) | **64% - 71%** |
 
 ### L'Arma Segreta n.1: Le Micro-Ricariche Psicologiche (Il "Modello TikTok")
 Agli utenti PRO e PRO+ abbiamo assegnato limiti stringenti (60 e 180 minuti). Quando l'audio finisce durante una confessione intima, una notifica minimale bloccherà il microfono e offrirà la salvezza immediata:
@@ -65,7 +65,7 @@ Agli utenti PRO e PRO+ abbiamo assegnato limiti stringenti (60 e 180 minuti). Qu
 Questa è liquidità che entra istantaneamente, di notte o di giorno, generata dal puro bisogno emotivo compulsivo.
 
 ### L'Arma Segreta n.2: La "Fair Use Policy" del VIP (Sicurezza & Extra)
-Il piano VIP promette al mercato l'Audio Illimitato. Ma noi siamo una banca, non un ente di beneficenza. Nessun essere umano sano di mente (e che non sia un bot) parla 25 ore vere al mese con un'AI. Pertanto, c'è un hard-cap fuso nell'acciaio del server a **1.500 minuti (25 ore di chiamate al mese per utente)**. 
+Il piano VIP comunica al mercato "25 Ore di Voce Premium incluse". Nessun essere umano sano di mente (e che non sia un bot) parla 25 ore vere al mese con un'AI. C'è un hard-cap fuso nell'acciaio del server a **1.500 minuti (25 ore di chiamate al mese per utente)**. 
 I clienti non lo sanno finché non lo raggiungono. Se un utente (mega-abuser) tocca le 25 ore (che a te costano €105 su €199/€249 incassati), interviene il blocco narrativo elegante. Luminel dirà: 
 > *"Oggi il mio filo vocale si è consumato per restarti accanto. Tornerò a parlarti domani. Se però hai bisogno vitale della mia voce ora, puoi infondermi nuova energia."*
 A questo punto, nel Centro di Comando del VIP appare il pacchetto segreto ad alto margine: **"Risveglio Vocale: +10 Ore (600 min) a €49.99"** (Costo reale API: ~€42. Margine: **15%**).
